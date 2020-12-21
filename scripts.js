@@ -54,12 +54,9 @@ function GetUpdateData(FileID) {
                 var j = json[i];
                 $("#updateDescription").val(j.description);
                 $("#updatePrice").val(j.price);
-                $("#updateImageCurrent").attr("src","data:image;base64," + j.image);
+                $("#updateImageCurrent").attr("src", "data:image;base64," + j.image);
                 $("#updateFileName").html(j.FileName);
-                // dynamically add the FileID to the EditFile event as a param
-                $(document).on("click", '#buttonEditFile', {'param': FileID}, function(event){
-                     EditFile(event.data.param);
-                });
+                $("#buttonEditFile").attr("FileID", j.id);
                 $("#divLoader").hide();
                 ShowFileForm("Edit");
             }
@@ -83,37 +80,66 @@ function EditFile(FileID) {
         contentType: false,
         processData: false,
         success: function(response) {
-
-                console.log();(response);
-//            alert ("Your file has been updated")
+            alert ("Your changes have been saved");
         }
     });
     HideFileForm("Edit");
+    $("#EditForm").load("#EditForm");
 }
 
 // upload file
 
 function UploadFile () {
-    var formdata = new FormData();
-    formdata.append('description', $("#fileDescription").val());
-    formdata.append('price', $("#filePrice").val());
-    formdata.append('image', $("#fileImage")[0].files[0]);
-    formdata.append('file', $("#fileFile")[0].files[0]);
+    if (ValidateFileForm()) {
+        var formdata = new FormData();
+        formdata.append('description', $("#fileDescription").val());
+        formdata.append('price', $("#filePrice").val());
+        formdata.append('image', $("#fileImage")[0].files[0]);
+        formdata.append('file', $("#fileFile")[0].files[0]);
 
-    $.ajax({
-        url: "upload.php",
-        method: "POST",
-        data : formdata,
-        cache: false,
-        contentType: false,
-        processData: false,
-        success: function(response) {
-            alert ("Your file has been uploaded")
-        }
-    });
-    HideFileForm("Upload");
+        $.ajax({
+            url: "upload.php",
+            method: "POST",
+            data : formdata,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function(response) {
+                alert ("Your file has been uploaded")
+            }
+        });
+        HideFileForm("Upload");
+    }
 }
 
+function ValidateFileForm() {
+    var valid = true;
+    var ErrMsg = "<br> <br>";
+    if ($("#fileDescription").val() == "") {
+        ErrMsg += "* You must include a description <br>";
+        valid = false;
+    }
+    if ($("#filePrice").val() == "" || $("#filePrice").val() < 0) {
+        ErrMsg += "* You haven't listed the price <br>";
+        valid = false;
+    }
+    if ($("#fileImage").val() == "") {
+        ErrMsg += "* You must upload an image <br>";
+        valid = false;
+    }
+    if ($("#fileFile").val() == "") {
+        ErrMsg += "* You forgot to include the file <br>";
+        valid = false;
+    }
+    if (!$('#fileAllowed').is(":checked")) {
+        ErrMsg += "* You must be legally allowed to sell this file <br>";
+        valid = false;
+    }
+
+    if (!valid)
+        $("#uploadErrorMessages").html(ErrMsg).show();
+    return valid;
+}
 
 function CopyLink (UUID) {
     const ta = document.createElement('textarea');

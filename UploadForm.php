@@ -4,6 +4,8 @@
         <img src="close.png" style="float: right; padding-top:16px;" class="close" onclick="HideFileForm('Upload');"></img>
     </div>
     <br>
+    <div id="uploadErrorMessages" style="display:none; font-size:13px;"></div>
+    <br>
     <table>
         <tr>
             <td colspan="2">
