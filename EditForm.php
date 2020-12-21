@@ -40,5 +40,5 @@
         </tr>
     </table>
     <br>
-    <a class="button orangeBG" id="buttonEditFile">Edit File</a>
+    <a FileID="" class="button orangeBG" id="buttonEditFile" onclick="EditFile($('#buttonEditFile').attr('FileID'));">Edit File</a>
 </div>

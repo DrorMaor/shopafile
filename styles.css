@@ -113,13 +113,12 @@ body {
 }
 
 #tblFiles tr:hover {
-    background-color: #ddd;
+    background-color: #f7f9fc;
 }
 
 #tblFiles th {
     padding-top: 12px;
     padding-bottom: 12px;
-    text-align: left;
 }
 /* ----------------------------- */
 
