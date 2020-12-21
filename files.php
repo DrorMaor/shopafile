@@ -21,8 +21,8 @@
         <?php
         foreach($sql as $row => $cols) {
             $id = $cols["id"];
-            $onmouseout = "$('#Image" . $id . ").hide();";
-            $onmouseover = "$('#Image" . $id . ").show();";
+            $onmouseout =  "$(\"#Image" . $id . "\").hide();";
+            $onmouseover = "$(\"#Image" . $id . "\").show();";
             echo "<tr> <td><span onmouseout='" . $onmouseout . "' onmouseover='" . $onmouseover . "'>" . $cols["FileName"] . "</span></td>";
             echo "<span class='FileImage' id='Image" . $id . "'><img style='width:100px;' src='data:image;base64," . $cols['image'] . "'/></span>";
             echo "<td class='TablePadding'>$" . number_format($cols["price"], 2) . "</td>";
@@ -37,7 +37,9 @@
             echo "<td class='TablePadding center'>" . $cols["downloads"] . "</td>";
             echo "<td class='TablePadding center'>$" . number_format($cols["earnings"], 2) . "</td>";
             echo "<td class='TablePadding'>";
-            echo "<a class='RepeatButton orange' onclick='EditFile(" . $cols["id"] . ");'>Edit</a> &nbsp;";
+            $title = "Click to copy the purchase link. Share it with your friends so they can buy your file";
+            echo "<a class='RepeatButton green' title='". $title . "' onclick='CopyLink(\"" . $cols["UUID"] . "\");'>Link</a> &nbsp;";
+            echo "<a class='RepeatButton orange' onclick='GetUpdateData(" . $cols["id"] . ");'>Edit</a> &nbsp;";
             echo "<a class='RepeatButton red' onclick='DeleteFile(" . $cols["id"] . ");'>Delete</a> </td> </tr>";
         }
         echo "</table>";

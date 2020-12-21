@@ -1,12 +1,4 @@
-<?php
-    if (isset($_GET["FileID"])) {
-        include ("DBconn.php");
-        $sql = $conn->prepare("select * from files where id = " . $_GET["FileID"]);
-        $sql->execute();
-        $rows = array();
-        $conn = null;
-    }
-?>
+
 <div id="EditForm" class="FileForm">
     <div style="width:100%">
         <h3 style="float: left;">Edit File</h3>
@@ -31,7 +23,11 @@
         <tr>
             <td>Image</td>
             <td>
-                <img id="updateImageCurrent" style='width:100px;'> <br>
+                <img id="updateImageCurrent" style="width:100px;"
+                    onmouseover1="$('#updateImageCurrent').css('width','100%');"
+                    onmouseout1="$('#updateImageCurrent').css('width','100px');"
+                    >
+                <br>
                 <input type="file" id="updateImage">
             </td>
         </tr>
@@ -44,5 +40,5 @@
         </tr>
     </table>
     <br>
-    <a class="button orangeBG" onclick="EditFile();">Edit File</a>
+    <a class="button orangeBG" id="buttonEditFile">Edit File</a>
 </div>
