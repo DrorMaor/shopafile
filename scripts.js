@@ -1,4 +1,5 @@
 
+
 // general File Form functions
 
 function HideFileForm(form) {
@@ -53,6 +54,7 @@ function GetUpdateData(FileID) {
             for (var i = 0; i < json.length; i++) {
                 var j = json[i];
                 $("#updateDescription").val(j.description);
+                $("#selCategories").val(j.category);
                 $("#updatePrice").val(j.price);
                 $("#updateImageCurrent").attr("src", "data:image;base64," + j.image);
                 $("#updateFileName").html(j.FileName);
@@ -68,6 +70,7 @@ function EditFile(FileID) {
     var formdata = new FormData();
     formdata.append('FileID', FileID);
     formdata.append('description', $("#updateDescription").val());
+    formdata.append('category', $("#selCategories").val());
     formdata.append('price', $("#updatePrice").val());
     formdata.append('image', $("#updateImage")[0].files[0]);
     formdata.append('file', $("#updateFile")[0].files[0]);
