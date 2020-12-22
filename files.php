@@ -3,7 +3,10 @@
     <?php
         include ("DisplayErrors.php");
         include ("DBconn.php");
-        $sql = $conn->prepare("select * from files where user = 1 order by UploadTime desc;");
+        $select = "select f.id, f.image, f.UUID, f.FileName, f.price, f.description, f.views, f.downloads, f.earnings, c.category
+            from files f inner join categories c on c.id = f.category
+            where f.user = 1 order by f.id desc;";
+        $sql = $conn->prepare($select);
         $sql->execute();
         $rows = array();
         ?>
@@ -14,6 +17,7 @@
                 <th class="left">File Name</th>
                 <th class="left">Price</th>
                 <th class="left">Description</th>
+                <th class="center">Category</th>
                 <th class="center">Views</th>
                 <th class="center">Downloads</th>
                 <th class="center">Earnings</th>
@@ -34,6 +38,7 @@
             else
                 echo "<span title='$description'>" . substr($description, 0, 40) . " ...</span>";
             echo "</td>";
+            echo "<td class='TablePadding center'>" . $cols["category"] . "</td>";
             echo "<td class='TablePadding center'>" . $cols["views"] . "</td>";
             echo "<td class='TablePadding center'>" . $cols["downloads"] . "</td>";
             echo "<td class='TablePadding center'>$" . number_format($cols["earnings"], 2) . "</td>";
