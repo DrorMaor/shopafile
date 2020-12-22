@@ -54,7 +54,7 @@ function GetUpdateData(FileID) {
             for (var i = 0; i < json.length; i++) {
                 var j = json[i];
                 $("#updateDescription").val(j.description);
-                $("#selCategories").val(j.category);
+                PopulateCategories(j.category);
                 $("#updatePrice").val(j.price);
                 $("#updateImageCurrent").attr("src", "data:image;base64," + j.image);
                 $("#updateFileName").html(j.FileName);
@@ -62,6 +62,28 @@ function GetUpdateData(FileID) {
                 $("#divLoader").hide();
                 ShowFileForm("Edit");
             }
+        }
+    });
+}
+
+function PopulateCategories(category) {
+    $.ajax({
+        type: "GET",
+        url: "categories.php",
+        data: $(this).serialize(),
+        dataType: 'text',
+        success: function(response) {
+            $("#selCategories").remove();
+            var select = $("<select id='selCategories'>");
+            $("<option />", {value: -1, text: "Select ..."}).appendTo(select);
+            var json = JSON.parse(response);
+            for (var i = 0; i < json.length; i++) {
+                var j = json[i];
+                var selected = (category == j.id);
+                $("<option />", {value: j.id, text: j.category, selected: selected}).appendTo(select);
+            }
+            //$("#selCategories").val(category);
+            select.appendTo($("#divCategories"));
         }
     });
 }

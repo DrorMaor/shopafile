@@ -9,16 +9,13 @@
         <tr>
             <td colspan="2">
                 Description <br>
-                <textarea rows="15" cols="35" id="updateDescription"></textarea>
+                <textarea rows="7" cols="35" id="updateDescription"></textarea>
             </td>
         </tr>
         <tr>
             <td>Category</td>
             <td>
-                <select id="selCategories">
-                    <option value='-1'>Select...
-                    <?php include("categories.php"); ?>
-                </select>
+                <div id="divCategories"></div>
             </td>
         </tr>
         <tr>

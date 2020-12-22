@@ -1,7 +1,7 @@
 <?php
     if (isset($_GET["id"])) {
         include("DBconn.php");
-        $sql = $conn->prepare("select * from files where id = '" . $_GET["id"] . "'");
+        $sql = $conn->prepare("select FileName, file from files where id = '" . $_GET["id"] . "'");
         $sql->execute();
         $rows = array();
         foreach($sql as $row => $cols) {

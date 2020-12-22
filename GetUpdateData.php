@@ -1,6 +1,8 @@
 <?php
     include ("DBconn.php");
-    $sql = $conn->prepare("select * from files where id = " . $_GET["FileID"]);
+    $select = "select id, FileName, price, description, image, category, views, downloads, earnings
+        from files where id = " . $_GET["FileID"];
+    $sql = $conn->prepare($select);
     $sql->execute();
     $rows = array();
     foreach($sql as $row => $cols)
