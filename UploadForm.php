@@ -14,6 +14,15 @@
             </td>
         </tr>
         <tr>
+            <td>Category</td>
+            <td>
+                <select id='selCategories'>
+                    <option value='-1'>Select...
+                    <?php include("categories.php"); ?>
+                </select>
+            </td>
+        </tr>
+        <tr>
             <td>Price</td>
             <td>
                 $ <input type="number" id="filePrice" onkeyup="ComputeReceive();" style="width:100px;">
