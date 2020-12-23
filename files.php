@@ -1,4 +1,4 @@
-<div id="files">
+<div id="divFiles">
     <h3>My Files</h3>
     <?php
         include ("DisplayErrors.php");
@@ -10,7 +10,7 @@
         $sql->execute();
         $rows = array();
         ?>
-        <a class="button greenBG" title="Upload a new file to sell" onclick="ShowFileForm('Upload');">Sell</a>
+        <a class="button greenBG" title="Upload a new file to sell" onclick="ReadyToUpload();">Sell</a>
         <br>
         <table id="tblFiles">
             <tr>

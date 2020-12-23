@@ -2,6 +2,21 @@ body {
     font-family: Poppins;
 }
 
+#divMessage {
+    display: none;
+    color: white;
+    font-weight: bold;
+    margin: 0;
+    padding: 10px;
+    border: 1px black solid;
+    border-radius: 5px;
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    -ms-transform: translate(-20%, -50%);
+    transform: translate(-20%, -50%);
+}
+
 .TopPadding {
     padding:25px;
 }
@@ -10,7 +25,7 @@ body {
     padding: 10px;
 }
 
-.FileForm {
+#FileForm {
     display: none;
     background-color: white;
     margin: 0;
