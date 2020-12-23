@@ -1,17 +1,49 @@
 
+$(document).ready(function(){
+    PopulateCategories();
+});
 
 // general File Form functions
 
-function HideFileForm(form) {
-    $("#overlay").hide();
-    $("#files").css('opacity', '1');
-    $("#" + form + "Form").hide();
+function ShowMsg(msg, BGcolor) {
+    $("#divMessage").html(msg).addClass(BGcolor).show().delay(2500).fadeOut(500);
 }
 
-function ShowFileForm(form) {
-    $("#overlay").show();
-    $("#files").css('opacity', '0.25');
-    $("#" + form + "Form").show();
+function AfterFileAction(msg, BGcolor) {
+    ShowMsg(msg, BGcolor);
+    FileFormDisplay(false);
+    $("#divFiles").load("files.php");
+}
+
+function CleanFileForm(type) {
+    if (type == 'upload') {
+        $("#fileDescription").val("");
+        $("#selCategories").val(-1);
+        $("#filePrice").val("");
+        $('#fileYWR').html("");
+        $("#divImageCurrent").hide();
+        $("#divFileName").hide();
+        $("#fileAllowed").val("");
+        $("#trLegallyAllowed").show();
+        $("#buttonUploadFile").show();
+        $("#buttonEditFile").hide();
+    }
+    else {
+        $("#divImageCurrent").show();
+        $("#divFileName").show();
+        $("#trLegallyAllowed").hide();
+        $("#buttonUploadFile").hide();
+        $("#buttonEditFile").show();
+    }
+    FileFormDisplay(true);
+}
+
+function FileFormDisplay(show) {
+    var display = (show) ? "block" : "none";
+    var opacity = (show) ? .25 : 1;
+    $("#overlay").css("display", display);
+    $("#divFiles").css('opacity', opacity);
+    $("#FileForm").css("display", display);
 }
 
 function ComputeReceive() {
@@ -19,7 +51,10 @@ function ComputeReceive() {
     var ywr = price - 0.99;
     if (price > 33)
         ywr = 0.97 * price;
-    $('#fileYWR').html('You will receive: $' + parseFloat(ywr).toFixed(2));
+    if (price > .99)
+        $('#fileYWR').html('You get $' + parseFloat(ywr).toFixed(2));
+    else
+        $('#fileYWR').html("");
 }
 
 ////////////////////////
@@ -34,7 +69,7 @@ function DeleteFile(FileID) {
             data: $(this).serialize(),
             dataType: 'text',
             success: function(response) {
-                alert ("This file has been deleted");
+                ShowMsg ("This file has been deleted", "greenBG");
             }
         });
     }
@@ -53,20 +88,21 @@ function GetUpdateData(FileID) {
             var json = JSON.parse(response);
             for (var i = 0; i < json.length; i++) {
                 var j = json[i];
-                $("#updateDescription").val(j.description);
-                PopulateCategories(j.category);
-                $("#updatePrice").val(j.price);
-                $("#updateImageCurrent").attr("src", "data:image;base64," + j.image);
-                $("#updateFileName").html(j.FileName);
-                $("#buttonEditFile").attr("FileID", j.id);
+                $("#fileDescription").val(j.description);
+                $("#selCategories").val(j.category);
+                $("#filePrice").val(j.price);
+                ComputeReceive();
+                $("#fileImageCurrent").attr("src", "data:image;base64," + j.image);
+                $("#fileFileName").html(j.FileName);
+                $("#buttonEditFile").attr("FileID", j.id).show();
                 $("#divLoader").hide();
-                ShowFileForm("Edit");
+                FileFormDisplay(true);
             }
         }
     });
 }
 
-function PopulateCategories(category) {
+function PopulateCategories() {
     $.ajax({
         type: "GET",
         url: "categories.php",
@@ -79,10 +115,8 @@ function PopulateCategories(category) {
             var json = JSON.parse(response);
             for (var i = 0; i < json.length; i++) {
                 var j = json[i];
-                var selected = (category == j.id);
-                $("<option />", {value: j.id, text: j.category, selected: selected}).appendTo(select);
+                $("<option />", {value: j.id, text: j.category}).appendTo(select);
             }
-            //$("#selCategories").val(category);
             select.appendTo($("#divCategories"));
         }
     });
@@ -91,11 +125,11 @@ function PopulateCategories(category) {
 function EditFile(FileID) {
     var formdata = new FormData();
     formdata.append('FileID', FileID);
-    formdata.append('description', $("#updateDescription").val());
+    formdata.append('description', $("#fileDescription").val());
     formdata.append('category', $("#selCategories").val());
-    formdata.append('price', $("#updatePrice").val());
-    formdata.append('image', $("#updateImage")[0].files[0]);
-    formdata.append('file', $("#updateFile")[0].files[0]);
+    formdata.append('price', $("#filePrice").val());
+    formdata.append('image', $("#fileImage")[0].files[0]);
+    formdata.append('file', $("#fileFile")[0].files[0]);
 
     $.ajax({
         url: "update.php",
@@ -105,11 +139,9 @@ function EditFile(FileID) {
         contentType: false,
         processData: false,
         success: function(response) {
-            alert ("Your changes have been saved");
+            AfterFileAction("Your changes have been saved", "greenBG");
         }
     });
-    HideFileForm("Edit");
-    $("#EditForm").load("#EditForm");
 }
 
 // upload file
@@ -118,6 +150,7 @@ function UploadFile () {
     if (ValidateFileForm()) {
         var formdata = new FormData();
         formdata.append('description', $("#fileDescription").val());
+        formdata.append('category', $("#selCategories").val());
         formdata.append('price', $("#filePrice").val());
         formdata.append('image', $("#fileImage")[0].files[0]);
         formdata.append('file', $("#fileFile")[0].files[0]);
@@ -130,10 +163,9 @@ function UploadFile () {
             contentType: false,
             processData: false,
             success: function(response) {
-                alert ("Your file has been uploaded")
+                AfterFileAction("Your file has been uploaded", "greenBG");
             }
         });
-        HideFileForm("Upload");
     }
 }
 
@@ -142,6 +174,10 @@ function ValidateFileForm() {
     var ErrMsg = "<br> <br>";
     if ($("#fileDescription").val() == "") {
         ErrMsg += "* You must include a description <br>";
+        valid = false;
+    }
+    if ($("#selCategories").val() == -1) {
+        ErrMsg += "* You must include a category <br>";
         valid = false;
     }
     if ($("#filePrice").val() == "" || $("#filePrice").val() < 0) {
