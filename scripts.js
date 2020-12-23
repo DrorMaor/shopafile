@@ -6,7 +6,7 @@ $(document).ready(function(){
 // general File Form functions
 
 function ShowMsg(msg, BGcolor) {
-    $("#divMessage").html(msg).addClass(BGcolor).show().delay(2500).fadeOut(500);
+    $("#divMessage").html(msg).removeClass().addClass(BGcolor).show().delay(3000).fadeOut(750);
 }
 
 function AfterFileAction(msg, BGcolor) {
@@ -17,6 +17,7 @@ function AfterFileAction(msg, BGcolor) {
 
 function CleanFileForm(type) {
     if (type == 'upload') {
+        $("#FileFormHeading").html("Upload File");
         $("#fileDescription").val("");
         $("#selCategories").val(-1);
         $("#filePrice").val("");
@@ -29,6 +30,7 @@ function CleanFileForm(type) {
         $("#buttonEditFile").hide();
     }
     else {
+        $("#FileFormHeading").html("Edit File");
         $("#divImageCurrent").show();
         $("#divFileName").show();
         $("#trLegallyAllowed").hide();
@@ -69,7 +71,7 @@ function DeleteFile(FileID) {
             data: $(this).serialize(),
             dataType: 'text',
             success: function(response) {
-                ShowMsg ("This file has been deleted", "greenBG");
+                ShowMsg ("This file has been deleted", "redBG");
             }
         });
     }
@@ -78,6 +80,7 @@ function DeleteFile(FileID) {
 // update file
 
 function GetUpdateData(FileID) {
+    CleanFileForm('edit');
     $("#divLoader").show();
     $.ajax({
         type: "GET",
@@ -94,7 +97,7 @@ function GetUpdateData(FileID) {
                 ComputeReceive();
                 $("#fileImageCurrent").attr("src", "data:image;base64," + j.image);
                 $("#fileFileName").html(j.FileName);
-                $("#buttonEditFile").attr("FileID", j.id).show();
+                $("#buttonEditFile").attr("FileID", j.id);
                 $("#divLoader").hide();
                 FileFormDisplay(true);
             }
@@ -139,14 +142,14 @@ function EditFile(FileID) {
         contentType: false,
         processData: false,
         success: function(response) {
-            AfterFileAction("Your changes have been saved", "greenBG");
+            AfterFileAction("Your changes have been saved", "orangeBG");
         }
     });
 }
 
 // upload file
 
-function UploadFile () {
+function UploadFile() {
     if (ValidateFileForm()) {
         var formdata = new FormData();
         formdata.append('description', $("#fileDescription").val());

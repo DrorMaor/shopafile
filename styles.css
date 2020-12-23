@@ -6,13 +6,14 @@ body {
     display: none;
     color: white;
     font-weight: bold;
+    text-align: center;
     margin: 0;
-    padding: 10px;
+    padding: 15px;
     border: 1px black solid;
     border-radius: 5px;
     position: absolute;
     top: 20%;
-    left: 50%;
+    left: 45%;
     -ms-transform: translate(-20%, -50%);
     transform: translate(-20%, -50%);
 }
@@ -97,6 +98,10 @@ body {
 
 .orangeBG {
     background-color: #EFB700;
+}
+
+.redBG {
+    background-color: #B81D13;
 }
 
 .purple {

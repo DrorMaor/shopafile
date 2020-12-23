@@ -10,7 +10,7 @@
         $sql->execute();
         $rows = array();
         ?>
-        <a class="button greenBG" title="Upload a new file to sell" onclick="ReadyToUpload();">Sell</a>
+        <a class="button greenBG" title="Upload a new file to sell" onclick="CleanFileForm('upload');">Sell</a>
         <br>
         <table id="tblFiles">
             <tr>
@@ -44,7 +44,8 @@
             echo "<td class='TablePadding center'>$" . number_format($cols["earnings"], 2) . "</td>";
             echo "<td class='TablePadding'>";
             $title = "Click to copy the purchase link. Share it with your friends so they can buy your file";
-            echo "<a class='RepeatButton green' title='". $title . "' onclick='CopyLink(\"" . $cols["UUID"] . "\");'>Link</a> &nbsp;";
+            echo "<a class='RepeatButton green' title='". $title . "' onclick='CopyLink(\"" . $cols["UUID"] . "\"); ";
+            echo "ShowMsg(\"The purchase link to this file<br>has been copied to the clipboard\", \"greenBG\");'>Link</a> &nbsp;";
             echo "<a class='RepeatButton orange' onclick='GetUpdateData(" . $id . ");'>Edit</a> &nbsp;";
             echo "<a class='RepeatButton red' onclick='DeleteFile(" . $id . ");'>Delete</a> </td> </tr>";
         }
