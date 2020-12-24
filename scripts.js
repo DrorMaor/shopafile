@@ -3,16 +3,8 @@ $(document).ready(function(){
     PopulateCategories();
 });
 
-// general File Form functions
-
 function ShowMsg(msg, BGcolor) {
     $("#divMessage").html(msg).removeClass().addClass(BGcolor).show().delay(3000).fadeOut(750);
-}
-
-function AfterFileAction(msg, BGcolor) {
-    ShowMsg(msg, BGcolor);
-    FileFormDisplay(false);
-    $("#divFiles").load("files.php");
 }
 
 function CleanFileForm(type) {
@@ -37,6 +29,7 @@ function CleanFileForm(type) {
         $("#buttonUploadFile").hide();
         $("#buttonEditFile").show();
     }
+
     FileFormDisplay(true);
 }
 
@@ -59,10 +52,6 @@ function ComputeReceive() {
         $('#fileYWR').html("");
 }
 
-////////////////////////
-
-// delete file
-
 function DeleteFile(FileID) {
     if (confirm ("Are you sure you want to delete this file?")) {
         $.ajax({
@@ -76,8 +65,6 @@ function DeleteFile(FileID) {
         });
     }
 }
-
-// update file
 
 function GetUpdateData(FileID) {
     CleanFileForm('edit');
@@ -125,48 +112,41 @@ function PopulateCategories() {
     });
 }
 
-function EditFile(FileID) {
+function SaveFile(FileID) {
+    var valid = true;
+    var url = "";
     var formdata = new FormData();
-    formdata.append('FileID', FileID);
-    formdata.append('description', $("#fileDescription").val());
-    formdata.append('category', $("#selCategories").val());
-    formdata.append('price', $("#filePrice").val());
-    formdata.append('image', $("#fileImage")[0].files[0]);
-    formdata.append('file', $("#fileFile")[0].files[0]);
-
-    $.ajax({
-        url: "update.php",
-        method: "POST",
-        data : formdata,
-        cache: false,
-        contentType: false,
-        processData: false,
-        success: function(response) {
-            AfterFileAction("Your changes have been saved", "orangeBG");
-        }
-    });
-}
-
-// upload file
-
-function UploadFile() {
-    if (ValidateFileForm()) {
-        var formdata = new FormData();
+    var msg = "";
+    var BGcolor = "";
+    if (FileID == -1) {
+        valid = ValidateFileForm();
+        url = "upload.php";
+        msg = "Your file has been uploaded";
+        BGcolor = "greenBG";
+    }
+    else {
+        url = "update.php";
+        formdata.append('FileID', FileID);
+        msg = "Your changes have been saved";
+        BGcolor = "orangeBG";
+    }
+    if (valid) {
         formdata.append('description', $("#fileDescription").val());
         formdata.append('category', $("#selCategories").val());
         formdata.append('price', $("#filePrice").val());
         formdata.append('image', $("#fileImage")[0].files[0]);
         formdata.append('file', $("#fileFile")[0].files[0]);
-
         $.ajax({
-            url: "upload.php",
+            url: url,
             method: "POST",
             data : formdata,
             cache: false,
             contentType: false,
             processData: false,
             success: function(response) {
-                AfterFileAction("Your file has been uploaded", "greenBG");
+                ShowMsg(msg, BGcolor);
+                FileFormDisplay(false);
+                $("#divFiles").load("files.php");
             }
         });
     }
@@ -176,38 +156,55 @@ function ValidateFileForm() {
     var valid = true;
     var ErrMsg = "<br> <br>";
     if ($("#fileDescription").val() == "") {
-        ErrMsg += "* You must include a description <br>";
+        $("#tdDescription").addClass("yellowBG");
         valid = false;
     }
+    else
+        $("#tdDescription").removeClass("yellowBG");
+
     if ($("#selCategories").val() == -1) {
-        ErrMsg += "* You must include a category <br>";
+        $("#tdCategory").addClass("yellowBG");
         valid = false;
     }
+    else
+        $("#tdCategory").removeClass("yellowBG");
+
     if ($("#filePrice").val() == "" || $("#filePrice").val() < 0) {
-        ErrMsg += "* You haven't listed the price <br>";
+        $("#tdPrice").addClass("yellowBG");
         valid = false;
     }
+    else
+        $("#tdPrice").removeClass("yellowBG");
+
     if ($("#fileImage").val() == "") {
-        ErrMsg += "* You must upload an image <br>";
+        $("#tdImage").addClass("yellowBG");
         valid = false;
     }
+    else
+        $("#tdImage").removeClass("yellowBG");
+
     if ($("#fileFile").val() == "") {
-        ErrMsg += "* You forgot to include the file <br>";
+        $("#tdFile").addClass("yellowBG");
         valid = false;
     }
+    else
+        $("#tdFile").removeClass("yellowBG");
+
     if (!$('#fileAllowed').is(":checked")) {
-        ErrMsg += "* You must be legally allowed to sell this file <br>";
+        $("#tdAllowed").addClass("yellowBG");
         valid = false;
     }
+    else
+        $("#tdAllowed").removeClass("yellowBG");
 
     if (!valid)
-        $("#uploadErrorMessages").html(ErrMsg).show();
+        ShowMsg("Please correct the highlighted fields", "redBG");
     return valid;
 }
 
 function CopyLink (UUID) {
     const ta = document.createElement('textarea');
-    ta.value = "https://www.shopafile.com/buy.php?b=" + UUID;
+    ta.value = "https://www.shopafile.com/buy.php?l=" + UUID;
     document.body.appendChild(ta);
     ta.select();
     document.execCommand('copy');

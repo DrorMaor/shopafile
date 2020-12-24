@@ -3,6 +3,7 @@ body {
 }
 
 #divMessage {
+    z-index: 15;
     display: none;
     color: white;
     font-weight: bold;
@@ -104,8 +105,8 @@ body {
     background-color: #B81D13;
 }
 
-.purple {
-    color: #8b2673;
+.yellowBG {
+    background-color: #f2ef99;
 }
 
 .left {
