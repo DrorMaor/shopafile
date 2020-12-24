@@ -7,19 +7,23 @@
     <br>
     <table>
         <tr>
-            <td colspan="2" id="tdDescription">
-                Description <br>
+            <td colspan="2">
+                <span id="spnDescription">Description</span> <br>
                 <textarea rows="7" cols="35" id="fileDescription"></textarea>
             </td>
         </tr>
         <tr>
-            <td id="tdCategory">Category</td>
             <td>
-                <div id="divCategories"></div>
+                <span id="spnCategory">Category</span>
+            </td>
+            <td>
+                <div id="divFileCategories"></div>
             </td>
         </tr>
         <tr>
-            <td id="tdPrice">Price</td>
+            <td>
+                <span id="spnPrice">Price</span>
+            </td>
             <td>
                 $ <input type="number" id="filePrice" onchange="ComputeReceive();" onkeyup="ComputeReceive();" style="width:75px;">
                 &nbsp;
@@ -27,17 +31,21 @@
             </td>
         </tr>
         <tr>
-            <td id="tdImage">Image</td>
+            <td>
+                <span id="spnImage">Image</span>
+            </td>
             <td>
                 <div id="divImageCurrent">
                     <img id="fileImageCurrent" style="width:100px;">
                     <br>
                 </div>
-                <input type="file" id="fileImage">
+                <input type="file" id="fileImage" accept=".gif, .jpg, .jpeg, .png">
             </td>
         </tr>
         <tr>
-            <td id="tdFile">The File</td>
+            <td>
+                <span id="spnFile">The File</span>
+            </td>
             <td>
                 <div id="divFileName">
                     <span id="fileFileName"></span>
@@ -46,15 +54,15 @@
                 <input type="file" id="fileFile">
             </td>
         </tr>
-        <tr id="trLegallyAllowed" style="display:none;">
+        <tr>
             <td colspan="2" id="tdAllowed">
-                <input type="checkbox" id="fileAllowed"> I am legally allowed to sell this file
+                <input type="checkbox" id="fileAllowed">I am legally allowed to sell this file
             </td>
         </tr>
         <tr>
             <td colspan="2" style="text-align:center;">
                 <br>
-                <a class="button orangeBG" FileID="" id="buttonEditFile" style="display:none;" onclick="SaveFile($('#buttonEditFile').attr('FileID'));">Edit File</a>
+                <a class="button orangeBG" FileID="" id="buttonEditFile" style="display:none;" onclick="SaveFile($('#buttonEditFile').prop('FileID'));">Edit File</a>
                 <a class="button greenBG" id="buttonUploadFile" onclick="SaveFile(-1);" style="display:none;">Upload File</a>
             </td>
         </tr>

@@ -4,7 +4,7 @@ $(document).ready(function(){
 });
 
 function ShowMsg(msg, BGcolor) {
-    $("#divMessage").html(msg).removeClass().addClass(BGcolor).show().delay(3000).fadeOut(750);
+    $("#divMessage").html(msg).removeClass().addClass(BGcolor).show().delay(2500).fadeOut(750);
 }
 
 function CleanFileForm(type) {
@@ -14,10 +14,10 @@ function CleanFileForm(type) {
         $("#selCategories").val(-1);
         $("#filePrice").val("");
         $('#fileYWR').html("");
+        $("#fileImageCurrent").prop('src', "data:image;base64,");
         $("#divImageCurrent").hide();
         $("#divFileName").hide();
-        $("#fileAllowed").val("");
-        $("#trLegallyAllowed").show();
+        $("#fileAllowed").prop("checked", false);
         $("#buttonUploadFile").show();
         $("#buttonEditFile").hide();
     }
@@ -25,10 +25,17 @@ function CleanFileForm(type) {
         $("#FileFormHeading").html("Edit File");
         $("#divImageCurrent").show();
         $("#divFileName").show();
-        $("#trLegallyAllowed").hide();
         $("#buttonUploadFile").hide();
         $("#buttonEditFile").show();
     }
+
+    // remove yeloow highlights, if they remained
+    $("#spnDescription").removeClass("yellowBG");
+    $("#spnCategory").removeClass("yellowBG");
+    $("#spnPrice").removeClass("yellowBG");
+    $("#spnImage").removeClass("yellowBG");
+    $("#spnFile").removeClass("yellowBG");
+    $("#tdAllowed").removeClass("yellowBG");
 
     FileFormDisplay(true);
 }
@@ -61,6 +68,7 @@ function DeleteFile(FileID) {
             dataType: 'text',
             success: function(response) {
                 ShowMsg ("This file has been deleted", "redBG");
+                $("#divFiles").load("files.php");
             }
         });
     }
@@ -82,9 +90,9 @@ function GetUpdateData(FileID) {
                 $("#selCategories").val(j.category);
                 $("#filePrice").val(j.price);
                 ComputeReceive();
-                $("#fileImageCurrent").attr("src", "data:image;base64," + j.image);
+                $("#fileImageCurrent").prop("src", "data:image;base64," + j.image);
                 $("#fileFileName").html(j.FileName);
-                $("#buttonEditFile").attr("FileID", j.id);
+                $("#buttonEditFile").prop("FileID", j.id);
                 $("#divLoader").hide();
                 FileFormDisplay(true);
             }
@@ -107,30 +115,29 @@ function PopulateCategories() {
                 var j = json[i];
                 $("<option />", {value: j.id, text: j.category}).appendTo(select);
             }
-            select.appendTo($("#divCategories"));
+            select.appendTo($("#divFileCategories"));
+            select.appendTo($("#divSearchCategories"));
         }
     });
 }
 
 function SaveFile(FileID) {
-    var valid = true;
-    var url = "";
-    var formdata = new FormData();
-    var msg = "";
-    var BGcolor = "";
-    if (FileID == -1) {
-        valid = ValidateFileForm();
-        url = "upload.php";
-        msg = "Your file has been uploaded";
-        BGcolor = "greenBG";
-    }
-    else {
-        url = "update.php";
-        formdata.append('FileID', FileID);
-        msg = "Your changes have been saved";
-        BGcolor = "orangeBG";
-    }
-    if (valid) {
+    if (ValidateFileForm()) {
+        var url = "";
+        var formdata = new FormData();
+        var msg = "";
+        var BGcolor = "";
+        if (FileID == -1) {
+            url = "upload.php";
+            msg = "Your file has been uploaded";
+            BGcolor = "greenBG";
+        }
+        else {
+            url = "update.php";
+            formdata.append('FileID', FileID);
+            msg = "Your changes have been saved";
+            BGcolor = "orangeBG";
+        }
         formdata.append('description', $("#fileDescription").val());
         formdata.append('category', $("#selCategories").val());
         formdata.append('price', $("#filePrice").val());
@@ -139,7 +146,7 @@ function SaveFile(FileID) {
         $.ajax({
             url: url,
             method: "POST",
-            data : formdata,
+            data: formdata,
             cache: false,
             contentType: false,
             processData: false,
@@ -156,39 +163,39 @@ function ValidateFileForm() {
     var valid = true;
     var ErrMsg = "<br> <br>";
     if ($("#fileDescription").val() == "") {
-        $("#tdDescription").addClass("yellowBG");
+        $("#spnDescription").addClass("yellowBG");
         valid = false;
     }
     else
-        $("#tdDescription").removeClass("yellowBG");
+        $("#spnDescription").removeClass("yellowBG");
 
     if ($("#selCategories").val() == -1) {
-        $("#tdCategory").addClass("yellowBG");
+        $("#spnCategory").addClass("yellowBG");
         valid = false;
     }
     else
-        $("#tdCategory").removeClass("yellowBG");
+        $("#spnCategory").removeClass("yellowBG");
 
-    if ($("#filePrice").val() == "" || $("#filePrice").val() < 0) {
-        $("#tdPrice").addClass("yellowBG");
+    if ($("#filePrice").val() == "" || $("#filePrice").val() < 1) {
+        $("#spnPrice").addClass("yellowBG");
         valid = false;
     }
     else
-        $("#tdPrice").removeClass("yellowBG");
+        $("#spnPrice").removeClass("yellowBG");
 
-    if ($("#fileImage").val() == "") {
-        $("#tdImage").addClass("yellowBG");
+    if ($("#fileImage").val() == "" && $("#fileImageCurrent").prop('src') == "data:image;base64,") {
+        $("#spnImage").addClass("yellowBG");
         valid = false;
     }
     else
-        $("#tdImage").removeClass("yellowBG");
+        $("#spnImage").removeClass("yellowBG");
 
-    if ($("#fileFile").val() == "") {
-        $("#tdFile").addClass("yellowBG");
+    if ($("#fileFile").val() == "" && $("#fileFileName").html() == "") {
+        $("#spnFile").addClass("yellowBG");
         valid = false;
     }
     else
-        $("#tdFile").removeClass("yellowBG");
+        $("#spnFile").removeClass("yellowBG");
 
     if (!$('#fileAllowed').is(":checked")) {
         $("#tdAllowed").addClass("yellowBG");
@@ -209,4 +216,74 @@ function CopyLink (UUID) {
     ta.select();
     document.execCommand('copy');
     document.body.removeChild(ta);
+}
+
+function ShowFiles(type) {
+    var url = (type == 'files') ? "files.php" : "search.php?kw=" + $("#SearchKeywords").val() + "&cat=" + $("#selCategories").val();
+    $.ajax({
+        type: "GET",
+        url: url,
+        data: $(this).serialize(),
+        dataType: 'text',
+        success: function(response) {
+            BuildTable(type, JSON.parse(response));
+        }
+    });
+}
+
+function BuildTable(type, json) {
+    var table = "<table id='tblFiles'>";
+    table += '<tr>';
+    table += '    <th class="left">File Name</th>';
+    table += '    <th class="left">Description</th>';
+    table += '    <th class="center">Category</th>';
+    table += '    <th class="center">Price</th>';
+    if (type == 'files') {
+        table += '    <th class="center">Views</th>';
+        table += '    <th class="center">Downloads</th>';
+        table += '    <th class="center">Earnings</th>';
+    }
+    table += '</tr>';
+
+    for (var i = 0; i < json.length; i++) {
+        var j = json[i];
+        if (type == 'files') {
+            var FileID = j.id;
+            var onmouseout  = "$('#Image" + FileID + "').hide();";
+            var onmouseover = "$('#Image" + FileID + "').show();";
+        }
+
+        table += "<tr>";
+        if (type == 'files')
+            table += "<td><span onmouseout='" + onmouseout + "' onmouseover='" + onmouseover + "'>" + j.FileName + "</span></td>";
+        else
+            table += "<td>" + j.FileName + "</td>";
+        table += "<span class='FileImage' id='Image" + FileID + "'>";
+        table += "  <img style='width:100px;' src='data:image;base64," + j.image + "'/></span>";
+        var desc = j.description;
+        if (desc.length <= 40)
+            table += "<td>" + desc + "</td>";
+        else
+            table += "<td><span title='" + desc + "'>" + desc.substring(0, 40) + "<span></td>";
+        table += "<td>" + j.category + "</td>";
+        table += "<td>$" + parseFloat(j.price).toFixed(2) + "</td>";
+        if (type == 'files') {
+            table += "<td>" + j.views + "</td>";
+            table += "<td>" + j.downloads + "</td>";
+            table += "<td>$" + parseFloat(j.earnings).toFixed(2) + "</td>";
+            // right side tool links
+            var title = "Click to copy the purchase link. Share it with your friends so they can buy your file";
+            var onclick = "CopyLink('" + j.UUID + "'); ShowMsg('The purchase link to this file has been copied to the clipboard', 'greenBG');";
+            table += "<td> <a class='RepeatButton green' title='" + title + "' onclick=\"" + onclick + "\">Link</a> &nbsp;";
+            table += "<a class='RepeatButton orange' onclick='GetUpdateData(" + FileID + ");'>Edit</a> &nbsp;";
+            table += "<a class='RepeatButton red' onclick='DeleteFile(" + FileID + ");'>Delete</a> </td>";
+        }
+        else {
+            table += "<td><a class='RepeatButton green' href='https://www.shopafile.com/buy.php?l=" + j.UUID + "'>Buy File</a></td>";
+        }
+        table += "</tr>";
+    }
+    table += "</table>";
+    $("#divFiles").html(table).show();
+    $("#divSearch").hide();
 }

@@ -28,11 +28,11 @@
     <body>
         <?php
             include("top.php");
-            include("files.php");
             include("FileForm.php");
         ?>
         <div id="overlay"></div>
         <div id="divLoader"></div>
         <div id="divMessage"></div>
+        <div id="divFiles"></div>
     </body>
 </html>

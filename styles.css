@@ -19,12 +19,24 @@ body {
     transform: translate(-20%, -50%);
 }
 
+#divSearch {
+    display: none;
+    border: 1px black solid;
+    border-radius: 5px;
+    padding: 10px;
+}
+
 .TopPadding {
     padding:25px;
+    vertical-align: top;
 }
 
 .TablePadding {
     padding: 10px;
+}
+
+.SearchTablePadding {
+    padding: 5px;
 }
 
 #FileForm {
