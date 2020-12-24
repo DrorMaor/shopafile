@@ -7,19 +7,19 @@
     <br>
     <table>
         <tr>
-            <td colspan="2">
+            <td colspan="2" id="tdDescription">
                 Description <br>
                 <textarea rows="7" cols="35" id="fileDescription"></textarea>
             </td>
         </tr>
         <tr>
-            <td>Category</td>
+            <td id="tdCategory">Category</td>
             <td>
                 <div id="divCategories"></div>
             </td>
         </tr>
         <tr>
-            <td>Price</td>
+            <td id="tdPrice">Price</td>
             <td>
                 $ <input type="number" id="filePrice" onchange="ComputeReceive();" onkeyup="ComputeReceive();" style="width:75px;">
                 &nbsp;
@@ -27,7 +27,7 @@
             </td>
         </tr>
         <tr>
-            <td>Image</td>
+            <td id="tdImage">Image</td>
             <td>
                 <div id="divImageCurrent">
                     <img id="fileImageCurrent" style="width:100px;">
@@ -37,7 +37,7 @@
             </td>
         </tr>
         <tr>
-            <td>The File</td>
+            <td id="tdFile">The File</td>
             <td>
                 <div id="divFileName">
                     <span id="fileFileName"></span>
@@ -47,15 +47,15 @@
             </td>
         </tr>
         <tr id="trLegallyAllowed" style="display:none;">
-            <td colspan="2">
+            <td colspan="2" id="tdAllowed">
                 <input type="checkbox" id="fileAllowed"> I am legally allowed to sell this file
             </td>
         </tr>
         <tr>
             <td colspan="2" style="text-align:center;">
                 <br>
-                <a class="button orangeBG" FileID="" id="buttonEditFile" style="display:none;" onclick="EditFile($('#buttonEditFile').attr('FileID'));">Edit File</a>
-                <a class="button greenBG" id="buttonUploadFile" onclick="UploadFile();" style="display:none;">Upload File</a>
+                <a class="button orangeBG" FileID="" id="buttonEditFile" style="display:none;" onclick="SaveFile($('#buttonEditFile').attr('FileID'));">Edit File</a>
+                <a class="button greenBG" id="buttonUploadFile" onclick="SaveFile(-1);" style="display:none;">Upload File</a>
             </td>
         </tr>
     </table>
