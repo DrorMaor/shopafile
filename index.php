@@ -29,10 +29,11 @@
         <?php
             include("top.php");
             include("FileForm.php");
+            include("LoginForm.php");
         ?>
         <div id="overlay"></div>
         <div id="divLoader"></div>
         <div id="divMessage"></div>
-        <div id="divFiles"></div>
+        <div id="dashboard"></div>
     </body>
 </html>

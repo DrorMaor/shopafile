@@ -1,13 +1,13 @@
-
-    <table>
-        <tr>
-            <td class="TopPadding"><img src="logo.png" style="width:200px;"></td>
-            <td class="TopPadding">FAQ</td>
-            <td class="TopPadding">It's FREE</td>
-            <td class="TopPadding" onclick="ShowFiles('files');">Login</td>
-            <td class="TopPadding">
-                <div onclick="$('#divSearch').show();">Search</div>
-                <?php include("SearchDiv.php"); ?>
-            </td>
-        </tr>
-    </table>
+<table>
+    <tr>
+        <td><img src="logo.png" style="width:200px;"></td>
+        <td class="TopPadding"><span class="MenuItem">FAQ</span></td>
+        <td class="TopPadding"><span class="MenuItem">It's FREE</span></td>
+        <td class="TopPadding" id="tdLogin" onclick="LoginScreenDisplay(true);"><span class="MenuItem" id="menuLogin">Login</span></td>
+        <td class="TopPadding" id="tdLogoff" style="display:none;" onclick="Logoff();"><span class="MenuItem" id="menuLogoff">Logoff</span></td>
+        <td class="TopPadding">
+            <input type="text" id="SearchKeywords" placeholder="Search for anything digital">
+            <a onclick="ShowFiles('search');" id="SearchGlyph">&#128269;</a>
+        </td>
+    </tr>
+</table>

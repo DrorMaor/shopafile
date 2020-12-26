@@ -1,5 +1,5 @@
 
-<div id="FileForm">
+<div id="FileForm" class="PopupForm">
     <div style="width:100%">
         <h3 style="float: left;" id="FileFormHeading"></h3>
         <img src="close.png" style="float: right; padding-top:16px;" class="close" onclick="FileFormDisplay(false);"></img>

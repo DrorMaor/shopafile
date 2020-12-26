@@ -2,6 +2,46 @@ body {
     font-family: Poppins;
 }
 
+#menuLogoff {
+    color: #B81D13;
+    border: 1px #B81D13 solid;
+    background-color: white;
+}
+
+#SearchKeywords {
+    height: 40px;
+    width: 350px;
+    background-color: #f5fbfc;
+    border: 2px solid #a2edfa;
+    border-radius: 13px;
+}
+
+#SearchGlyph {
+    font-size: 25px;
+    cursor: pointer;
+}
+#SearchGlyph:hover {
+    opacity: .75;
+}
+
+.TopPadding {
+    padding: 10px;
+}
+
+.MenuItem {
+    font-size: 18px;
+    font-weight: bold;
+    border: 1px black solid;
+    border-radius: 5px;
+    vertical-align: center;
+    padding: 7px;
+    cursor: pointer;
+    background-color: #F5F5F5;
+}
+.MenuItem:hover {
+    opacity: .75;
+}
+
 #divMessage {
     z-index: 15;
     display: none;
@@ -26,11 +66,6 @@ body {
     padding: 10px;
 }
 
-.TopPadding {
-    padding:25px;
-    vertical-align: top;
-}
-
 .TablePadding {
     padding: 10px;
 }
@@ -39,7 +74,7 @@ body {
     padding: 5px;
 }
 
-#FileForm {
+.PopupForm {
     display: none;
     background-color: white;
     margin: 0;
