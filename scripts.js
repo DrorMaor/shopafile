@@ -7,6 +7,14 @@ function ShowMsg(msg, BGcolor) {
     $("#divMessage").html(msg).removeClass().addClass(BGcolor).show().delay(2500).fadeOut(750);
 }
 
+function LoginScreenDisplay(show) {
+    var display = (show) ? "block" : "none";
+    var opacity = (show) ? .25 : 1;
+    $("#overlay").css("display", display);
+    $(".OtherDiv").css('opacity', opacity);
+    $("#divLoginForm").css("display", display);
+}
+
 function CleanFileForm(type) {
     if (type == 'upload') {
         $("#FileFormHeading").html("Upload File");
@@ -44,7 +52,7 @@ function FileFormDisplay(show) {
     var display = (show) ? "block" : "none";
     var opacity = (show) ? .25 : 1;
     $("#overlay").css("display", display);
-    $("#divFiles").css('opacity', opacity);
+    $("#dashboard").css('opacity', opacity);
     $("#FileForm").css("display", display);
 }
 
@@ -68,7 +76,7 @@ function DeleteFile(FileID) {
             dataType: 'text',
             success: function(response) {
                 ShowMsg ("This file has been deleted", "redBG");
-                $("#divFiles").load("files.php");
+                $("#dashboard").load("files.php");
             }
         });
     }
@@ -153,10 +161,42 @@ function SaveFile(FileID) {
             success: function(response) {
                 ShowMsg(msg, BGcolor);
                 FileFormDisplay(false);
-                $("#divFiles").load("files.php");
+                $("#dashboard").load("files.php");
             }
         });
     }
+}
+
+function Login() {
+    var formdata = new FormData();
+    formdata.append('user', $("#LoginUser").val());
+    formdata.append('pwd', $("#LoginPwd").val());
+    $.ajax({
+        url: "login.php",
+        method: "POST",
+        data: formdata,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function(response) {
+            if (response != "") {
+                document.cookie = "user=" + response;
+                LoginScreenDisplay(false);
+                ShowFiles("files");
+                $("#tdLogin").hide();
+                $("#tdLogoff").show();
+            }
+            else
+                ShowMsg("There was an error in the login", "redBG");
+        }
+    });
+}
+
+function Logoff () {
+    document.cookie = "user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    $("#tdLogin").show();
+    $("#tdLogoff").hide();
+    $("#dashboard").empty();
 }
 
 function ValidateFileForm() {
@@ -249,8 +289,8 @@ function BuildTable(type, json) {
         var j = json[i];
         if (type == 'files') {
             var FileID = j.id;
-            var onmouseout  = "$('#Image" + FileID + "').hide();";
-            var onmouseover = "$('#Image" + FileID + "').show();";
+            var onmouseout  = "$(\"#Image" + FileID + "\").hide();";
+            var onmouseover = "$(\"#Image" + FileID + "\").show();";
         }
 
         table += "<tr>";
@@ -284,6 +324,6 @@ function BuildTable(type, json) {
         table += "</tr>";
     }
     table += "</table>";
-    $("#divFiles").html(table).show();
+    $("#dashboard").html(table).show();
     $("#divSearch").hide();
 }
