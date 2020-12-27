@@ -7,14 +7,6 @@ function ShowMsg(msg, BGcolor) {
     $("#divMessage").html(msg).removeClass().addClass(BGcolor).show().delay(2500).fadeOut(750);
 }
 
-function LoginScreenDisplay(show) {
-    var display = (show) ? "block" : "none";
-    var opacity = (show) ? .25 : 1;
-    $("#overlay").css("display", display);
-    $(".OtherDiv").css('opacity', opacity);
-    $("#divLoginForm").css("display", display);
-}
-
 function CleanFileForm(type) {
     if (type == 'upload') {
         $("#FileFormHeading").html("Upload File");
@@ -45,15 +37,15 @@ function CleanFileForm(type) {
     $("#spnFile").removeClass("yellowBG");
     $("#tdAllowed").removeClass("yellowBG");
 
-    FileFormDisplay(true);
+    PopupFormDisplay(true, "FileForm");
 }
 
-function FileFormDisplay(show) {
+function PopupFormDisplay(show, form) {
     var display = (show) ? "block" : "none";
     var opacity = (show) ? .25 : 1;
     $("#overlay").css("display", display);
     $("#dashboard").css('opacity', opacity);
-    $("#FileForm").css("display", display);
+    $("#" + form).css("display", display);
 }
 
 function ComputeReceive() {
@@ -102,7 +94,7 @@ function GetUpdateData(FileID) {
                 $("#fileFileName").html(j.FileName);
                 $("#buttonEditFile").prop("FileID", j.id);
                 $("#divLoader").hide();
-                FileFormDisplay(true);
+                PopupFormDisplay(true, "FileForm");
             }
         }
     });
@@ -160,7 +152,7 @@ function SaveFile(FileID) {
             processData: false,
             success: function(response) {
                 ShowMsg(msg, BGcolor);
-                FileFormDisplay(false);
+                PopupFormDisplay(false, "FileForm");
                 $("#dashboard").load("files.php");
             }
         });
@@ -181,8 +173,8 @@ function Login() {
         success: function(response) {
             if (response != "") {
                 document.cookie = "user=" + response;
-                LoginScreenDisplay(false);
-                ShowFiles("files");
+                PopupFormDisplay(false, "LoginForm");
+                DoDashboard();
                 $("#tdLogin").hide();
                 $("#tdLogoff").show();
             }
@@ -258,6 +250,7 @@ function CopyLink (UUID) {
     document.body.removeChild(ta);
 }
 
+/*
 function ShowFiles(type) {
     var url = (type == 'files') ? "files.php" : "search.php?kw=" + $("#SearchKeywords").val() + "&cat=" + $("#selCategories").val();
     $.ajax({
@@ -270,34 +263,62 @@ function ShowFiles(type) {
         }
     });
 }
+*/
 
-function BuildTable(type, json) {
-    var table = "<table id='tblFiles'>";
+function DoDashboard() {
+    var div = "";
+    // get acct info
+    $.ajax({
+        type: "GET",
+        url: "account.php",
+        data: $(this).serialize(),
+        dataType: 'text',
+        success: function(response) {
+            var j = JSON.parse(response)[0];
+            $("#acctEmail").val(j.email);
+            $("#acctPayPal").val(j.PayPal);
+            var onclick = "PopupFormDisplay(true, 'acctDivEmail')";
+            div += "<a onlick='" + onclick + "'>email</a> ";
+            div += "<a onlick='PopupFormDisplay(true, \"acctDivPwd\");'>pwd</a> ";
+            div += "<a onlick='PopupFormDisplay(true, \"acctDivPayPal\");'>PP</a>";
+        }
+    });
+
+    // get files
+    $.ajax({
+        type: "GET",
+        url: "files.php",
+        data: $(this).serialize(),
+        dataType: 'text',
+        success: function(response) {
+            div += MyFilesTable(JSON.parse(response));
+            $("#dashboard").html(div).show();
+        }
+    });
+
+}
+
+function MyFilesTable(json) {
+    var table = "<h3>My Files</h3>";
+    table += "<table id='tblFiles'>";
     table += '<tr>';
     table += '    <th class="left">File Name</th>';
     table += '    <th class="left">Description</th>';
     table += '    <th class="center">Category</th>';
     table += '    <th class="center">Price</th>';
-    if (type == 'files') {
-        table += '    <th class="center">Views</th>';
-        table += '    <th class="center">Downloads</th>';
-        table += '    <th class="center">Earnings</th>';
-    }
+    table += '    <th class="center">Views</th>';
+    table += '    <th class="center">Downloads</th>';
+    table += '    <th class="center">Earnings</th>';
     table += '</tr>';
 
     for (var i = 0; i < json.length; i++) {
         var j = json[i];
-        if (type == 'files') {
-            var FileID = j.id;
-            var onmouseout  = "$(\"#Image" + FileID + "\").hide();";
-            var onmouseover = "$(\"#Image" + FileID + "\").show();";
-        }
+        var FileID = j.id;
+        var onmouseout  = "$(\"#Image" + FileID + "\").hide();";
+        var onmouseover = "$(\"#Image" + FileID + "\").show();";
 
         table += "<tr>";
-        if (type == 'files')
-            table += "<td><span onmouseout='" + onmouseout + "' onmouseover='" + onmouseover + "'>" + j.FileName + "</span></td>";
-        else
-            table += "<td>" + j.FileName + "</td>";
+        table += "<td><span onmouseout='" + onmouseout + "' onmouseover='" + onmouseover + "'>" + j.FileName + "</span></td>";
         table += "<span class='FileImage' id='Image" + FileID + "'>";
         table += "  <img style='width:100px;' src='data:image;base64," + j.image + "'/></span>";
         var desc = j.description;
@@ -307,23 +328,17 @@ function BuildTable(type, json) {
             table += "<td><span title='" + desc + "'>" + desc.substring(0, 40) + "<span></td>";
         table += "<td>" + j.category + "</td>";
         table += "<td>$" + parseFloat(j.price).toFixed(2) + "</td>";
-        if (type == 'files') {
-            table += "<td>" + j.views + "</td>";
-            table += "<td>" + j.downloads + "</td>";
-            table += "<td>$" + parseFloat(j.earnings).toFixed(2) + "</td>";
-            // right side tool links
-            var title = "Click to copy the purchase link. Share it with your friends so they can buy your file";
-            var onclick = "CopyLink('" + j.UUID + "'); ShowMsg('The purchase link to this file has been copied to the clipboard', 'greenBG');";
-            table += "<td> <a class='RepeatButton green' title='" + title + "' onclick=\"" + onclick + "\">Link</a> &nbsp;";
-            table += "<a class='RepeatButton orange' onclick='GetUpdateData(" + FileID + ");'>Edit</a> &nbsp;";
-            table += "<a class='RepeatButton red' onclick='DeleteFile(" + FileID + ");'>Delete</a> </td>";
-        }
-        else {
-            table += "<td><a class='RepeatButton green' href='https://www.shopafile.com/buy.php?l=" + j.UUID + "'>Buy File</a></td>";
-        }
+        table += "<td>" + j.views + "</td>";
+        table += "<td>" + j.downloads + "</td>";
+        table += "<td>$" + parseFloat(j.earnings).toFixed(2) + "</td>";
+        // right side tool links
+        var title = "Click to copy the purchase link. Share it with your friends so they can buy your file";
+        var onclick = "CopyLink('" + j.UUID + "'); ShowMsg('The purchase link to this file has been copied to the clipboard', 'greenBG');";
+        table += "<td> <a class='RepeatButton green' title='" + title + "' onclick=\"" + onclick + "\">Link</a> &nbsp;";
+        table += "<a class='RepeatButton orange' onclick='GetUpdateData(" + FileID + ");'>Edit</a> &nbsp;";
+        table += "<a class='RepeatButton red' onclick='DeleteFile(" + FileID + ");'>Delete</a> </td>";
         table += "</tr>";
     }
     table += "</table>";
-    $("#dashboard").html(table).show();
-    $("#divSearch").hide();
+    return table;
 }
