@@ -34,6 +34,10 @@
         <div id="overlay"></div>
         <div id="divLoader"></div>
         <div id="divMessage"></div>
-        <div id="dashboard"></div>
+        <div id="dashboard">
+        </div>
+        <?php
+            include("AccountDivs.php");
+        ?>
     </body>
 </html>
