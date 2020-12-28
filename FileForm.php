@@ -1,8 +1,8 @@
 
 <div id="FileForm" class="PopupForm">
     <div style="width:100%">
-        <h3 style="float: left;" id="FileFormHeading"></h3>
-        <img src="close.png" style="float: right; padding-top:16px;" class="close" onclick="PopupFormDisplay(false, 'FileForm');"></img>
+        <span class="heading" id="FileFormHeading"></span>
+        <img src="close.png" class="close" onclick="PopupFormDisplay(false, 'FileForm');"></img>
     </div>
     <br>
     <table>
@@ -62,8 +62,8 @@
         <tr>
             <td colspan="2" style="text-align:center;">
                 <br>
-                <a class="button orangeBG" FileID="" id="buttonEditFile" style="display:none;" onclick="SaveFile($('#buttonEditFile').prop('FileID'));">Edit File</a>
-                <a class="button greenBG" id="buttonUploadFile" onclick="SaveFile(-1);" style="display:none;">Upload File</a>
+                <a class="button orangeBG" FileID="" id="buttonEditFile" class="hide" onclick="SaveFile($('#buttonEditFile').prop('FileID'));">Edit File</a>
+                <a class="button greenBG" id="buttonUploadFile" onclick="SaveFile(-1);" class="hide">Upload File</a>
             </td>
         </tr>
     </table>

@@ -2,7 +2,11 @@ body {
     font-family: Poppins;
 }
 
-#menuLogoff {
+.hide {
+    display: none;
+}
+
+#menuLogout {
     color: #B81D13;
     border: 1px #B81D13 solid;
     background-color: white;
@@ -76,6 +80,38 @@ body {
 
 .SearchTablePadding {
     padding: 5px;
+}
+
+#RightLeftArrow {
+    cursor: pointer;
+    color: gray;
+    font-size: 16px;
+}
+#RightLeftArrow:hover {
+    opacity: .75;
+}
+
+#AccountMenu {
+    position: absolute;
+    display: none;
+    padding: 10px;
+}
+
+.AcctMenuItem {
+    cursor: pointer;
+    padding: 4px;
+    border: 1px solid gray;
+    border-radius: 4px;
+}
+.AcctMenuItem:hover {
+    opacity: .75;
+}
+
+.heading {
+    font-weight: bold;
+    font-size: 1.17em;
+    margin-bottom: 5px;
+    float: left;
 }
 
 .PopupForm {
@@ -216,6 +252,8 @@ body {
 
 .close {
     cursor: pointer;
+    float: right;
+    padding-top:3px;
 }
 .close:hover {
     opacity: .5;

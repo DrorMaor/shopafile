@@ -1,8 +1,8 @@
 
 <div id="LoginForm" class="PopupForm">
     <div style="width:100%">
-        <h3 style="float: left;">Please Login</h3>
-        <img src="close.png" style="float: right; padding-top:16px;" class="close" onclick="PopupFormDisplay(false, 'LoginForm');"></img>
+        <span class="heading">Please Login</span>
+        <img src="close.png" class="close" onclick="PopupFormDisplay(false, 'LoginForm');"></img>
     </div>
     <br>
     <table>
