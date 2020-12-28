@@ -68,7 +68,7 @@ function DeleteFile(FileID) {
             dataType: 'text',
             success: function(response) {
                 ShowMsg ("This file has been deleted", "redBG");
-                $("#dashboard").load("files.php");
+                $("#MyFiles").load("files.php");
             }
         });
     }
@@ -153,7 +153,7 @@ function SaveFile(FileID) {
             success: function(response) {
                 ShowMsg(msg, BGcolor);
                 PopupFormDisplay(false, "FileForm");
-                $("#dashboard").load("files.php");
+                $("#MyFiles").load("files.php");
             }
         });
     }
@@ -176,7 +176,7 @@ function Login() {
                 PopupFormDisplay(false, "LoginForm");
                 DoDashboard();
                 $("#tdLogin").hide();
-                $("#tdLogoff").show();
+                $("#tdLogout").show();
             }
             else
                 ShowMsg("There was an error in the login", "redBG");
@@ -184,11 +184,17 @@ function Login() {
     });
 }
 
-function Logoff () {
+function Logout () {
     document.cookie = "user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     $("#tdLogin").show();
-    $("#tdLogoff").hide();
-    $("#dashboard").empty();
+    $("#tdLogout").hide();
+    $("#MyFiles").hide();
+    $("#AcctHeading").hide();
+    $("#AccountMenu").hide();
+    $("#acctDivEmail").hide();
+    $("#acctDivPwd").hide();
+    $("#acctDivPayPal").hide();
+    $("#RightLeftArrow").html("⇢");
 }
 
 function ValidateFileForm() {
@@ -265,8 +271,18 @@ function ShowFiles(type) {
 }
 */
 
+function ToggleAccountDivArrows() {
+    if ($("#RightLeftArrow").html() == "⇢") {
+        $('#AccountMenu').show();
+        $("#RightLeftArrow").html("⇠");
+    }
+    else {
+        $('#AccountMenu').hide();
+        $("#RightLeftArrow").html("⇢");
+    }
+}
+
 function DoDashboard() {
-    var div = "";
     // get acct info
     $.ajax({
         type: "GET",
@@ -277,10 +293,7 @@ function DoDashboard() {
             var j = JSON.parse(response)[0];
             $("#acctEmail").val(j.email);
             $("#acctPayPal").val(j.PayPal);
-            var onclick = "PopupFormDisplay(true, 'acctDivEmail')";
-            div += "<a onlick='" + onclick + "'>email</a> ";
-            div += "<a onlick='PopupFormDisplay(true, \"acctDivPwd\");'>pwd</a> ";
-            div += "<a onlick='PopupFormDisplay(true, \"acctDivPayPal\");'>PP</a>";
+            $("#AcctHeading").show();
         }
     });
 
@@ -291,15 +304,13 @@ function DoDashboard() {
         data: $(this).serialize(),
         dataType: 'text',
         success: function(response) {
-            div += MyFilesTable(JSON.parse(response));
-            $("#dashboard").html(div).show();
+            $("#MyFiles").html(MyFilesTable(JSON.parse(response))).show();
         }
     });
-
 }
 
 function MyFilesTable(json) {
-    var table = "<h3>My Files</h3>";
+    var table = "<br> <div class='heading'>My Files</div>";
     table += "<table id='tblFiles'>";
     table += '<tr>';
     table += '    <th class="left">File Name</th>';

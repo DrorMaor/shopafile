@@ -34,10 +34,19 @@
         <div id="overlay"></div>
         <div id="divLoader"></div>
         <div id="divMessage"></div>
-        <div id="dashboard">
+
+        <div id="dashboard" style="width:100%;">
+            <?php include("AccountDivs.php"); ?>
+            <div id="AcctHeading" class="hide">
+                <span class="heading">My Account</span> &nbsp; <a id="RightLeftArrow" onclick="ToggleAccountDivArrows();">⇢</a>
+
+                <span id="AccountMenu">
+                    <a class="AcctMenuItem" onclick="PopupFormDisplay(true, 'acctDivEmail');">email</a> &nbsp;
+                    <a class="AcctMenuItem" onclick="PopupFormDisplay(true, 'acctDivPwd');">password</a> &nbsp;
+                    <a class="AcctMenuItem" onclick="PopupFormDisplay(true, 'acctDivPayPal');">PayPal</a> &nbsp;
+                </span>
+            </div>
+            <div id="MyFiles"></div>
         </div>
-        <?php
-            include("AccountDivs.php");
-        ?>
     </body>
 </html>
