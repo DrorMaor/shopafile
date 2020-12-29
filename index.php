@@ -28,25 +28,16 @@
     <body>
         <?php
             include("top.php");
+            // these are the hidden divs
             include("FileForm.php");
             include("LoginForm.php");
+            include("AccountSettings.php");
+            include("ItsFree.php");
+            include("FAQ.php");
         ?>
         <div id="overlay"></div>
         <div id="divLoader"></div>
         <div id="divMessage"></div>
-
-        <div id="dashboard" style="width:100%;">
-            <?php include("AccountDivs.php"); ?>
-            <div id="AcctHeading" class="hide">
-                <span class="heading">My Account</span> &nbsp; <a id="RightLeftArrow" onclick="ToggleAccountDivArrows();">⇢</a>
-
-                <span id="AccountMenu">
-                    <a class="AcctMenuItem" onclick="PopupFormDisplay(true, 'acctDivEmail');">email</a> &nbsp;
-                    <a class="AcctMenuItem" onclick="PopupFormDisplay(true, 'acctDivPwd');">password</a> &nbsp;
-                    <a class="AcctMenuItem" onclick="PopupFormDisplay(true, 'acctDivPayPal');">PayPal</a> &nbsp;
-                </span>
-            </div>
-            <div id="MyFiles"></div>
-        </div>
+        <div id="MyFiles"></div>
     </body>
 </html>
