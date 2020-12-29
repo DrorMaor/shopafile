@@ -1,8 +1,7 @@
-
 <div id="FileForm" class="PopupForm">
     <div style="width:100%">
-        <span class="heading" id="FileFormHeading"></span>
-        <img src="close.png" class="close" onclick="PopupFormDisplay(false, 'FileForm');"></img>
+        <span class="LargeHeading" id="FileFormHeading"></span>
+        <img src="images/close.png" class="ImageIcon right" onclick="PopupFormDisplay(false, 'FileForm');"></img>
     </div>
     <br>
     <table>

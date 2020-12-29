@@ -67,7 +67,7 @@ function DeleteFile(FileID) {
             data: $(this).serialize(),
             dataType: 'text',
             success: function(response) {
-                ShowMsg ("This file has been deleted", "redBG");
+                ShowMsg ("The file has been deleted", "redBG");
                 $("#MyFiles").load("files.php");
             }
         });
@@ -159,6 +159,7 @@ function SaveFile(FileID) {
     }
 }
 
+// LOGIN & LOGOUT //
 function Login() {
     var formdata = new FormData();
     formdata.append('user', $("#LoginUser").val());
@@ -191,11 +192,9 @@ function Logout () {
     $("#MyFiles").hide();
     $("#AcctHeading").hide();
     $("#AccountMenu").hide();
-    $("#acctDivEmail").hide();
-    $("#acctDivPwd").hide();
-    $("#acctDivPayPal").hide();
     $("#RightLeftArrow").html("⇢");
 }
+///////////////////
 
 function ValidateFileForm() {
     var valid = true;
@@ -256,6 +255,77 @@ function CopyLink (UUID) {
     document.body.removeChild(ta);
 }
 
+function ShowSearchResults() {
+
+}
+
+// SAVE ACCOUNT SETTINGS
+
+function SaveEmail() {
+    var formdata = new FormData();
+    formdata.append('email', $("#acctEmail").val());
+    $.ajax({
+        url: "SaveEmail.php",
+        method: "POST",
+        data: formdata,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function(response) {
+            ShowMsg("Your email address has been updated", 'greenBG');
+        }
+    });
+}
+
+function SavePayPal() {
+    var formdata = new FormData();
+    formdata.append('PayPal', $("#acctPayPal").val());
+    $.ajax({
+        url: "SavePayPal.php",
+        method: "POST",
+        data: formdata,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function(response) {
+            ShowMsg("Your PayPal account has been updated", 'greenBG');
+        }
+    });
+}
+
+function SavePwd() {
+    if ($("#acctNewPwd1").val() != $("#acctNewPwd2").val()) {
+        ShowMsg("The new passwords don't match", 'redBG');
+    }
+    else {
+        var formdata = new FormData();
+        formdata.append('OldPwd', $("#acctOldPwd").val());
+        formdata.append('NewPwd1', $("#acctNewPwd1").val());
+        formdata.append('NewPwd2', $("#acctNewPwd2").val());
+        $.ajax({
+            url: "SavePwd.php",
+            method: "POST",
+            data: formdata,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function(response) {
+                console.log(response);
+                if (response != "0") {
+                    ShowMsg("Your password has been updated", 'greenBG');
+                    $("#acctOldPwd").val("");
+                    $("#acctNewPwd1").val("");
+                    $("#acctNewPwd2").val("");
+                }
+                else
+                    ShowMsg("An error occurred. Please try again", 'redBG');
+            }
+        });
+    }
+}
+
+////////////////////////
+
 /*
 function ShowFiles(type) {
     var url = (type == 'files') ? "files.php" : "search.php?kw=" + $("#SearchKeywords").val() + "&cat=" + $("#selCategories").val();
@@ -271,17 +341,7 @@ function ShowFiles(type) {
 }
 */
 
-function ToggleAccountDivArrows() {
-    if ($("#RightLeftArrow").html() == "⇢") {
-        $('#AccountMenu').show();
-        $("#RightLeftArrow").html("⇠");
-    }
-    else {
-        $('#AccountMenu').hide();
-        $("#RightLeftArrow").html("⇢");
-    }
-}
-
+// DASHBOARD FUNCTIONS //
 function DoDashboard() {
     // get acct info
     $.ajax({
@@ -310,7 +370,7 @@ function DoDashboard() {
 }
 
 function MyFilesTable(json) {
-    var table = "<br> <div class='heading'>My Files</div>";
+    var table = "<br> <div class='LargeHeading'>My Files</div>";
     table += "<table id='tblFiles'>";
     table += '<tr>';
     table += '    <th class="left">File Name</th>';
@@ -348,8 +408,10 @@ function MyFilesTable(json) {
         table += "<td> <a class='RepeatButton green' title='" + title + "' onclick=\"" + onclick + "\">Link</a> &nbsp;";
         table += "<a class='RepeatButton orange' onclick='GetUpdateData(" + FileID + ");'>Edit</a> &nbsp;";
         table += "<a class='RepeatButton red' onclick='DeleteFile(" + FileID + ");'>Delete</a> </td>";
+
         table += "</tr>";
     }
     table += "</table>";
     return table;
 }
+////////////////////////

@@ -19,7 +19,7 @@
         $update .= " image = '" . base64_encode(file_get_contents($image)) . "', ";
     $update .= " price = " . $price;
     $update .= " where id = " . $_POST["FileID"];
-    echo $update;
+    //echo $update;
     $sql = $conn->prepare($update);
     $sql->execute();
     $conn = null;

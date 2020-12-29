@@ -1,8 +1,7 @@
-
 <div id="LoginForm" class="PopupForm">
     <div style="width:100%">
-        <span class="heading">Please Login</span>
-        <img src="close.png" class="close" onclick="PopupFormDisplay(false, 'LoginForm');"></img>
+        <span class="LargeHeading">Please Login</span>
+        <img src="images/close.png" class="ImageIcon right" onclick="PopupFormDisplay(false, 'LoginForm');"></img>
     </div>
     <br>
     <table>
