@@ -138,12 +138,12 @@ body {
 .button {
     border: none;
     color: white;
-    padding: 5px 13px;
+    padding: 2px 8px;
     text-align: center;
     vertical-align: middle;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px;
+    font-size: 14px;
     border-radius: 7px;
     cursor: pointer;
 }
@@ -202,27 +202,45 @@ body {
     padding-bottom: 12px;
 }
 
-/* Files table */
+/* Search Results */
 
-#tblFiles {
+.SearchImage {
+    padding: 10px;
+    margin: 10px;
+    height: 200px;
+    width: 200px;
+    box-shadow:3px 3px 3px 3px #B8B8B8;
+}
+
+.SearchDesc {
+    width: 200px;
+    margin: auto;
+    text-align: center;
+    overflow-wrap: normal;
+}
+/* -------------- */
+
+/* My Files table */
+
+#tblMyFiles {
     border-collapse: collapse;
     width: 100%;
 }
 
-#tblFiles td {
+#tblMyFiles td {
     border: 1px solid #ddd;
     padding: 8px;
 }
 
-#tblFiles tr:nth-child(even) {
+#tblMyFiles tr:nth-child(even) {
     background-color: #f2f2f2;
 }
 
-#tblFiles tr:hover {
+#tblMyFiles tr:hover {
     background-color: #f7f9fc;
 }
 
-#tblFiles th {
+#tblMyFiles th {
     padding-top: 12px;
     padding-bottom: 12px;
 }
@@ -232,11 +250,6 @@ body {
     display: none;
     background-color: white;
     margin: 0;
-    position: absolute;
-    top: 50%;
-    left: 25%;
-    -ms-transform: translate(-50%, -25%);
-    transform: translate(-50%, -25%);
     border: 1px gray solid;
     padding: 10px;
     border-radius: 5px;

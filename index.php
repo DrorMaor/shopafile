@@ -29,15 +29,17 @@
         <?php
             include("top.php");
             // these are the hidden divs
-            include("FileForm.php");
-            include("LoginForm.php");
-            include("AccountSettings.php");
-            include("ItsFree.php");
-            include("FAQ.php");
+            include("popup/FileForm.php");
+            include("popup/BuyFile.php");
+            include("popup/LoginForm.php");
+            include("popup/AccountSettings.php");
+            include("popup/ItsFree.php");
+            include("popup/FAQ.php");
         ?>
         <div id="overlay"></div>
         <div id="divLoader"></div>
         <div id="divMessage"></div>
         <div id="MyFiles"></div>
+        <div id="SearchResults"></div>
     </body>
 </html>

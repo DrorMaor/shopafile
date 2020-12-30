@@ -55,7 +55,8 @@
         </tr>
         <tr>
             <td colspan="2" id="tdAllowed">
-                <input type="checkbox" id="fileAllowed">I am legally allowed to sell this file
+                <input type="checkbox" id="fileAllowed" name="">
+                <label for="fileAllowed"> I am legally allowed to sell this file</label>
             </td>
         </tr>
         <tr>

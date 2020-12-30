@@ -29,7 +29,7 @@ function CleanFileForm(type) {
         $("#buttonEditFile").show();
     }
 
-    // remove yeloow highlights, if they remained
+    // remove yellow highlights, if they remained
     $("#spnDescription").removeClass("yellowBG");
     $("#spnCategory").removeClass("yellowBG");
     $("#spnPrice").removeClass("yellowBG");
@@ -44,15 +44,17 @@ function PopupFormDisplay(show, form) {
     var display = (show) ? "block" : "none";
     var opacity = (show) ? .25 : 1;
     $("#overlay").css("display", display);
-    $("#dashboard").css('opacity', opacity);
+    $("#MyFiles").css('opacity', opacity);
+    $("#SearchResults").css('opacity', opacity);
     $("#" + form).css("display", display);
 }
 
 function ComputeReceive() {
+    // ywr = You Will Receive
     var price = $('#filePrice').val();
-    var ywr = price - 0.99;
-    if (price > 33)
-        ywr = 0.97 * price;
+    var ywr = price * 0.92;  // regular 8% commission
+    if (price < 12.5)
+        ywr = price - 0.99;
     if (price > .99)
         $('#fileYWR').html('You get $' + parseFloat(ywr).toFixed(2));
     else
@@ -63,12 +65,12 @@ function DeleteFile(FileID) {
     if (confirm ("Are you sure you want to delete this file?")) {
         $.ajax({
             type: "GET",
-            url: "delete.php?FileID=" + FileID,
+            url: "php/delete.php?FileID=" + FileID,
             data: $(this).serialize(),
             dataType: 'text',
             success: function(response) {
                 ShowMsg ("The file has been deleted", "redBG");
-                $("#MyFiles").load("files.php");
+                GetMyFiles();
             }
         });
     }
@@ -79,7 +81,7 @@ function GetUpdateData(FileID) {
     $("#divLoader").show();
     $.ajax({
         type: "GET",
-        url: "GetUpdateData.php?FileID=" + FileID,
+        url: "php/GetUpdateData.php?FileID=" + FileID,
         data: $(this).serialize(),
         dataType: 'text',
         success: function(response) {
@@ -103,7 +105,7 @@ function GetUpdateData(FileID) {
 function PopulateCategories() {
     $.ajax({
         type: "GET",
-        url: "categories.php",
+        url: "php/categories.php",
         data: $(this).serialize(),
         dataType: 'text',
         success: function(response) {
@@ -128,12 +130,12 @@ function SaveFile(FileID) {
         var msg = "";
         var BGcolor = "";
         if (FileID == -1) {
-            url = "upload.php";
+            url = "php/upload.php";
             msg = "Your file has been uploaded";
             BGcolor = "greenBG";
         }
         else {
-            url = "update.php";
+            url = "php/update.php";
             formdata.append('FileID', FileID);
             msg = "Your changes have been saved";
             BGcolor = "orangeBG";
@@ -153,7 +155,7 @@ function SaveFile(FileID) {
             success: function(response) {
                 ShowMsg(msg, BGcolor);
                 PopupFormDisplay(false, "FileForm");
-                $("#MyFiles").load("files.php");
+                GetMyFiles();
             }
         });
     }
@@ -165,7 +167,7 @@ function Login() {
     formdata.append('user', $("#LoginUser").val());
     formdata.append('pwd', $("#LoginPwd").val());
     $.ajax({
-        url: "login.php",
+        url: "php/login.php",
         method: "POST",
         data: formdata,
         cache: false,
@@ -175,7 +177,8 @@ function Login() {
             if (response != "") {
                 document.cookie = "user=" + response;
                 PopupFormDisplay(false, "LoginForm");
-                DoDashboard();
+                GetAccountData();
+                GetMyFiles();
                 $("#tdLogin").hide();
                 $("#tdLogout").show();
             }
@@ -247,17 +250,59 @@ function ValidateFileForm() {
 }
 
 function CopyLink (UUID) {
-    const ta = document.createElement('textarea');
-    ta.value = "https://www.shopafile.com/buy.php?l=" + UUID;
-    document.body.appendChild(ta);
-    ta.select();
+    const tb = document.createElement('textbox');
+    tb.value = "https://www.shopafile.com/buy.php?l=" + UUID;
+    document.body.appendChild(tb);
+    tb.select();
     document.execCommand('copy');
-    document.body.removeChild(ta);
+    document.body.removeChild(tb);
 }
 
+// SEARCH //
 function ShowSearchResults() {
-
+    $.ajax({
+        type: "GET",
+        url: "php/search.php?kw=" + $("#SearchKeywords").val() + "&cat=" + $("#selCategories").val(),
+        data: $(this).serialize(),
+        dataType: 'text',
+        success: function(response) {
+            $("#SearchResults").html(SearchResultsTable(JSON.parse(response))).show();
+        }
+    });
 }
+
+function SearchResultsTable(json) {
+    // f.id, f.FileName, f.price, f.description, f.UUID, c.category
+    var table = "<div class='LargeHeading'>Search Results</div>";
+    table += "<table id='tblSearchResults'>";
+    for (var i = 0; i < json.length; i++) {
+        var j = json[i];
+        if (i % 5 == 0)
+            table += "<tr>";
+        if (i % 5 == 4)
+            table += "</tr>";
+        
+        table += "<td>";
+        table += "<a onclick='PrepareBuyFileForm(\"" + j.image + "\", " + j.FileSize + ", " + j.price + ");'>";
+        table += "<img class='SearchImage' style='width:200px;' src='data:image;base64," + j.image + "'/></a>";
+        table += "<br> " + DescriptionSpan(j.description, 40, "SearchDesc", "div");
+        table += "<br>Price $" + j.price;
+        table += "<br>Size " + FileSizeText(j.FileSize);
+        table += "</td>";
+        
+    }
+    table += "</table>";
+    return table;
+}
+
+function PrepareBuyFileForm(image, FileSize, price) {
+    $("#buyImage").prop("src", "data:image;base64," + image);
+    $("#buySize").html(FileSizeText(FileSize));
+    $("#buyPrice").html("$" + price);
+    PopupFormDisplay(true, 'BuyFile');
+}
+
+///////////
 
 // SAVE ACCOUNT SETTINGS
 
@@ -265,13 +310,14 @@ function SaveEmail() {
     var formdata = new FormData();
     formdata.append('email', $("#acctEmail").val());
     $.ajax({
-        url: "SaveEmail.php",
+        url: "php/save/SaveEmail.php",
         method: "POST",
         data: formdata,
         cache: false,
         contentType: false,
         processData: false,
         success: function(response) {
+            console.log(response);
             ShowMsg("Your email address has been updated", 'greenBG');
         }
     });
@@ -281,7 +327,7 @@ function SavePayPal() {
     var formdata = new FormData();
     formdata.append('PayPal', $("#acctPayPal").val());
     $.ajax({
-        url: "SavePayPal.php",
+        url: "php/save/SavePayPal.php",
         method: "POST",
         data: formdata,
         cache: false,
@@ -303,7 +349,7 @@ function SavePwd() {
         formdata.append('NewPwd1', $("#acctNewPwd1").val());
         formdata.append('NewPwd2', $("#acctNewPwd2").val());
         $.ajax({
-            url: "SavePwd.php",
+            url: "php/save/SavePwd.php",
             method: "POST",
             data: formdata,
             cache: false,
@@ -326,27 +372,12 @@ function SavePwd() {
 
 ////////////////////////
 
-/*
-function ShowFiles(type) {
-    var url = (type == 'files') ? "files.php" : "search.php?kw=" + $("#SearchKeywords").val() + "&cat=" + $("#selCategories").val();
-    $.ajax({
-        type: "GET",
-        url: url,
-        data: $(this).serialize(),
-        dataType: 'text',
-        success: function(response) {
-            BuildTable(type, JSON.parse(response));
-        }
-    });
-}
-*/
 
 // DASHBOARD FUNCTIONS //
-function DoDashboard() {
-    // get acct info
+function GetAccountData() {
     $.ajax({
         type: "GET",
-        url: "account.php",
+        url: "php/account.php",
         data: $(this).serialize(),
         dataType: 'text',
         success: function(response) {
@@ -356,11 +387,12 @@ function DoDashboard() {
             $("#AcctHeading").show();
         }
     });
+}
 
-    // get files
+function GetMyFiles() {
     $.ajax({
         type: "GET",
-        url: "files.php",
+        url: "php/files.php",
         data: $(this).serialize(),
         dataType: 'text',
         success: function(response) {
@@ -369,11 +401,37 @@ function DoDashboard() {
     });
 }
 
+function UploadNewFile() {
+    CleanFileForm('upload');
+    PopupFormDisplay(true, "FileForm");
+}
+
+function FileSizeText(FileSize) {
+    var retVal = parseFloat(FileSize / 1000 / 1.33).toFixed(0);
+    if (FileSize < 1000 * 1000)
+        retVal += " KB";
+    else
+        retVal = parseFloat(FileSize / 1000 / 1000 / 1.33).toFixed(1) + " MB";
+    return retVal;
+}
+
+function DescriptionSpan(desc, chars, className, DivOrSpan) {
+    var retVal = desc
+    if (desc.length <= chars)
+        retVal = "<span>" + desc + "</span>";
+    else
+        retVal =  "<" + DivOrSpan + " class='" + className + "' title='" + desc + "'>" + desc.substring(0, chars) + " ...</" + DivOrSpan + ">";
+    return retVal;
+}
+
 function MyFilesTable(json) {
-    var table = "<br> <div class='LargeHeading'>My Files</div>";
-    table += "<table id='tblFiles'>";
+    var table = "<div class='LargeHeading'>My Files</div>";
+    table += "<a class='button greenBG' title='Upload new file to sell' onclick='UploadNewFile();'>Upload</a> <br>";
+    table += "<table id='tblMyFiles'>";
     table += '<tr>';
     table += '    <th class="left">File Name</th>';
+    table += '    <th class="left">Size</th>';
+    table += '    <th class="left"> </th>';
     table += '    <th class="left">Description</th>';
     table += '    <th class="center">Category</th>';
     table += '    <th class="center">Price</th>';
@@ -385,22 +443,15 @@ function MyFilesTable(json) {
     for (var i = 0; i < json.length; i++) {
         var j = json[i];
         var FileID = j.id;
-        var onmouseout  = "$(\"#Image" + FileID + "\").hide();";
-        var onmouseover = "$(\"#Image" + FileID + "\").show();";
-
         table += "<tr>";
-        table += "<td><span onmouseout='" + onmouseout + "' onmouseover='" + onmouseover + "'>" + j.FileName + "</span></td>";
-        table += "<span class='FileImage' id='Image" + FileID + "'>";
-        table += "  <img style='width:100px;' src='data:image;base64," + j.image + "'/></span>";
-        var desc = j.description;
-        if (desc.length <= 40)
-            table += "<td>" + desc + "</td>";
-        else
-            table += "<td><span title='" + desc + "'>" + desc.substring(0, 40) + "<span></td>";
+        table += "<td>" + j.FileName + "</td>";
+        table += "<td>" + FileSizeText(j.FileSize) + "</td>";
+        table += "<td class='center'> <img style='height:50px;' src='data:image;base64," + j.image + "'/> </td>";
+        table += "<td>" + DescriptionSpan(j.description, 40, "", "span") + "</td>";
         table += "<td>" + j.category + "</td>";
         table += "<td>$" + parseFloat(j.price).toFixed(2) + "</td>";
-        table += "<td>" + j.views + "</td>";
-        table += "<td>" + j.downloads + "</td>";
+        table += "<td class='center'>" + j.views + "</td>";
+        table += "<td class='center'>" + j.downloads + "</td>";
         table += "<td>$" + parseFloat(j.earnings).toFixed(2) + "</td>";
         // right side tool links
         var title = "Click to copy the purchase link. Share it with your friends so they can buy your file";
