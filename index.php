@@ -19,7 +19,12 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
 
         <!-- our code -->
-        <script src="scripts.js"></script>
+        <script src="scripts/general.js"></script>
+        <script src="scripts/login.js"></script>
+        <script src="scripts/search.js"></script>
+        <script src="scripts/SaveAccount.js"></script>
+        <script src="scripts/dashboard.js"></script>
+        <script src="scripts/FileForm.js"></script>
         <link rel="stylesheet" href="styles.css">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
