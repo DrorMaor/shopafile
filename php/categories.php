@@ -1,5 +1,4 @@
 <?php
-
     include ("DBconn.php");
     $sql = $conn->prepare("select id, category from categories order by category");
     $sql->execute();

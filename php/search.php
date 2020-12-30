@@ -1,6 +1,6 @@
 <?php
     include ("DBconn.php");
-    $select = "select f.id, f.FileName, f.price, f.description, f.UUID, c.category
+    $select = "select f.id, f.FileName, f.price, f.description, f.UUID, c.category, f.image, length(file) as FileSize
         from files f inner join categories c on c.id = f.category
         where f.description like '%" . $_GET["kw"] . "%' ";
     if ($_GET["cat"] != -1)
