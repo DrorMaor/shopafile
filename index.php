@@ -19,16 +19,23 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
 
         <!-- our code -->
+        <!-- *.js -->
         <script src="scripts/general.js"></script>
         <script src="scripts/login.js"></script>
         <script src="scripts/search.js"></script>
         <script src="scripts/SaveAccount.js"></script>
         <script src="scripts/dashboard.js"></script>
         <script src="scripts/FileForm.js"></script>
-        <link rel="stylesheet" href="styles.css">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- *.css -->
+        <link rel="stylesheet" href="styles/colors.css">
+        <link rel="stylesheet" href="styles/general.css">
+        <link rel="stylesheet" href="styles/image.css">
+        <link rel="stylesheet" href="styles/MyFiles.css">
+        <link rel="stylesheet" href="styles/search.css">
+        <link rel="stylesheet" href="styles/TopMenu.css">
 
         <title>Shopafile - Buy/Sell Anything Digital</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body>
         <?php

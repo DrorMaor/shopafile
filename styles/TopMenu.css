@@ -1,0 +1,29 @@
+#menuLogout {
+    color: #B81D13;
+    border: 1px #B81D13 solid;
+    background-color: white;
+}
+
+.MenuItem {
+    font-size: 18px;
+    font-weight: bold;
+    border: 1px black solid;
+    border-radius: 5px;
+    vertical-align: center;
+    padding: 7px;
+    cursor: pointer;
+    background-color: #F5F5F5;
+}
+.MenuItem:hover {
+    opacity: .75;
+}
+
+#AccountMenu {
+    position: absolute;
+    display: none;
+    padding: 10px;
+}
+
+.TopPadding {
+    padding: 10px;
+}

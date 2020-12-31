@@ -1,0 +1,22 @@
+.ImageIcon {
+    cursor: pointer;
+    padding-top:3px;
+}
+.ImageIcon:hover {
+    opacity: .75;
+}
+
+.FileImage {
+    display: none;
+    background-color: white;
+    margin: 0;
+    border: 1px gray solid;
+    padding: 10px;
+    border-radius: 5px;
+    z-index: 9;
+}
+
+.BuyFileImage {
+    height: 150px;
+    width: 150px;
+}
