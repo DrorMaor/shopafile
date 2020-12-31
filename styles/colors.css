@@ -1,0 +1,29 @@
+/*  colors */
+
+.red {
+    color:#B81D13;
+}
+
+.orange {
+    color:#EFB700;
+}
+
+.green {
+    color:#008450;
+}
+
+.greenBG {
+    background-color: #008450;
+}
+
+.orangeBG {
+    background-color: #EFB700;
+}
+
+.redBG {
+    background-color: #B81D13;
+}
+
+.yellowBG {
+    background-color: #f2ef99;
+}

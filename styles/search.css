@@ -1,0 +1,44 @@
+#SearchKeywords {
+    height: 40px;
+    width: 350px;
+    background-color: #f5fbfc;
+    border: 2px solid #a2edfa;
+    border-radius: 13px;
+}
+
+#SearchGlyph {
+    font-size: 25px;
+    cursor: pointer;
+}
+#SearchGlyph:hover {
+    opacity: .75;
+}
+
+#divSearch {
+    display: none;
+    border: 1px black solid;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+/* Search Results */
+
+.SearchImage {
+    padding: 10px;
+    margin: 10px;
+    height: 200px;
+    width: 200px;
+    box-shadow:3px 3px 3px 3px #B8B8B8;
+    cursor: pointer;
+}
+.SearchImage:hover {
+    opacity: .85;
+}
+
+.SearchDesc {
+    width: 200px;
+    margin: auto;
+    text-align: center;
+    overflow-wrap: normal;
+}
+/* -------------- */

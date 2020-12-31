@@ -1,0 +1,133 @@
+body {
+    font-family: Poppins;
+}
+
+.hide {
+    display: none;
+}
+
+/* loader */
+#divLoader {
+    display: none;
+    border: 12px solid #EFB700;
+    border-top: 12px solid #8b2673;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 2s linear infinite;
+
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+/* ----------- */
+
+
+#divMessage {
+    z-index: 15;
+    display: none;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    margin: 0;
+    padding: 15px;
+    border: 1px black solid;
+    border-radius: 5px;
+    position: absolute;
+    top: 20%;
+    left: 45%;
+    -ms-transform: translate(-20%, -50%);
+    transform: translate(-20%, -50%);
+}
+
+
+.LargeHeading {
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.SmallHeading {
+    font-weight: bold;
+    font-size: 13px;
+    margin-bottom: 3px;
+    float: left;
+}
+
+.PopupForm {
+    display: none;
+    background-color: white;
+    margin: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    border: 2px black solid;
+    padding: 20px;
+    border-radius: 5px;
+    z-index: 9;
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+#overlay {
+    display: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0px;
+    top: 0px;
+    opacity: .1;
+    pointer-events: none;
+    background-color: gray;
+    z-index: 3;
+}
+
+.button {
+    border: none;
+    color: white;
+    padding: 2px 8px;
+    text-align: center;
+    vertical-align: middle;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    border-radius: 7px;
+    cursor: pointer;
+}
+.button:hover {
+    opacity: .75;
+}
+
+.RepeatButton {
+    font-weight: bold;
+    cursor: pointer;
+}
+.RepeatButton:hover {
+    opacity: .75;
+}
+
+.left {
+    text-align: left;
+}
+
+.center {
+    text-align: center;
+}
+
+.right {
+    float: right;
+}

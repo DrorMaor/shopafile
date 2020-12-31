@@ -1,0 +1,25 @@
+/* My Files table */
+
+#tblMyFiles {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#tblMyFiles td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#tblMyFiles tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#tblMyFiles tr:hover {
+    background-color: #f7f9fc;
+}
+
+#tblMyFiles th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+/* ----------------------------- */
