@@ -2,25 +2,30 @@ function ShowSearchResults() {
     $("#divLoader").show();
     $.ajax({
         type: "GET",
-        url: "php/search.php?kw=" + $("#SearchKeywords").val(),
+        url: "php/search.php?kw=" + $("#SearchKeywords").val() + "&cat=" + $("#selCategories").val(),
         data: $(this).serialize(),
         dataType: 'text',
         success: function(response) {
             $("#MyFiles").hide();
             var table = SearchResultsTable(JSON.parse(response));
-            $("#SearchResults").html(table).show();
+            $("#SearchResults").html($("#SearchResults").html() + table).show();
             $("#divLoader").hide();
         }
     });
 }
 
 function SearchResultsTable(json) {
-    var table = "<div class='LargeHeading'>Search Results</div>";
-    table += "<table id='tblSearchResults'>";
+    var html = "<div class='LargeHeading'>Search Results</div>";
+    html += "<div class='SmallHeading' style='font-weight:normal;'>" + json.length + " results</div>";
+    html += "<br> <div id='divSearchCategories'></div>";
+    $("#SearchResults").html(html);
+    $("#selCategories").appendTo($("#divSearchCategories"));
+
+    var table = "<table id='tblSearchResults'>";
     for (var i = 0; i < json.length; i++) {
         if (i == 0)
             table += "<tr>";
-        if (i % 5 == 0 && i != json.length -1)
+        if (i % 5 == 0)
             table += "</tr> <tr>";
         if (i == json.length -1)
             table += "</tr>";
@@ -52,5 +57,6 @@ function PrepareBuyFileForm(json) {
     $("#buyCategory").html("Category: " + json.category);
     $("#buySize").html(FileSizeText(json.FileSize));
     $("#buyPrice").html("$" + json.price);
+    $("#buyUUID").prop("UUID", json.UUID);
     PopupFormDisplay(true, 'BuyFile');
 }

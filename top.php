@@ -20,7 +20,7 @@
             <img src="images/files.png" title="Show My Files" class="ImageIcon" onclick="GetMyFiles();"></img>
         </td>
         <td class="TopPadding">
-            <input type="text" id="SearchKeywords" placeholder="  Search for anything digital">
+            <input type="text" id="SearchKeywords" placeholder="Search for anything digital">
             <a onclick="ShowSearchResults();" id="SearchGlyph">&#128269;</a>
         </td>
     </tr>

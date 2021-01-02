@@ -17,6 +17,7 @@
             Size: <span id="buySize"></span>
         </div>
         <br>
-        <a class="button greenBG" id="buttonUploadFile" onclick="SaveFile(-1);" class="hide">Buy File</a>
+        <div id="buyUUID" UUID='0'></div>
+        <a class="button greenBG" id="buttonUploadFile" onclick="BuyFile($('#buyUUID').prop('UUID'));" class="hide">Buy File</a>
     </div>
 </div>
