@@ -10,6 +10,7 @@
         <div id="buyDesc"> </div>
         <br>
         <div class='bold center' style="width:100%;" id="buyFileName"></div>
+        <div class='center blue' style="width:100%;" id="buyCategory"></div>
         <div class="center" style="width:100%;">
             Price: <span id="buyPrice"></span>
             / 

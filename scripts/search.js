@@ -1,4 +1,5 @@
 function ShowSearchResults() {
+    $("#divLoader").show();
     $.ajax({
         type: "GET",
         url: "php/search.php?kw=" + $("#SearchKeywords").val(),
@@ -6,7 +7,9 @@ function ShowSearchResults() {
         dataType: 'text',
         success: function(response) {
             $("#MyFiles").hide();
-            $("#SearchResults").html(SearchResultsTable(JSON.parse(response))).show();
+            var table = SearchResultsTable(JSON.parse(response));
+            $("#SearchResults").html(table).show();
+            $("#divLoader").hide();
         }
     });
 }
@@ -15,18 +18,21 @@ function SearchResultsTable(json) {
     var table = "<div class='LargeHeading'>Search Results</div>";
     table += "<table id='tblSearchResults'>";
     for (var i = 0; i < json.length; i++) {
-        if (i % 5 == 0)
+        if (i == 0)
             table += "<tr>";
-        if (i % 5 == 4)
+        if (i % 5 == 0 && i != json.length -1)
+            table += "</tr> <tr>";
+        if (i == json.length -1)
             table += "</tr>";
         
         var j = json[i];
-        table += "<td>";
-        table += "<a onclick='PrepareBuyFileForm(" + JSON.stringify(j) + ");'>";
-        table += "<img class='SearchImage' src='data:image;base64," + j.image + "'/></a>";
-        table += "<br> " + DescriptionSpan(j.description, 40, "SearchDesc", "div");
-        table += "<div class='bold center'>" + j.FileName + "</div>";
-        table += "<div class='center'>Price $" + j.price + " / Size " + FileSizeText(j.FileSize) + "</div>";
+        table += "<td class='SearchResultTD'>";
+        table += "  <a onclick='PrepareBuyFileForm(" + JSON.stringify(j) + ");'>";
+        table += "  <img class='SearchImage' src='data:image;base64," + j.image + "'/></a>";
+        table += "  <br> " + DescriptionSpan(j.description, 40, "SearchDesc", "div");
+        table += "  <div class='bold center BuyFileName'>" + j.FileName + "</div>";
+        table += "  <div class='center blue'>Category: " + j.category + "</div>";
+        table += "  <div class='center'>Price $" + j.price + " / Size " + FileSizeText(j.FileSize) + "</div>";
         table += "</td>";
     }
     table += "</table>";
@@ -43,6 +49,7 @@ function PrepareBuyFileForm(json) {
     $("#buyImage").prop("src", "data:image;base64," + json.image);
     $("#buyFileName").html(json.FileName);
     $("#buyDesc").html(DescriptionSpan(json.description, 40, "SearchDesc", "div"));
+    $("#buyCategory").html("Category: " + json.category);
     $("#buySize").html(FileSizeText(json.FileSize));
     $("#buyPrice").html("$" + json.price);
     PopupFormDisplay(true, 'BuyFile');

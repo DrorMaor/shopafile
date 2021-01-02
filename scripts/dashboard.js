@@ -14,6 +14,7 @@ function GetAccountData() {
 }
 
 function GetMyFiles() {
+    $("#divLoader").show();
     $.ajax({
         type: "GET",
         url: "php/files.php",
@@ -21,7 +22,9 @@ function GetMyFiles() {
         dataType: 'text',
         success: function(response) {
             $("#SearchResults").hide();
-            $("#MyFiles").html(MyFilesTable(JSON.parse(response))).show();
+            var table = MyFilesTable(JSON.parse(response));
+            $("#MyFiles").html(table).show();
+            $("#divLoader").hide();
         }
     });
 }

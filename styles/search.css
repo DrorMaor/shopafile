@@ -21,7 +21,11 @@
     padding: 10px;
 }
 
-/* Search Results */
+.SearchResultTD {
+    vertical-align: top;
+    border: 1px solid gray;
+    border-radius: 5px;
+}
 
 .SearchImage {
     padding: 10px;
@@ -41,4 +45,12 @@
     text-align: center;
     overflow-wrap: normal;
 }
-/* -------------- */
+
+.BuyFileName {
+    margin-top: 13px;
+}
+
+#tblSearchResults {
+    border-spacing:20px;
+    font-size: 14px;
+}
