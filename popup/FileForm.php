@@ -1,7 +1,7 @@
 <div id="FileForm" class="PopupForm">
     <div style="width:100%">
         <span class="LargeHeading" id="FileFormHeading"></span>
-        <img src="images/close.png" class="ImageIcon right" onclick="PopupFormDisplay(false, 'FileForm');"></img>
+        <img src="images/close.png" class="ImageIcon right hover" onclick="PopupFormDisplay(false, 'FileForm');"></img>
     </div>
     <br>
     <table>

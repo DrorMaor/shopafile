@@ -1,7 +1,7 @@
 <div id="ItsFree" class="PopupForm">
     <div style="width:100%">
         <span class='LargeHeading'>It's FREE</span>
-        <img src="images/close.png" class="ImageIcon right" onclick="PopupFormDisplay(false, 'ItsFree');"></img>
+        <img src="images/close.png" class="ImageIcon right hover" onclick="PopupFormDisplay(false, 'ItsFree');"></img>
     </div>
     <br>
     <div style="line-height: 1.5;">

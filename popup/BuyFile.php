@@ -1,7 +1,7 @@
 <div id="BuyFile" class="PopupForm">
     <div style="width:100%">
         <span class='LargeHeading'>Buy a File</span>
-            <img src="images/close.png" class="ImageIcon right" onclick="PopupFormDisplay(false, 'BuyFile');"></img>
+            <img src="images/close.png" class="ImageIcon right hover" onclick="PopupFormDisplay(false, 'BuyFile');"></img>
     </div>
     <br>
     <div class="center">

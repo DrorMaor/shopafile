@@ -2,9 +2,6 @@
     cursor: pointer;
     padding-top:3px;
 }
-.ImageIcon:hover {
-    opacity: .75;
-}
 
 .FileImage {
     display: none;
@@ -17,6 +14,6 @@
 }
 
 .BuyFileImage {
-    height: 150px;
-    width: 150px;
+    height: 200px;
+    width: 200px;
 }
