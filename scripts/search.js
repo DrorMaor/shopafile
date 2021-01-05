@@ -26,10 +26,31 @@ function LoadSearchResults(user) {
                 $("#SearchResults").html(table).show();
             }
             else {
-                $("#SearchResults").html("");
                 ShowMsg("No search results found", "redBG");
+                AnimateCategories();
             }
             $("#divLoader").hide();
+        }
+    });
+}
+
+function AnimateCategories() {
+    $("#SearchResults").html("");
+    var ScreenWidth = window.screen.availWidth;
+    var ScreenHeight = window.screen.availHeight;
+    $('#selCategories > option').each(function() {
+        var val = this.value;
+        if (val != -1) {
+            var cat = this.text;
+            var left = Math.floor((Math.random() * ScreenWidth) * .9);
+            var top = Math.floor( (Math.random() * (ScreenHeight * .75)) + (ScreenHeight * .1) );
+            // transform degree
+            var deg = Math.floor(Math.random() * 75);
+            if (Math.random() < .5)
+                deg = deg * -1;
+            var style = "left:" + left + "px; top:" + top + "px; transform:rotate(" + deg + "deg);";
+            var onclick = "$(\"#selCategories\").val(" + val + "); $(\"#SearchKeywords\").val(\"\"); ValidateSearch();";
+            $("#SearchResults").append("<a id='" + cat + "' class='NoSearchResults hover' style='" + style + "' onclick='" + onclick + "'>" + cat + "</a>");
         }
     });
 }
