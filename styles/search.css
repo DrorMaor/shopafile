@@ -50,3 +50,12 @@
     border-spacing:20px;
     font-size: 14px;
 }
+
+.NoSearchResults {
+    position:fixed;
+    cursor:pointer;
+    color:purple;
+    border: 1px solid purple;
+    border-radius: 3px;
+    padding: 3px;
+}
