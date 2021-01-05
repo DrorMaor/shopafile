@@ -12,9 +12,6 @@
     font-size: 25px;
     cursor: pointer;
 }
-#SearchGlyph:hover {
-    opacity: .75;
-}
 
 #divSearch {
     display: none;
@@ -36,9 +33,6 @@
     width: 200px;
     box-shadow:3px 3px 3px 3px #B8B8B8;
     cursor: pointer;
-}
-.SearchImage:hover {
-    opacity: .85;
 }
 
 .SearchDesc {

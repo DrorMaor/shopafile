@@ -1,7 +1,7 @@
 <div id="AccountSettings" class="PopupForm">
     <div style="width:100%">
         <span class='LargeHeading'>Account Settings</span>
-        <img src="images/close.png" class="ImageIcon right" onclick="PopupFormDisplay(false, 'AccountSettings');"></img>
+        <img src="images/close.png" class="ImageIcon right hover" onclick="PopupFormDisplay(false, 'AccountSettings');"></img>
     </div>
     <br>
     <table>

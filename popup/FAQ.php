@@ -1,7 +1,7 @@
 <div id="FAQ" class="PopupForm">
     <div style="width:100%">
         <span class='LargeHeading'>FAQ</span>
-        <img src="images/close.png" class="ImageIcon right" onclick="PopupFormDisplay(false, 'FAQ');"></img>
+        <img src="images/close.png" class="ImageIcon right hover" onclick="PopupFormDisplay(false, 'FAQ');"></img>
     </div>
     <ul>
         <li>

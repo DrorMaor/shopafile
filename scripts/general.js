@@ -1,6 +1,7 @@
 
 $(document).ready(function(){
     PopulateCategories();
+    LoadSearchResults(false);
 });
 
 function ShowMsg(msg, BGcolor) {
@@ -24,10 +25,7 @@ function PopulateCategories() {
         dataType: 'text',
         success: function(response) {
             $("#selCategories").remove();
-            var onclick = "";
-            if($("#SearchResults").css("display") == "block")
-                onclick = "onclick = 'ShowSearchResults();'";
-            var select = $("<select id='selCategories' " + onclick + ">");
+            var select = $("<select id='selCategories'>");
             $("<option />", {value: -1, text: "Select ..."}).appendTo(select);
             var json = JSON.parse(response);
             for (var i = 0; i < json.length; i++) {
@@ -35,6 +33,7 @@ function PopulateCategories() {
                 $("<option />", {value: j.id, text: j.category}).appendTo(select);
             }
             select.appendTo($("#divFileCategories"));
+            select.appendTo($("#divSearchCategories"));
         }
     });
 }

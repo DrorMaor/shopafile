@@ -6,6 +6,10 @@ body {
     display: none;
 }
 
+.hover:hover {
+    opacity: .75;
+}
+
 /* loader */
 #divLoader {
     display: none;
@@ -72,7 +76,7 @@ body {
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     border: 2px black solid;
-    padding: 20px;
+    padding: 10px;
     border-radius: 5px;
     z-index: 9;
     max-height: 500px;
@@ -108,16 +112,10 @@ body {
     border-radius: 7px;
     cursor: pointer;
 }
-.button:hover {
-    opacity: .75;
-}
 
 .RepeatButton {
     font-weight: bold;
     cursor: pointer;
-}
-.RepeatButton:hover {
-    opacity: .75;
 }
 
 .left {
