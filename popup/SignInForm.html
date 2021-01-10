@@ -1,0 +1,38 @@
+<div id="SignInForm" class="PopupForm">
+    <div style="width:100%">
+        <span class="LargeHeading">Sign In</span>
+        <img src="images/close.png" class="ImageIcon right hover" onclick="PopupFormDisplay(false, 'SignInForm');"></img>
+    </div>
+    <br>
+    <table>
+        <tr>
+            <td>
+                User
+            </td>
+            <td>
+                <input type="text" id="SignInUser" value="dror.m.maor@gmail.com">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Password
+            </td>
+            <td>
+                <input type="password" id="SignInPwd" value="testing123">
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <a class="right">Forgot password?</a>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" class="center">
+                <br>
+                <a class="button hover greenBG" id="buttonSignIn" onclick="SignIn();">Sign In</a>
+                &nbsp;
+                <a class="button hover blueBG" id="buttonSignUp" onclick="PopupFormDisplay(true, 'SignUpForm');">Sign Up</a>
+            </td>
+        </tr>
+    </table>
+</div>

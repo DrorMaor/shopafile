@@ -1,12 +1,10 @@
 <?php
     include ("DisplayErrors.php");
     include ("DBconn.php");
-    $select = "select email, PayPal from users where UUID = '" . $_COOKIE["user"] . "'";
+    $select = "select UUID from users where email = '" . $_POST["user"] . "' and password = '" . $_POST["pwd"] . "'";
     $sql = $conn->prepare($select);
     $sql->execute();
-    $rows = array();
     foreach($sql as $row => $cols)
-        array_push($rows, $cols);
-    echo json_encode($rows);
+        echo $cols["UUID"];
     $conn = null;
 ?>

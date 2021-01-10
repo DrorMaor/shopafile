@@ -8,8 +8,7 @@ function SaveEmail() {
         cache: false,
         contentType: false,
         processData: false,
-        success: function(response) {
-            console.log(response);
+        success: function() {
             ShowMsg("Your email address has been updated", 'greenBG');
         }
     });
@@ -25,7 +24,7 @@ function SavePayPal() {
         cache: false,
         contentType: false,
         processData: false,
-        success: function(response) {
+        success: function() {
             ShowMsg("Your PayPal account has been updated", 'greenBG');
         }
     });
@@ -48,7 +47,6 @@ function SavePwd() {
             contentType: false,
             processData: false,
             success: function(response) {
-                console.log(response);
                 if (response != "0") {
                     ShowMsg("Your password has been updated", 'greenBG');
                     $("#acctOldPwd").val("");

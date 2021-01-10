@@ -9,7 +9,7 @@
 }
 
 .green {
-    color:#008450;
+    color:#004d2e;
 }
 
 .greenBG {
@@ -30,4 +30,8 @@
 
 .blue {
     color: blue;
+}
+
+.blueBG {
+    background-color: blue;
 }

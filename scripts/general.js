@@ -1,14 +1,43 @@
 
 $(document).ready(function(){
-    PopulateCategories();
-    LoadSearchResults(false);
+    if (window.location.search != "")
+        return;
+    else {
+        $.ajax({
+            type: "GET",
+            url: "php/traffic.php",
+            data: $(this).serialize(),
+            dataType: 'text',
+            success: function() {
+                PopulateCategories();
+                if (document.cookie.length > 0) {
+                    var kookie = document.cookie.split("=");
+                    if (kookie[0] == "user" && kookie[1] != "-1") {
+                        GetAccountData();
+                        GetMyFiles();
+                        $("#tdSignIn").hide();
+                        $("#tdSignOut").show();
+                    }
+                }
+                LoadSearchResults(false);
+                IncludePopups();
+            }
+        });
+    }
 });
+
+function IncludePopups() {
+    var PopupFiles  = ["AccountSettings", "MessageSeller", "FileForm", "BuyFile", "FAQ", "ItsFree", "SignInForm", "SignUpForm"];
+    for (var i=0; i<PopupFiles.length; i++)
+        $.get("popup/" + PopupFiles[i] + ".html", '', function (data) { $("#PopupDivs").append(data); });
+}
 
 function ShowMsg(msg, BGcolor) {
     $("#divMessage").html(msg).removeClass().addClass(BGcolor).show().delay(2500).fadeOut(750);
 }
 
 function PopupFormDisplay(show, form) {
+    $(".PopupForm").hide();
     var display = (show) ? "block" : "none";
     var opacity = (show) ? .25 : 1;
     $("#overlay").css("display", display);

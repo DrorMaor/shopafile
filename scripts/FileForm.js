@@ -98,7 +98,7 @@ function SaveFile(FileID) {
             cache: false,
             contentType: false,
             processData: false,
-            success: function(response) {
+            success: function() {
                 ShowMsg(msg, BGcolor);
                 PopupFormDisplay(false, "FileForm");
                 GetMyFiles();
