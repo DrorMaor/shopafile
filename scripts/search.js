@@ -35,7 +35,8 @@ function LoadSearchResults(user) {
 }
 
 function AnimateCategories() {
-    $("#SearchResults").html("");
+    $("#MyFiles").hide();
+    $("#SearchResults").html("").show();
     var ScreenWidth = window.screen.availWidth;
     var ScreenHeight = window.screen.availHeight;
     $('#selCategories > option').each(function() {
@@ -93,10 +94,32 @@ function PrepareBuyFileForm(json) {
     });
     $("#buyImage").prop("src", "data:image;base64," + json.image);
     $("#buyFileName").html(json.FileName);
+    $("#msgFileName").html(json.FileName);
     $("#buyDesc").html(DescriptionSpan(json.description, 40, "SearchDesc", "div"));
     $("#buyCategory").html("Category: " + json.category);
     $("#buySize").html(FileSizeText(json.FileSize));
     $("#buyPrice").html("$" + json.price);
     $("#buyUUID").prop("UUID", json.UUID);
     PopupFormDisplay(true, 'BuyFile');
+}
+
+function SendMessage() {
+    var formdata = new FormData();
+    formdata.append('senderEmail', $("#msgEmail").val());
+    formdata.append('FileName', $("#buyFileName").html());
+    formdata.append('FileUUID', $("#buyUUID").prop("UUID"));
+    $.ajax({
+        url: "php/MessageSeller.php",
+        method: "POST",
+        data: formdata,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function(response) {
+            if (response == "1")
+                ShowMsg("Your message has been sent to the seller", "greenBG");
+            else
+                ShowMsg("An error occurred. Please try again", "redBG");
+        }
+    });
 }

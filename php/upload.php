@@ -7,8 +7,9 @@
     $image = $_FILES["image"]["tmp_name"];
     $fileName = basename($_FILES["file"]["name"]);
     $fileFile = $_FILES["file"]["tmp_name"];
-    $insert = "INSERT INTO files (user, FileName, price, description, category, UUID, image, file) ";
-    $insert .= "values (" . $_COOKIE['user'] . ", '" . $fileName . "', $price, '" . $description . "', $category , UUID(), ";
+    $insert = "INSERT INTO files (user, FileName, price, description, category, UUID, image, file) values ( ";
+    $insert .= "(select id from users where UUID = '" . $_COOKIE['user'] . ")";
+    $insert .+ ", '" . $fileName . "', $price, '" . $description . "', $category , UUID(), ";
     $insert .= "'" . base64_encode(file_get_contents($image)) . "', '" . base64_encode(file_get_contents($fileFile)) . "')";
     $sql = $conn->prepare($insert);
     $sql->execute();

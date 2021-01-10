@@ -1,9 +1,9 @@
-function Login() {
+function SignIn() {
     var formdata = new FormData();
-    formdata.append('user', $("#LoginUser").val());
-    formdata.append('pwd', $("#LoginPwd").val());
+    formdata.append('user', $("#SignInUser").val());
+    formdata.append('pwd', $("#SignInPwd").val());
     $.ajax({
-        url: "php/login.php",
+        url: "php/SignIn.php",
         method: "POST",
         data: formdata,
         cache: false,
@@ -12,24 +12,28 @@ function Login() {
         success: function(response) {
             if (response != "") {
                 document.cookie = "user=" + response;
-                PopupFormDisplay(false, "LoginForm");
+                PopupFormDisplay(false, "SignInForm");
                 GetAccountData();
                 GetMyFiles();
-                $("#tdLogin").hide();
-                $("#tdLogout").show();
+                $("#tdSignIn").hide();
+                $("#tdSignOut").show();
             }
             else
-                ShowMsg("There was an error in the login", "redBG");
+                ShowMsg("An error occurred", "redBG");
         }
     });
 }
 
-function Logout () {
-    document.cookie = "user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    $("#tdLogin").show();
-    $("#tdLogout").hide();
+function SignOut () {
+    document.cookie = "user=-1";
+    $("#tdSignIn").show();
+    $("#tdSignOut").hide();
     $("#MyFiles").hide();
     $("#AcctHeading").hide();
     $("#AccountMenu").hide();
     $("#RightLeftArrow").html("⇢");
+}
+
+function SignUp() {
+   
 }

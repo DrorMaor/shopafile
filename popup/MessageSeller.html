@@ -1,0 +1,17 @@
+<div id="MessageSeller" class="PopupForm">
+    <div style="width:100%">
+        <span class='LargeHeading'>Message Seller</span>
+            <img src="images/close.png" class="ImageIcon right hover" onclick="PopupFormDisplay(false, 'MessageSeller');"></img>
+    </div>
+    <br>
+    File: <span class="bold" id="msgFileName"></span>
+    <br>
+    Your Email &nbsp; <input type="text" id="msgEmail">
+    <br>Your message
+    <br>
+    <textarea rows="7" cols="35" id="msgMessage"></textarea>
+    <br> <br>
+    <div class="center">
+        <a class="button hover greenBG" onclick="SendMessage();" class="hide">Send Message</a>
+    </div>
+</div>

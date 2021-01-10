@@ -31,7 +31,7 @@ function GetMyFiles() {
 
 function MyFilesTable(json) {
     var table = "<div class='LargeHeading'>My Files</div>";
-    table += "<a class='button greenBG' title='Upload new file to sell' onclick='UploadNewFile();'>Upload</a> <br>";
+    table += "<a class='button hover greenBG' title='Upload new file to sell' onclick='UploadNewFile();'>Upload</a> <br>";
     table += "<table id='tblMyFiles'>";
     table += '<tr>';
     table += '    <th class="left">File Name</th>';
@@ -78,7 +78,7 @@ function DeleteFile(FileID) {
             url: "php/delete.php?FileID=" + FileID,
             data: $(this).serialize(),
             dataType: 'text',
-            success: function(response) {
+            success: function() {
                 ShowMsg ("The file has been deleted", "redBG");
                 GetMyFiles();
             }

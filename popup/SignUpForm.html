@@ -1,0 +1,37 @@
+<div id="SignUpForm" class="PopupForm">
+    <div style="width:100%">
+        <span class='LargeHeading'>Sign Up</span>
+        <img src="images/close.png" class="ImageIcon right hover" onclick="PopupFormDisplay(false, 'SignUpForm');"></img>
+    </div>
+    <br>
+    <table>
+        <tr>
+            <td>Email Address</td>
+            <td><input type='text' id='SignUpEmail'></td>
+        </tr>
+        <tr>
+            <td>Password</td>
+            <td><input type='password' id='SignUpNewPwd1'></td>
+        </tr>
+        <tr>
+            <td>Confirm</td>
+            <td><input type='password' id='SignUpNewPwd2'></td>
+        </tr>
+        <tr>
+            <td>PayPal</td>
+            <td><input type='text' id='SignUpPayPal'></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="checkbox" id="SignUpAllowed">
+                <label for="SignUpAllowed"> I am legally allowed to sell my files</label>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" class="center">
+                <br>
+                <a class="button hover greenBG" onclick="SignUp();">Sign Up</a>
+            </td>
+        </tr>
+    </table>
+</div>
