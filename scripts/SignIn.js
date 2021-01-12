@@ -12,6 +12,7 @@ function SignIn() {
         success: function(response) {
             if (response != "") {
                 document.cookie = "user=" + response;
+                user = response;
                 PopupFormDisplay(false, "SignInForm");
                 GetAccountData();
                 GetMyFiles();
@@ -30,8 +31,8 @@ function SignOut () {
     $("#tdSignOut").hide();
     $("#MyFiles").hide();
     $("#AcctHeading").hide();
-    $("#AccountMenu").hide();
     $("#RightLeftArrow").html("⇢");
+    LoadSearchResults(false);
 }
 
 function SignUp() {

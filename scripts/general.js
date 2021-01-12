@@ -1,5 +1,26 @@
+var user = "";
 
-$(document).ready(function(){
+$(document).keyup(function(e) {
+    if (e.key === "Escape")
+        PopupFormDisplay(false, "");
+});
+
+function PopupFormDisplay(show, form) {
+    $(".PopupForm").hide();
+    var display = (show) ? "block" : "none";
+    var opacity = (show) ? .25 : 1;
+    $("#overlay").css("display", display);
+    $("#MyFiles").css('opacity', opacity);
+    $("#SearchResults").css('opacity', opacity);
+    $("#" + form).css("display", display);
+}
+
+var PopupFiles = null;
+$.getJSON("popup/files.json", function(json){
+    PopupFiles = json;
+});
+
+$(document).ready(function() {
     if (window.location.search != "")
         return;
     else {
@@ -13,6 +34,7 @@ $(document).ready(function(){
                 if (document.cookie.length > 0) {
                     var kookie = document.cookie.split("=");
                     if (kookie[0] == "user" && kookie[1] != "-1") {
+                        user = kookie[1];  // set user in global variable
                         GetAccountData();
                         GetMyFiles();
                         $("#tdSignIn").hide();
@@ -20,30 +42,43 @@ $(document).ready(function(){
                     }
                 }
                 LoadSearchResults(false);
-                IncludePopups();
+                
+                // include popups
+                $.each(PopupFiles, function(index, PopupFiles) {
+                    $.each(PopupFiles, function(form, elements) {
+                        $.get("popup/" + form + ".html", '', function (data) { $("#PopupDivs").append(data); });
+                        $.each(elements, function(index, elements) {
+                            $.each(elements, function(id, type) {
+                                $("#" + type).val(3*3);
+                            });
+                        });
+                    });
+                });
             }
         });
     }
 });
 
+
 function IncludePopups() {
-    var PopupFiles  = ["AccountSettings", "MessageSeller", "FileForm", "BuyFile", "FAQ", "ItsFree", "SignInForm", "SignUpForm"];
-    for (var i=0; i<PopupFiles.length; i++)
-        $.get("popup/" + PopupFiles[i] + ".html", '', function (data) { $("#PopupDivs").append(data); });
+
+
+
+
+       
+
+
+        //$.get("popup/" + PopupFiles[i] + ".html", '', function (data) { $("#PopupDivs").append(data); });
 }
+
+/*
+var PopupFiles = [
+
+];
+*/
 
 function ShowMsg(msg, BGcolor) {
     $("#divMessage").html(msg).removeClass().addClass(BGcolor).show().delay(2500).fadeOut(750);
-}
-
-function PopupFormDisplay(show, form) {
-    $(".PopupForm").hide();
-    var display = (show) ? "block" : "none";
-    var opacity = (show) ? .25 : 1;
-    $("#overlay").css("display", display);
-    $("#MyFiles").css('opacity', opacity);
-    $("#SearchResults").css('opacity', opacity);
-    $("#" + form).css("display", display);
 }
 
 function PopulateCategories() {

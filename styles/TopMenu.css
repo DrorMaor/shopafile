@@ -14,11 +14,8 @@
     cursor: pointer;
     background-color: #F5F5F5;
 }
-
-#AccountMenu {
-    position: absolute;
-    display: none;
-    padding: 10px;
+.MenuItem:hover {
+    border: 1px black dotted;
 }
 
 .TopPadding {

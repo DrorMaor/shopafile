@@ -1,7 +1,7 @@
 <?php
-    include ("DisplayErrors.php");
     include ("DBconn.php");
-    $select = "select email, PayPal from users where UUID = '" . $_COOKIE["user"] . "'";
+    //include ("DisplayErrors.php");
+    $select = "select email, PayPal from users where UUID = '" . $_GET["user"] . "'";
     $sql = $conn->prepare($select);
     $sql->execute();
     $rows = array();
