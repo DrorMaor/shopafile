@@ -1,6 +1,6 @@
 <?php
     include ("DBconn.php");
-    include ("DisplayErrors.php");
+    //include ("DisplayErrors.php");
     $description = $_POST["description"];
     $category = $_POST["category"];
     $price = $_POST["price"];

@@ -1,4 +1,4 @@
-/*  colors */
+/* font color */
 
 .red {
     color:#B81D13;
@@ -11,6 +11,13 @@
 .green {
     color:#004d2e;
 }
+
+.blue {
+    color: blue;
+}
+
+
+/* BG colors */
 
 .greenBG {
     background-color: #008450;
@@ -26,10 +33,6 @@
 
 .yellowBG {
     background-color: #f2ef99;
-}
-
-.blue {
-    color: blue;
 }
 
 .blueBG {

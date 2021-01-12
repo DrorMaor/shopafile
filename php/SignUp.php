@@ -1,6 +1,6 @@
 <?php
-    include ("DisplayErrors.php");
     include ("DBconn.php");
+    //include ("DisplayErrors.php");
     $insert = "insert into users (email, password, PayPal, active) values(";
     $insert .= "'" . $_POST["email"] . "', ";
     $insert .= "'" . $_POST["pwd"] . "', ";

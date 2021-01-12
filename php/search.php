@@ -1,6 +1,5 @@
 <?php
     include ("DBconn.php");
-    include ("DisplayErrors.php");
     $select = "select f.id, f.FileName, f.price, f.description, f.UUID, c.category, f.image, length(file) as FileSize
         from files f inner join categories c on c.id = f.category where 1 = 1 ";  // this final where is to automatically include a "where" clause, so the following "and"s are valid syntax
     

@@ -1,7 +1,7 @@
 function GetAccountData() {
     $.ajax({
         type: "GET",
-        url: "php/account.php",
+        url: "php/account.php?user=" + user,
         data: $(this).serialize(),
         dataType: 'text',
         success: function(response) {
@@ -17,7 +17,7 @@ function GetMyFiles() {
     $("#divLoader").show();
     $.ajax({
         type: "GET",
-        url: "php/files.php",
+        url: "php/files.php?user=" + user,
         data: $(this).serialize(),
         dataType: 'text',
         success: function(response) {

@@ -10,6 +10,22 @@ body {
     opacity: .75;
 }
 
+.bold {
+    font-weight: bold;
+}
+
+.left {
+    text-align: left;
+}
+
+.center {
+    text-align: center;
+}
+
+.right {
+    float: right;
+}
+
 /* loader */
 #divLoader {
     display: none;
@@ -83,10 +99,6 @@ body {
     overflow-y: auto;
 }
 
-.bold {
-    font-weight: bold;
-}
-
 #overlay {
     display: none;
     position: absolute;
@@ -116,16 +128,4 @@ body {
 .RepeatButton {
     font-weight: bold;
     cursor: pointer;
-}
-
-.left {
-    text-align: left;
-}
-
-.center {
-    text-align: center;
-}
-
-.right {
-    float: right;
 }

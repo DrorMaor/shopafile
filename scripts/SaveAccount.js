@@ -1,6 +1,7 @@
 function SaveEmail() {
     var formdata = new FormData();
     formdata.append('email', $("#acctEmail").val());
+    formdata.append('user', user);
     $.ajax({
         url: "php/save/SaveEmail.php",
         method: "POST",
@@ -17,6 +18,7 @@ function SaveEmail() {
 function SavePayPal() {
     var formdata = new FormData();
     formdata.append('PayPal', $("#acctPayPal").val());
+    formdata.append('user', user);
     $.ajax({
         url: "php/save/SavePayPal.php",
         method: "POST",
@@ -39,6 +41,7 @@ function SavePwd() {
         formdata.append('OldPwd', $("#acctOldPwd").val());
         formdata.append('NewPwd1', $("#acctNewPwd1").val());
         formdata.append('NewPwd2', $("#acctNewPwd2").val());
+        formdata.append('user', user);
         $.ajax({
             url: "php/save/SavePwd.php",
             method: "POST",
