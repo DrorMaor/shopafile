@@ -1,14 +1,10 @@
 function CleanFileForm(type) {
     if (type == 'upload') {
         $("#FileFormHeading").html("Upload File");
-        $("#fileDescription").val("");
         $("#selCategories").val(-1);
-        $("#filePrice").val("");
-        $('#fileYWR').html("");
         $("#fileImageCurrent").prop('src', "data:image;base64,");
         $("#divImageCurrent").hide();
         $("#divFileName").hide();
-        $("#fileAllowed").prop("checked", false);
         $("#buttonUploadFile").show();
         $("#buttonEditFile").hide();
     }
@@ -19,15 +15,6 @@ function CleanFileForm(type) {
         $("#buttonUploadFile").hide();
         $("#buttonEditFile").show();
     }
-
-    // remove yellow highlights, if they remained
-    $("#spnDescription").removeClass("yellowBG");
-    $("#spnCategory").removeClass("yellowBG");
-    $("#spnPrice").removeClass("yellowBG");
-    $("#spnImage").removeClass("yellowBG");
-    $("#spnFile").removeClass("yellowBG");
-    $("#tdAllowed").removeClass("yellowBG");
-
     PopupFormDisplay(true, "FileForm");
 }
 

@@ -1,4 +1,5 @@
 var user = "";
+var PopupFiles = null;
 
 $(document).keyup(function(e) {
     if (e.key === "Escape")
@@ -13,69 +14,85 @@ function PopupFormDisplay(show, form) {
     $("#MyFiles").css('opacity', opacity);
     $("#SearchResults").css('opacity', opacity);
     $("#" + form).css("display", display);
+    
+    if (!show)
+        ClearFormFields(form);
 }
 
-var PopupFiles = null;
-$.getJSON("popup/files.json", function(json){
-    PopupFiles = json;
-});
-
-$(document).ready(function() {
-    if (window.location.search != "")
-        return;
-    else {
-        $.ajax({
-            type: "GET",
-            url: "php/traffic.php",
-            data: $(this).serialize(),
-            dataType: 'text',
-            success: function() {
-                PopulateCategories();
-                if (document.cookie.length > 0) {
-                    var kookie = document.cookie.split("=");
-                    if (kookie[0] == "user" && kookie[1] != "-1") {
-                        user = kookie[1];  // set user in global variable
-                        GetAccountData();
-                        GetMyFiles();
-                        $("#tdSignIn").hide();
-                        $("#tdSignOut").show();
+function ClearFormFields(form) {
+    $.each(PopupFiles, function(index, PopupFiles) {
+        $.each(PopupFiles, function(index, elements) {
+            if (index == form && form != "AccountSettings") {
+                $.each(elements, function(index, element) {
+                    var id = $("#" + element.id);
+                    switch (element.type) {
+                        case "text":
+                            id.val("");
+                            break;
+                        case "textarea":
+                            id.val("");
+                            break;
+                        case "yelow":
+                            id.css("background-color", "white");
+                            break;
+                        case "span":
+                            id.html("");
+                            break;
+                        case "checkbox":
+                            id.prop("checked", false);
                     }
-                }
-                LoadSearchResults(false);
-                
-                // include popups
-                $.each(PopupFiles, function(index, PopupFiles) {
-                    $.each(PopupFiles, function(form, elements) {
-                        $.get("popup/" + form + ".html", '', function (data) { $("#PopupDivs").append(data); });
-                        $.each(elements, function(index, elements) {
-                            $.each(elements, function(id, type) {
-                                $("#" + type).val(3*3);
-                            });
-                        });
-                    });
                 });
             }
         });
+    });
+}
+
+$(document).ready(function() {
+    if (window.location.search != "") 
+        return;
+    else {
+        IncludePopups();
+
+        // try to match logged in user
+        if (document.cookie.length > 0 && document.cookie != "user=-1") {
+            var kookie = document.cookie.split("=");
+            if (kookie[0] == "user" && kookie[1] != "-1") {
+                user = kookie[1];  // set user in global variable
+                GetAccountData();
+                GetMyFiles();
+                $("#tdSignIn").hide();
+                $("#tdSignOut").show();
+            }
+        }
+        else
+            LoadSearchResults(false);
+
+        RecordTraffic();
+        PopulateCategories();
     }
 });
 
-
-function IncludePopups() {
-
-
-
-
-       
-
-
-        //$.get("popup/" + PopupFiles[i] + ".html", '', function (data) { $("#PopupDivs").append(data); });
+function RecordTraffic() {
+    $.ajax({
+        type: "GET",
+        url: "php/traffic.php",
+        data: $(this).serialize(),
+        dataType: 'text'
+    });
 }
 
-/*
-var PopupFiles = [
-
-];
-*/
+function IncludePopups() {
+    $.getJSON("popup/files.json", function(json) {
+        PopupFiles = json;
+        $.each(PopupFiles, function(index, PopupFiles) {
+            $.each(PopupFiles, function(form, elements) {
+                $.get("popup/" + form + ".html", '', function (data) {
+                    $("#PopupDivs").append(data); // add the actual popup form
+                });
+            });
+        });
+    });
+}
 
 function ShowMsg(msg, BGcolor) {
     $("#divMessage").html(msg).removeClass().addClass(BGcolor).show().delay(2500).fadeOut(750);
