@@ -31,10 +31,22 @@ function SignOut () {
     $("#tdSignOut").hide();
     $("#MyFiles").hide();
     $("#AcctHeading").hide();
-    $("#RightLeftArrow").html("⇢");
     LoadSearchResults(false);
 }
 
 function SignUp() {
    
 }
+
+function SendPasswordResetEmail() {
+    if ($("#SignInUser").val() == "") {
+        alert ("Please enter a valid email address, and then click 'Forgot password?' again");
+    }
+    else {
+        var msg = "Would you like us to send an email to " + $("#SignInUser").val() + " to reset your password?";
+        if (confirm(msg)) {
+            
+        }
+    }
+}
+

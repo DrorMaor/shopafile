@@ -26,6 +26,12 @@ body {
     float: right;
 }
 
+.link {
+    font-style: italic;
+    font-size: smaller;
+    cursor: pointer;
+}
+
 /* loader */
 #divLoader {
     display: none;
@@ -35,7 +41,6 @@ body {
     width: 60px;
     height: 60px;
     animation: spin 2s linear infinite;
-
     margin: 0;
     position: absolute;
     top: 50%;
