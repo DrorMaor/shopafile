@@ -1,121 +1,47 @@
 {
     "popups": {
       "AccountSettings": [
-        {
-          "id": "acctEmail",
-          "type": "text"
-        },
-        {
-          "id": "acctOldPwd",
-          "type": "text"
-        },
-        {
-          "id": "acctNewPwd1",
-          "type": "text"
-        },
-        {
-          "id": "acctNewPwd2",
-          "type": "text"
-        },
-        {
-          "id": "acctPayPal",
-          "type": "text"
-        }
+        {"id": "acctEmail", "type": "text"},
+        {"id": "acctOldPwd", "type": "text"},
+        {"id": "acctNewPwd1", "type": "text"},
+        {"id": "acctNewPwd2", "type": "text"},
+        {"id": "acctPayPal", "type": "text"}
       ],
       "MessageSeller": [
-        {
-          "id": "msgFileName",
-          "type": "span"
-        },
-        {
-          "id": "msgEmail",
-          "type": "text"
-        },
-        {
-          "id": "msgMessage",
-          "type": "textarea"
-        }
+        {"id": "msgFileName", "type": "span"},
+        {"id": "msgEmail", "type": "text"},
+        {"id": "msgMessage", "type": "textarea"}
       ],
       "FileForm": [
-        {
-          "id": "spnDescription",
-          "type": "yellow"
-        },
-        {
-          "id": "fileDescription",
-          "type": "textarea"
-        },
-        {
-          "id": "spnDescription",
-          "type": "yellow"
-        },
-        {
-          "id": "spnPrice",
-          "type": "yellow"
-        },
-        {
-          "id": "filePrice",
-          "type": "text"
-        },
-        {
-          "id": "fileYWR",
-          "type": "span"
-        },
-        {
-          "id": "spnImage",
-          "type": "yellow"
-        },
-        {
-          "id": "fileImageCurrent",
-          "type": "image"
-        },
-        {
-          "id": "spnFile",
-          "type": "yellow"
-        },
-        {
-          "id": "fileFileName",
-          "type": "span"
-        },
-        {
-          "id": "fileAllowed",
-          "type": "checkbox"
-        }
+        {"id": "spnDescription", "type": "yellow"},
+        {"id": "fileDescription", "type": "textarea"},
+        {"id": "spnDescription", "type": "yellow"},
+        {"id": "spnPrice", "type": "yellow"},
+        {"id": "filePrice", "type": "text"},
+        {"id": "fileYWR", "type": "span"},
+        {"id": "spnImage", "type": "yellow"},
+        {"id": "fileImageCurrent", "type": "image"},
+        {"id": "spnFile", "type": "yellow"},
+        {"id": "fileFileName", "type": "span"},
+        {"id": "tdAllowed", "type": "yellow"}
       ],
       "SignInForm": [
-        {
-          "id": "SignInUser",
-          "type": "text"
-        },
-        {
-          "id": "SignInPwd",
-          "type": "text"
-        }
+        {"id": "SignInUser", "type": "text"},
+        {"id": "SignInPwd", "type": "text"}
       ],
       "SignUpForm": [
-        {
-          "id": "SignUpEmail",
-          "type": "text"
-        },
-        {
-          "id": "SignUpNewPwd1",
-          "type": "text"
-        },
-        {
-          "id": "SignUpNewPwd2",
-          "type": "text"
-        },
-        {
-          "id": "SignUpPayPal",
-          "type": "text"
-        },
-        {
-          "id": "SignUpAllowed",
-          "type": "checkbox"
-        }
+        {"id": "SignUpEmail", "type": "text"},
+        {"id": "SignUpNewPwd1", "type": "text"},
+        {"id": "SignUpNewPwd2", "type": "text"},
+        {"id": "SignUpPayPal", "type": "text"},
+        {"id": "SignUpAllowed", "type": "checkbox"}
       ],
       "BuyFile": [],
       "FAQ": [],
-      "ItsFree": []
+      "ItsFree": [],
+      "ContactUs": [
+        {"id": "contactEmail", "type": "text"},
+        {"id": "contactMessage", "type": "textarea"}
+      ]
     }
   }

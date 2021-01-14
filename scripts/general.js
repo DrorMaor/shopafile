@@ -27,12 +27,10 @@ function ClearFormFields(form) {
                     var id = $("#" + element.id);
                     switch (element.type) {
                         case "text":
-                            id.val("");
-                            break;
                         case "textarea":
                             id.val("");
                             break;
-                        case "yelow":
+                        case "yellow":
                             id.css("background-color", "white");
                             break;
                         case "span":
@@ -136,4 +134,8 @@ function DescriptionSpan(desc, chars, className, DivOrSpan) {
         retVal += " title='" + desc + "'>" + desc.substring(0, chars) + " ...";
     retVal += "</" + DivOrSpan + ">";
     return retVal;
+}
+
+function ContactUs() {
+    ShowMsg("Thanks for contacting us. We'll get back to you as soon as we can.", "greenBG");
 }
