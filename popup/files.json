@@ -40,8 +40,8 @@
       "FAQ": [],
       "ItsFree": [],
       "ContactUs": [
-        {"id": "contactEmail", "type": "text"},
-        {"id": "contactMessage", "type": "textarea"}
+        {"id": "contactEmail", "type": "text", "validate": "email"},
+        {"id": "contactMessage", "type": "textarea", "validate": "text"}
       ]
     }
   }

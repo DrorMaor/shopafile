@@ -1,8 +1,8 @@
 function ValidateSearch() {
     var SearchKW = $("#SearchKeywords").val().trim();
     var selCat = $("#selCategories").val();
-    if (SearchKW.length < 3 && selCat == -1)
-        ShowMsg("Please enter valid search criteria", "redBG");
+    if (SearchKW.length < 3 && selCat == -1) 
+        AnimateCategories();
     else
         LoadSearchResults(true);
 }
@@ -25,16 +25,17 @@ function LoadSearchResults(user) {
                 // display the results
                 $("#SearchResults").html(table).show();
             }
-            else {
-                ShowMsg("No search results found", "redBG");
+            else 
                 AnimateCategories();
-            }
+
             $("#divLoader").hide();
         }
     });
 }
 
 function AnimateCategories() {
+    ShowMsg("No search results found", "redBG");
+    
     $("#MyFiles").hide();
     $("#SearchResults").html("").show();
     var ScreenWidth = window.screen.availWidth;
