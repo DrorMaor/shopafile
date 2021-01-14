@@ -139,3 +139,44 @@ function DescriptionSpan(desc, chars, className, DivOrSpan) {
 function ContactUs() {
     ShowMsg("Thanks for contacting us. We'll get back to you as soon as we can.", "greenBG");
 }
+
+function IsEmailValid(email) {
+    var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    var valid = regex.test(email);
+    return valid;
+}
+
+function ValidateForm(form) {
+    var msg = ""
+    $.each(PopupFiles, function(index, PopupFiles) {
+        $.each(PopupFiles, function(index, elements) {
+            if (index == form) {
+                $.each(elements, function(index, element) {
+                    var id = $("#" + element.id);
+                    if (element.validate != "") {
+                        switch (element.validate) {
+                            case "text":
+                                if (id.val() == "")
+                                    msg += "Please provide some text <br>";
+                                break;
+                            case "email":
+                                if (id.val() == "" || !IsEmailValid(id.val()))
+                                    msg += "The email is invalid <br>";
+                                break;
+                            case "checkbox":
+                                if (!id.prop("checked")) 
+                                    msg += "You must check the checkbox <br>";
+                                break;
+                        }
+                    }
+                });
+            }
+        });
+    });
+    if (msg != "") {
+        ShowMsg(msg, "redBG");
+        return false;
+    }
+    else
+        return true;
+}

@@ -67,12 +67,11 @@ body {
     border: 1px black solid;
     border-radius: 5px;
     position: absolute;
-    top: 20%;
-    left: 45%;
-    -ms-transform: translate(-20%, -50%);
-    transform: translate(-20%, -50%);
+    top: 25%;
+    left: 50%;
+    -ms-transform: translate(-25%, -50%);
+    transform: translate(-25%, -50%);
 }
-
 
 .LargeHeading {
     font-weight: bold;
