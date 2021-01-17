@@ -11,9 +11,9 @@ function PopupFormDisplay(show, form) {
     $(".PopupForm").hide();
     var display = (show) ? "block" : "none";
     var opacity = (show) ? .25 : 1;
+    var MouseEvents = (show) ? "none" : "auto";
     $("#overlay").css("display", display);
-    $("#MyFiles").css('opacity', opacity);
-    $("#SearchResults").css('opacity', opacity);
+    $(".MouseEvents").css('opacity', opacity).css("pointer-events", MouseEvents);
     $("#" + form).css("display", display);
     
     if (!show)
