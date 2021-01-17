@@ -1,11 +1,11 @@
 {
     "popups": {
       "AccountSettings": [
-        {"id": "acctEmail", "type": "text"},
-        {"id": "acctOldPwd", "type": "text"},
-        {"id": "acctNewPwd1", "type": "text"},
-        {"id": "acctNewPwd2", "type": "text"},
-        {"id": "acctPayPal", "type": "text"}
+        {"id": "acctEmail", "type": "text", "validate": "email"},
+        {"id": "acctOldPwd", "type": "text", "validate": "pwd"},
+        {"id": "acctNewPwd1", "type": "text", "validate": "pwd"},
+        {"id": "acctNewPwd2", "type": "text", "validate": "pwd"},
+        {"id": "acctPayPal", "type": "text", "validate": "email"}
       ],
       "MessageSeller": [
         {"id": "msgFileName", "type": "span"},
