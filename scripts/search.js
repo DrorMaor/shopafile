@@ -34,7 +34,7 @@ function LoadSearchResults(user) {
 }
 
 function AnimateCategories() {
-    ShowMsg("No search results found", "redBG");
+    ShowMsg(11, "redBG");
     
     $("#MyFiles").hide();
     $("#SearchResults").html("").show();
@@ -118,9 +118,9 @@ function SendMessage() {
         processData: false,
         success: function(response) {
             if (response == "1")
-                ShowMsg("Your message has been sent to the seller", "greenBG");
+                ShowMsg(12, "greenBG");
             else
-                ShowMsg("An error occurred. Please try again", "redBG");
+                ShowMsg(13, "redBG");
         }
     });
 }

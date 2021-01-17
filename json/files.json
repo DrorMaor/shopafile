@@ -9,8 +9,8 @@
       ],
       "MessageSeller": [
         {"id": "msgFileName", "type": "span"},
-        {"id": "msgEmail", "type": "text"},
-        {"id": "msgMessage", "type": "textarea"}
+        {"id": "msgEmail", "type": "text", "validate": "email"},
+        {"id": "msgMessage", "type": "textarea", "validate": "text"}
       ],
       "FileForm": [
         {"id": "spnDescription", "type": "yellow"},
@@ -26,15 +26,15 @@
         {"id": "tdAllowed", "type": "yellow"}
       ],
       "SignInForm": [
-        {"id": "SignInUser", "type": "text"},
-        {"id": "SignInPwd", "type": "text"}
+        {"id": "SignInUser", "type": "text", "validate": "email"},
+        {"id": "SignInPwd", "type": "text", "validate": "pwd"}
       ],
       "SignUpForm": [
-        {"id": "SignUpEmail", "type": "text"},
-        {"id": "SignUpNewPwd1", "type": "text"},
-        {"id": "SignUpNewPwd2", "type": "text"},
-        {"id": "SignUpPayPal", "type": "text"},
-        {"id": "SignUpAllowed", "type": "checkbox"}
+        {"id": "SignUpEmail", "type": "text", "validate": "email"},
+        {"id": "SignUpNewPwd1", "type": "text", "validate": "pwd"},
+        {"id": "SignUpNewPwd2", "type": "text", "validate": "pwd"},
+        {"id": "SignUpPayPal", "type": "text", "validate": "pwd"},
+        {"id": "SignUpAllowed", "type": "checkbox", "validate": "checkbox"}
       ],
       "BuyFile": [],
       "FAQ": [],
