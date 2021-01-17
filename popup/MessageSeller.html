@@ -12,6 +12,6 @@
     <textarea rows="7" cols="35" id="msgMessage"></textarea>
     <br> <br>
     <div class="center">
-        <a class="button hover greenBG" onclick="SendMessage();" class="hide">Send Message</a>
+        <a class="button hover greenBG" onclick="if (ValidateForm('MessageSeller')) SendMessage();" class="hide">Send Message</a>
     </div>
 </div>

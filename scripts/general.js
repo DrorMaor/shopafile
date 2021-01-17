@@ -1,5 +1,6 @@
 var user = "";
 var PopupFiles = null;
+var messages = null;
 
 $(document).keyup(function(e) {
     if (e.key === "Escape")
@@ -50,7 +51,8 @@ $(document).ready(function() {
         return;
     else {
         IncludePopups();
-
+        LoadMessages();
+       
         // try to match logged in user
         if (document.cookie.length > 0 && document.cookie != "user=-1") {
             var kookie = document.cookie.split("=");
@@ -80,7 +82,7 @@ function RecordTraffic() {
 }
 
 function IncludePopups() {
-    $.getJSON("popup/files.json", function(json) {
+    $.getJSON("json/files.json", function(json) {
         PopupFiles = json;
         $.each(PopupFiles, function(index, PopupFiles) {
             $.each(PopupFiles, function(form, elements) {
@@ -92,8 +94,26 @@ function IncludePopups() {
     });
 }
 
+function LoadMessages() {
+    $.getJSON("json/messages.json", function(json) {
+        messages = json;
+    });
+}
+
 function ShowMsg(msg, BGcolor) {
-    $("#divMessage").html(msg).removeClass().addClass(BGcolor).show().delay(2500).fadeOut(750);
+    $.each(messages, function(index, messages) {
+        $.each(messages, function(index, message) {
+            if (message.id == msg) 
+                msg = message.msg;
+        });
+    });
+
+    if (msg.indexOf("<ul>") >= 0)
+        $("#divMessage").css("text-align", "left");
+    else
+        $("#divMessage").css("text-align", "center");
+    // finally, show the msg
+    $("#divMessage").html(msg).removeClass().addClass(BGcolor).show().delay(2500).fadeOut(750)
 }
 
 function PopulateCategories() {
@@ -137,7 +157,7 @@ function DescriptionSpan(desc, chars, className, DivOrSpan) {
 }
 
 function ContactUs() {
-    ShowMsg("Thanks for contacting us. We'll get back to you as soon as we can.", "greenBG");
+    ShowMsg(10, "greenBG");
 }
 
 function IsEmailValid(email) {
@@ -147,7 +167,7 @@ function IsEmailValid(email) {
 }
 
 function ValidateForm(form) {
-    var msg = ""
+    var msg = "<ul>";
     $.each(PopupFiles, function(index, PopupFiles) {
         $.each(PopupFiles, function(index, elements) {
             if (index == form) {
@@ -157,15 +177,19 @@ function ValidateForm(form) {
                         switch (element.validate) {
                             case "text":
                                 if (id.val() == "")
-                                    msg += "Please provide some text <br>";
+                                    msg += "<li>Please provide some text</li>";
                                 break;
                             case "email":
                                 if (id.val() == "" || !IsEmailValid(id.val()))
-                                    msg += "The email is invalid <br>";
+                                    msg += "<li>The email is invalid </li>";
                                 break;
                             case "checkbox":
                                 if (!id.prop("checked")) 
-                                    msg += "You must check the checkbox <br>";
+                                    msg += "<li>You must check the checkbox</li>";
+                                break;
+                            case "pwd":
+                                if (id.val() == "")
+                                    msg += "<li>Enter your password</li>";
                                 break;
                         }
                     }
@@ -173,7 +197,8 @@ function ValidateForm(form) {
             }
         });
     });
-    if (msg != "") {
+    msg += "</ul>";
+    if (msg != "<ul></ul>") {
         ShowMsg(msg, "redBG");
         return false;
     }

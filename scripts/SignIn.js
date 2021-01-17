@@ -20,7 +20,7 @@ function SignIn() {
                 $("#tdSignOut").show();
             }
             else
-                ShowMsg("An error occurred", "redBG");
+                ShowMsg(6, "redBG");
         }
     });
 }
@@ -35,13 +35,12 @@ function SignOut () {
 }
 
 function SignUp() {
-   
+    ShowMsg(15, "greenBG");
 }
 
 function SendPasswordResetEmail() {
-    if ($("#SignInUser").val() == "") {
-        alert ("Please enter a valid email address, and then click 'Forgot password?' again");
-    }
+    if ($("#SignInUser").val() == "")
+        ShowMsg(7, "redBG");
     else {
         var msg = "Would you like us to send an email to " + $("#SignInUser").val() + " to reset your password?";
         if (confirm(msg)) {

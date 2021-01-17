@@ -60,7 +60,7 @@ function MyFilesTable(json) {
         table += "<td>$" + parseFloat(j.earnings).toFixed(2) + "</td>";
         // right side tool links
         var title = "Click to copy the purchase link. Share it with your friends so they can buy your file";
-        var onclick = "CopyLink('" + j.UUID + "'); ShowMsg('The purchase link to this file has been copied to the clipboard', 'greenBG');";
+        var onclick = "CopyLink('" + j.UUID + "'); ShowMsg(8, 'greenBG');";
         table += "<td> <a class='RepeatButton green' title='" + title + "' onclick=\"" + onclick + "\">Link</a> &nbsp;";
         table += "<a class='RepeatButton orange' onclick='GetUpdateData(" + FileID + ");'>Edit</a> &nbsp;";
         table += "<a class='RepeatButton red' onclick='DeleteFile(" + FileID + ");'>Delete</a> </td>";
@@ -79,7 +79,7 @@ function DeleteFile(FileID) {
             data: $(this).serialize(),
             dataType: 'text',
             success: function() {
-                ShowMsg ("The file has been deleted", "redBG");
+                ShowMsg (9, "redBG");
                 GetMyFiles();
             }
         });

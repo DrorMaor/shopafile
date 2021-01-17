@@ -140,7 +140,7 @@ function ValidateFileForm() {
         $("#tdAllowed").removeClass("yellowBG");
 
     if (!valid)
-        ShowMsg("Please correct the highlighted fields", "redBG");
+        ShowMsg(14, "redBG");
     return valid;
 }
 

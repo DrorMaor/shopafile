@@ -10,7 +10,7 @@ function SaveEmail() {
         contentType: false,
         processData: false,
         success: function() {
-            ShowMsg("Your email address has been updated", 'greenBG');
+            ShowMsg(1, 'greenBG');
         }
     });
 }
@@ -27,14 +27,14 @@ function SavePayPal() {
         contentType: false,
         processData: false,
         success: function() {
-            ShowMsg("Your PayPal account has been updated", 'greenBG');
+            ShowMsg(2, 'greenBG');
         }
     });
 }
 
 function SavePwd() {
     if ($("#acctNewPwd1").val() != $("#acctNewPwd2").val()) {
-        ShowMsg("The new passwords don't match", 'redBG');
+        ShowMsg(3, 'redBG');
     }
     else {
         var formdata = new FormData();
@@ -51,13 +51,13 @@ function SavePwd() {
             processData: false,
             success: function(response) {
                 if (response != "0") {
-                    ShowMsg("Your password has been updated", 'greenBG');
+                    ShowMsg(4, 'greenBG');
                     $("#acctOldPwd").val("");
                     $("#acctNewPwd1").val("");
                     $("#acctNewPwd2").val("");
                 }
                 else
-                    ShowMsg("An error occurred. Please try again", 'redBG');
+                    ShowMsg(5, 'redBG');
             }
         });
     }
