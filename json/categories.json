@@ -1,0 +1,26 @@
+{
+    "categories": [
+        {"id": 14, "cat": "3D Model"},
+        {"id": 10, "cat": "Article"},
+        {"id": 16, "cat": "Artwork"},
+        {"id": 4, "cat": "Audio"},
+        {"id": 9, "cat": "Browser Plugin"},
+        {"id": 18, "cat": "Course"},
+        {"id": 17, "cat": "Document"},
+        {"id": 2, "cat": "E-book"},
+        {"id": 19, "cat": "Font"},
+        {"id": 5, "cat": "Game"},
+        {"id": 7, "cat": "Graphics"},
+        {"id": 22, "cat": "Image"},
+        {"id": 3, "cat": "Music"},
+        {"id": 13, "cat": "Presentation"},
+        {"id": 11, "cat": "Ringtone"},
+        {"id": 1, "cat": "Software"},
+        {"id": 6, "cat": "Sound Effect"},
+        {"id": 20, "cat": "Template"},
+        {"id": 15, "cat": "Theme"},
+        {"id": 8, "cat": "Video"},
+        {"id": 12, "cat": "Wallpaper"},
+        {"id": 21, "cat": "WordPress"}
+    ]
+}

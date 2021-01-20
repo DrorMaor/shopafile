@@ -20,7 +20,7 @@ function SignIn() {
                 $("#tdSignOut").show();
             }
             else
-                ShowMsg(6, "redBG");
+                ShowMsg([6], "redBG");
         }
     });
 }
@@ -35,12 +35,12 @@ function SignOut () {
 }
 
 function SignUp() {
-    ShowMsg(15, "greenBG");
+    ShowMsg([15], "greenBG");
 }
 
 function SendPasswordResetEmail() {
     if ($("#SignInUser").val() == "")
-        ShowMsg(7, "redBG");
+        ShowMsg([7], "redBG");
     else {
         var msg = "Would you like us to send an email to " + $("#SignInUser").val() + " to reset your password?";
         if (confirm(msg)) {

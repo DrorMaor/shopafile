@@ -14,6 +14,13 @@
         {"id": 12, "msg": "Your message has been sent to the seller"},
         {"id": 13, "msg": "An error occurred. Please try again."},
         {"id": 14, "msg": "Please correct the highlighted fields"},
-        {"id": 15, "msg": "An email has been mailed to you"}
+        {"id": 15, "msg": "An email has been mailed to you"},
+        {"id": 16, "msg": "Please provide some text"},
+        {"id": 17, "msg": "An email address is required"},
+        {"id": 18, "msg": "The email address is invalid"},
+        {"id": 19, "msg": "You must check the checkbox"},
+        {"id": 20, "msg": "Enter your password"},
+        {"id": 21, "msg": "Enter your PayPal account"},
+        {"id": 22, "msg": "The PayPal account is invalid"}
     ]
 }

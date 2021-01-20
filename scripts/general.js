@@ -1,6 +1,7 @@
 var user = "";
-var PopupFiles = null;
 var messages = null;
+var PopupFiles = null;
+var categories = null;
 
 $(document).keyup(function(e) {
     if (e.key === "Escape")
@@ -52,7 +53,7 @@ $(document).ready(function() {
     else {
         IncludePopups();
         LoadMessages();
-       
+        PopulateCategories("Search");
         // try to match logged in user
         if (document.cookie.length > 0 && document.cookie != "user=-1") {
             var kookie = document.cookie.split("=");
@@ -64,11 +65,10 @@ $(document).ready(function() {
                 $("#tdSignOut").show();
             }
         }
-        else
-            LoadSearchResults(false);
-
+        else {
+         //   LoadSearchResults(false);
+        }
         RecordTraffic();
-        PopulateCategories();
     }
 });
 
@@ -100,41 +100,45 @@ function LoadMessages() {
     });
 }
 
-function ShowMsg(msg, BGcolor) {
-    $.each(messages, function(index, messages) {
-        $.each(messages, function(index, message) {
-            if (message.id == msg) 
-                msg = message.msg;
+function ShowMsg(msgArray, BGcolor) {
+    var ul = (msgArray.length > 1);
+    var msg = (ul) ? "<ul>" : "";
+    for (var i=0; i<msgArray.length; i++) {
+        $.each(messages, function(index, messages) {
+            $.each(messages, function(index, message) {
+                if (message.id == msgArray[i])
+                    msg += (ul) ? "<li>" + message.msg + "</li>" : message.msg;
+            });
         });
-    });
+    }
 
-    if (msg.indexOf("<ul>") >= 0)
+    if (ul) {
+        msg += "</ul>";
         $("#divMessage").css("text-align", "left");
+    }
     else
         $("#divMessage").css("text-align", "center");
+
     // finally, show the msg
     $("#divMessage").html(msg).removeClass().addClass(BGcolor).show().delay(2500).fadeOut(750)
 }
 
-function PopulateCategories() {
-    $.ajax({
-        type: "GET",
-        url: "php/categories.php",
-        data: $(this).serialize(),
-        dataType: 'text',
-        success: function(response) {
-            $("#selCategories").remove();
-            var select = $("<select id='selCategories'>");
-            $("<option />", {value: -1, text: "Select ..."}).appendTo(select);
-            var json = JSON.parse(response);
-            for (var i = 0; i < json.length; i++) {
-                var j = json[i];
-                $("<option />", {value: j.id, text: j.category}).appendTo(select);
-            }
-            select.appendTo($("#divFileCategories"));
-            select.appendTo($("#divSearchCategories"));
-        }
+function PopulateCategories(type) {
+    if ($("#sel" + type + "Categories").length)
+        $("#sel" + type + "Categories").remove();
+    var select = $("<select id='sel" + type + "Categories'>");
+    $("<option />", {value: -1, text: "Select ..."}).appendTo(select);
+    
+    $.getJSON("json/categories.json", function(json) {
+        categories = json;
+        $.each(categories, function(index, categories) {
+            $.each(categories, function(index, cat) {
+                $("<option />", {value: cat.id, text: cat.cat}).appendTo(select);
+            });
+        });
     });
+
+    select.appendTo($("#spn" + type + "Categories"));
 }
 
 function FileSizeText(FileSize) {
@@ -157,7 +161,7 @@ function DescriptionSpan(desc, chars, className, DivOrSpan) {
 }
 
 function ContactUs() {
-    ShowMsg(10, "greenBG");
+    ShowMsg([10], "greenBG");
 }
 
 function IsEmailValid(email) {
@@ -167,7 +171,7 @@ function IsEmailValid(email) {
 }
 
 function ValidateForm(form) {
-    var msg = "<ul>";
+    var msgArray = Array();
     $.each(PopupFiles, function(index, PopupFiles) {
         $.each(PopupFiles, function(index, elements) {
             if (index == form) {
@@ -177,19 +181,29 @@ function ValidateForm(form) {
                         switch (element.validate) {
                             case "text":
                                 if (id.val() == "")
-                                    msg += "<li>Please provide some text</li>";
+                                    msgArray.push(16);
                                 break;
                             case "email":
-                                if (id.val() == "" || !IsEmailValid(id.val()))
-                                    msg += "<li>The email is invalid </li>";
+                                if (id.val() == "")
+                                    msgArray.push(17);
+                                else 
+                                    if (!IsEmailValid(id.val()))
+                                        msgArray.push(18);
                                 break;
                             case "checkbox":
                                 if (!id.prop("checked")) 
-                                    msg += "<li>You must check the checkbox</li>";
+                                    msgArray.push(19);
                                 break;
                             case "pwd":
                                 if (id.val() == "")
-                                    msg += "<li>Enter your password</li>";
+                                    msgArray.push(20);
+                                break;
+                            case "PayPal":
+                                if (id.val() == "")
+                                    msgArray.push(21);
+                                else
+                                    if (!IsEmailValid(id.val()))
+                                    msgArray.push(22);
                                 break;
                         }
                     }
@@ -197,9 +211,8 @@ function ValidateForm(form) {
             }
         });
     });
-    msg += "</ul>";
-    if (msg != "<ul></ul>") {
-        ShowMsg(msg, "redBG");
+    if (msgArray.length > 0) {
+        ShowMsg(msgArray, "redBG");
         return false;
     }
     else

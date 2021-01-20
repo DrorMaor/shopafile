@@ -5,7 +5,7 @@
         {"id": "acctOldPwd", "type": "text", "validate": "pwd"},
         {"id": "acctNewPwd1", "type": "text", "validate": "pwd"},
         {"id": "acctNewPwd2", "type": "text", "validate": "pwd"},
-        {"id": "acctPayPal", "type": "text", "validate": "email"}
+        {"id": "acctPayPal", "type": "text", "validate": "PayPal"}
       ],
       "MessageSeller": [
         {"id": "msgFileName", "type": "span"},
@@ -33,7 +33,7 @@
         {"id": "SignUpEmail", "type": "text", "validate": "email"},
         {"id": "SignUpNewPwd1", "type": "text", "validate": "pwd"},
         {"id": "SignUpNewPwd2", "type": "text", "validate": "pwd"},
-        {"id": "SignUpPayPal", "type": "text", "validate": "pwd"},
+        {"id": "SignUpPayPal", "type": "text", "validate": "PayPal"},
         {"id": "SignUpAllowed", "type": "checkbox", "validate": "checkbox"}
       ],
       "BuyFile": [],

@@ -35,8 +35,8 @@ function MyFilesTable(json) {
     table += "<table id='tblMyFiles'>";
     table += '<tr>';
     table += '    <th class="left">File Name</th>';
-    table += '    <th class="left">Size</th>';
-    table += '    <th class="left"> </th>';
+    table += '    <th class="center">Size</th>';
+    table += '    <th> &nbsp; </th>';
     table += '    <th class="left">Description</th>';
     table += '    <th class="center">Category</th>';
     table += '    <th class="center">Price</th>';
@@ -50,17 +50,17 @@ function MyFilesTable(json) {
         var FileID = j.id;
         table += "<tr>";
         table += "<td>" + j.FileName + "</td>";
-        table += "<td>" + FileSizeText(j.FileSize) + "</td>";
+        table += "<td class='center'>" + FileSizeText(j.FileSize) + "</td>";
         table += "<td class='center'> <img style='height:50px;' src='data:image;base64," + j.image + "'/> </td>";
         table += "<td>" + DescriptionSpan(j.description, 40, "", "span") + "</td>";
-        table += "<td>" + j.category + "</td>";
-        table += "<td>$" + parseFloat(j.price).toFixed(2) + "</td>";
+        table += "<td class='center'>" + j.category + "</td>";
+        table += "<td class='center'>$" + parseFloat(j.price).toFixed(2) + "</td>";
         table += "<td class='center'>" + j.views + "</td>";
         table += "<td class='center'>" + j.downloads + "</td>";
-        table += "<td>$" + parseFloat(j.earnings).toFixed(2) + "</td>";
+        table += "<td class='center'>$" + parseFloat(j.earnings).toFixed(2) + "</td>";
         // right side tool links
         var title = "Click to copy the purchase link. Share it with your friends so they can buy your file";
-        var onclick = "CopyLink('" + j.UUID + "'); ShowMsg(8, 'greenBG');";
+        var onclick = "CopyLink('" + j.UUID + "'); ShowMsg([8], 'greenBG');";
         table += "<td> <a class='RepeatButton green' title='" + title + "' onclick=\"" + onclick + "\">Link</a> &nbsp;";
         table += "<a class='RepeatButton orange' onclick='GetUpdateData(" + FileID + ");'>Edit</a> &nbsp;";
         table += "<a class='RepeatButton red' onclick='DeleteFile(" + FileID + ");'>Delete</a> </td>";
@@ -79,7 +79,7 @@ function DeleteFile(FileID) {
             data: $(this).serialize(),
             dataType: 'text',
             success: function() {
-                ShowMsg (9, "redBG");
+                ShowMsg ([9], "redBG");
                 GetMyFiles();
             }
         });
