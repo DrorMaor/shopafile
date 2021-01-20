@@ -65,9 +65,9 @@ $(document).ready(function() {
                 $("#tdSignOut").show();
             }
         }
-        else {
-         //   LoadSearchResults(false);
-        }
+        else
+            LoadSearchResults(false);
+
         RecordTraffic();
     }
 });

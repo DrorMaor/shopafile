@@ -5,27 +5,28 @@ function CleanFileForm(type) {
         $("#fileImageCurrent").prop('src', "data:image;base64,");
         $("#divImageCurrent").hide();
         $("#divFileName").hide();
-        $("#buttonUploadFile").show();
         $("#buttonEditFile").hide();
+        $("#buttonUploadFile").show();
     }
     else {
         $("#FileFormHeading").html("Edit File");
         $("#divImageCurrent").show();
         $("#divFileName").show();
-        $("#buttonUploadFile").hide();
         $("#buttonEditFile").show();
+        $("#buttonUploadFile").hide();
     }
+
     PopupFormDisplay(true, "FileForm");
 }
 
-function GetUpdateData(FileID) {
+function GetUpdateData(UUID) {
     CleanFileForm('edit');
     PopulateCategories("File");
     $("#divLoader").show();
 
     $.ajax({
         type: "GET",
-        url: "php/GetUpdateData.php?FileID=" + FileID,
+        url: "php/GetUpdateData.php?UUID=" + UUID,
         data: $(this).serialize(),
         dataType: 'text',
         success: function(response) {
@@ -38,7 +39,7 @@ function GetUpdateData(FileID) {
                 ComputeReceive();
                 $("#fileImageCurrent").prop("src", "data:image;base64," + j.image);
                 $("#fileFileName").html(j.FileName);
-                $("#buttonEditFile").prop("FileID", j.id);
+                $("#buttonEditFile").prop("UUID", j.UUID);
                 $("#divLoader").hide();
                 PopupFormDisplay(true, "FileForm");
             }
@@ -58,21 +59,21 @@ function ComputeReceive() {
         $('#fileYWR').html("");
 }
 
-function SaveFile(FileID) {
+function SaveFile(type) {
     if (ValidateFileForm()) {
         var url = "";
         var formdata = new FormData();
-        var msg = "";
+        var msgID = Array();
         var BGcolor = "";
-        if (FileID == -1) {
+        if (type == "-upload") {
             url = "php/upload.php";
-            msg = "Your file has been uploaded";
+            msgID.push(26);
             BGcolor = "greenBG";
         }
         else {
             url = "php/update.php";
-            formdata.append('FileID', FileID);
-            msg = "Your changes have been saved";
+            formdata.append('UUID', $('#buttonEditFile').prop('UUID'));
+            msgID.push(25);
             BGcolor = "orangeBG";
         }
         formdata.append('description', $("#fileDescription").val());
@@ -80,6 +81,7 @@ function SaveFile(FileID) {
         formdata.append('price', $("#filePrice").val());
         formdata.append('image', $("#fileImage")[0].files[0]);
         formdata.append('file', $("#fileFile")[0].files[0]);
+        formdata.append('user', user);
         $.ajax({
             url: url,
             method: "POST",
@@ -88,7 +90,7 @@ function SaveFile(FileID) {
             contentType: false,
             processData: false,
             success: function() {
-                ShowMsg(msg, BGcolor);
+                ShowMsg(msgID, BGcolor);
                 PopupFormDisplay(false, "FileForm");
                 GetMyFiles();
             }

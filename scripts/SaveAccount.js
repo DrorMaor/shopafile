@@ -7,7 +7,7 @@ function SaveEmail() {
         if (!IsEmailValid(email))
             msgArray.push(18);
 
-    if (msg != "") {
+    if (msgArray.length == 0) {
         var formdata = new FormData();
         formdata.append('email', email);
         formdata.append('user', user);
@@ -36,7 +36,7 @@ function SavePayPal() {
         if (!IsEmailValid(PayPal))
             msgArray.push(22);
 
-    if (msg != "") {
+    if (msgArray.length == 0) {
         var formdata = new FormData();
         formdata.append('PayPal', PayPal);
         formdata.append('user', user);
@@ -57,9 +57,10 @@ function SavePayPal() {
 }
 
 function SavePwd() {
-    if ($("#acctNewPwd1").val() != $("#acctNewPwd2").val()) {
+    if ($("#acctOldPwd").val() == "")
+        ShowMsg([23], 'redBG');
+    else if ($("#acctNewPwd1").val() != $("#acctNewPwd2").val())
         ShowMsg([3], 'redBG');
-    }
     else {
         var formdata = new FormData();
         formdata.append('OldPwd', $("#acctOldPwd").val());

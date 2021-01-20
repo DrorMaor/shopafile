@@ -2,7 +2,7 @@
     "messages": [
         {"id": 1, "msg": "Your email address has been updated"},
         {"id": 2, "msg": "Your PayPal account has been updated"},
-        {"id": 3, "msg": "The new passwords don't match"},
+        {"id": 3, "msg": "The passwords don't match"},
         {"id": 4, "msg": "Your password has been updated"},
         {"id": 5, "msg": "An error occurred. Please try again"},
         {"id": 6, "msg": "The email and password didn't match. Please try again."},
@@ -14,13 +14,17 @@
         {"id": 12, "msg": "Your message has been sent to the seller"},
         {"id": 13, "msg": "An error occurred. Please try again."},
         {"id": 14, "msg": "Please correct the highlighted fields"},
-        {"id": 15, "msg": "An email has been mailed to you"},
+        {"id": 15, "msg": "Thank you for signing up with Shopafile.<br>An email has been sent to you to complete your registration."},
         {"id": 16, "msg": "Please provide some text"},
         {"id": 17, "msg": "An email address is required"},
         {"id": 18, "msg": "The email address is invalid"},
         {"id": 19, "msg": "You must check the checkbox"},
         {"id": 20, "msg": "Enter your password"},
         {"id": 21, "msg": "Enter your PayPal account"},
-        {"id": 22, "msg": "The PayPal account is invalid"}
+        {"id": 22, "msg": "The PayPal account is invalid"},
+        {"id": 23, "msg": "Please enter the old password"},
+        {"id": 24, "msg": "The email already exists in the system"},
+        {"id": 25, "msg": "Your file has been saved"},
+        {"id": 26, "msg": "Your file has been uploaded"}
     ]
 }

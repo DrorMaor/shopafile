@@ -47,7 +47,7 @@ function MyFilesTable(json) {
 
     for (var i = 0; i < json.length; i++) {
         var j = json[i];
-        var FileID = j.id;
+        var UUID = j.UUID;
         table += "<tr>";
         table += "<td>" + j.FileName + "</td>";
         table += "<td class='center'>" + FileSizeText(j.FileSize) + "</td>";
@@ -60,10 +60,10 @@ function MyFilesTable(json) {
         table += "<td class='center'>$" + parseFloat(j.earnings).toFixed(2) + "</td>";
         // right side tool links
         var title = "Click to copy the purchase link. Share it with your friends so they can buy your file";
-        var onclick = "CopyLink('" + j.UUID + "'); ShowMsg([8], 'greenBG');";
+        var onclick = "CopyLink('" + UUID + "'); ShowMsg([8], 'greenBG');";
         table += "<td> <a class='RepeatButton green' title='" + title + "' onclick=\"" + onclick + "\">Link</a> &nbsp;";
-        table += "<a class='RepeatButton orange' onclick='GetUpdateData(" + FileID + ");'>Edit</a> &nbsp;";
-        table += "<a class='RepeatButton red' onclick='DeleteFile(" + FileID + ");'>Delete</a> </td>";
+        table += "<a class='RepeatButton orange' onclick='GetUpdateData(\"" + UUID + "\");'>Edit</a> &nbsp;";
+        table += "<a class='RepeatButton red' onclick='DeleteFile(\"" + UUID + "\");'>Delete</a> </td>";
 
         table += "</tr>";
     }
@@ -71,11 +71,11 @@ function MyFilesTable(json) {
     return table;
 }
 
-function DeleteFile(FileID) {
+function DeleteFile(UUID) {
     if (confirm ("Are you sure you want to delete this file?")) {
         $.ajax({
             type: "GET",
-            url: "php/delete.php?FileID=" + FileID,
+            url: "php/delete.php?UUID=" + UUID,
             data: $(this).serialize(),
             dataType: 'text',
             success: function() {
@@ -97,5 +97,6 @@ function CopyLink (UUID) {
 
 function UploadNewFile() {
     CleanFileForm('upload');
+    PopulateCategories("File");
     PopupFormDisplay(true, "FileForm");
 }
