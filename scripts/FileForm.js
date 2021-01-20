@@ -1,7 +1,7 @@
 function CleanFileForm(type) {
     if (type == 'upload') {
         $("#FileFormHeading").html("Upload File");
-        $("#selCategories").val(-1);
+        $("#selFileCategories").val(-1);
         $("#fileImageCurrent").prop('src', "data:image;base64,");
         $("#divImageCurrent").hide();
         $("#divFileName").hide();
@@ -20,7 +20,9 @@ function CleanFileForm(type) {
 
 function GetUpdateData(FileID) {
     CleanFileForm('edit');
+    PopulateCategories("File");
     $("#divLoader").show();
+
     $.ajax({
         type: "GET",
         url: "php/GetUpdateData.php?FileID=" + FileID,
@@ -31,7 +33,7 @@ function GetUpdateData(FileID) {
             for (var i = 0; i < json.length; i++) {
                 var j = json[i];
                 $("#fileDescription").val(j.description);
-                $("#selCategories").val(j.category);
+                $("#selFileCategories").val(j.category);
                 $("#filePrice").val(j.price);
                 ComputeReceive();
                 $("#fileImageCurrent").prop("src", "data:image;base64," + j.image);
@@ -74,7 +76,7 @@ function SaveFile(FileID) {
             BGcolor = "orangeBG";
         }
         formdata.append('description', $("#fileDescription").val());
-        formdata.append('category', $("#selCategories").val());
+        formdata.append('category', $("#selFileCategories").val());
         formdata.append('price', $("#filePrice").val());
         formdata.append('image', $("#fileImage")[0].files[0]);
         formdata.append('file', $("#fileFile")[0].files[0]);
@@ -104,7 +106,7 @@ function ValidateFileForm() {
     else
         $("#spnDescription").removeClass("yellowBG");
 
-    if ($("#selCategories").val() == -1) {
+    if ($("#selFileCategories").val() == -1) {
         $("#spnCategory").addClass("yellowBG");
         valid = false;
     }
@@ -140,7 +142,7 @@ function ValidateFileForm() {
         $("#tdAllowed").removeClass("yellowBG");
 
     if (!valid)
-        ShowMsg(14, "redBG");
+        ShowMsg([14], "redBG");
     return valid;
 }
 

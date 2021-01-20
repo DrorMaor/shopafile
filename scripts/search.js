@@ -1,6 +1,6 @@
 function ValidateSearch() {
     var SearchKW = $("#SearchKeywords").val().trim();
-    var selCat = $("#selCategories").val();
+    var selCat = $("#selSearchCategories").val();
     if (SearchKW.length < 3 && selCat == -1) 
         AnimateCategories();
     else
@@ -11,7 +11,7 @@ function LoadSearchResults(user) {
     $("#divLoader").show();
     var url = "php/search.php";
     if (user) // regular user search
-        url += "?kw=" + $("#SearchKeywords").val() + "&cat=" + $("#selCategories").val();
+        url += "?kw=" + $("#SearchKeywords").val() + "&cat=" + $("#selSearchCategories").val();
       
     $.ajax({
         type: "GET",
@@ -34,13 +34,13 @@ function LoadSearchResults(user) {
 }
 
 function AnimateCategories() {
-    ShowMsg(11, "redBG");
+    ShowMsg([11], "redBG");
     
     $("#MyFiles").hide();
     $("#SearchResults").html("").show();
     var ScreenWidth = window.screen.availWidth;
     var ScreenHeight = window.screen.availHeight;
-    $('#selCategories > option').each(function() {
+    $('#selSearchCategories > option').each(function() {
         var val = this.value;
         if (val != -1) {
             var cat = this.text;
@@ -51,7 +51,7 @@ function AnimateCategories() {
             if (Math.random() < .5)
                 deg = deg * -1;
             var style = "left:" + left + "px; top:" + top + "px; transform:rotate(" + deg + "deg);";
-            var onclick = "$(\"#selCategories\").val(" + val + "); $(\"#SearchKeywords\").val(\"\"); ValidateSearch();";
+            var onclick = "$(\"#selSearchCategories\").val(" + val + "); $(\"#SearchKeywords\").val(\"\"); ValidateSearch();";
             $("#SearchResults").append("<a id='" + cat + "' class='NoSearchResults hover' style='" + style + "' onclick='" + onclick + "'>" + cat + "</a>");
         }
     });
@@ -118,9 +118,9 @@ function SendMessage() {
         processData: false,
         success: function(response) {
             if (response == "1")
-                ShowMsg(12, "greenBG");
+                ShowMsg([12], "greenBG");
             else
-                ShowMsg(13, "redBG");
+                ShowMsg([13], "redBG");
         }
     });
 }
