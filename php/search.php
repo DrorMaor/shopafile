@@ -25,7 +25,7 @@
         if (isset($_GET["cat"]))
             if ($_GET["cat"] != -1)
                 $select .= " and f.category = " . $_GET["cat"];
-        $select .= " order by f.views desc limit 3 ";
+        $select .= " order by f.views desc limit 25 ";
     }
     
     $sql = $conn->prepare($select);

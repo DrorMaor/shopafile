@@ -35,7 +35,35 @@ function SignOut () {
 }
 
 function SignUp() {
-    ShowMsg([15], "greenBG");
+    if ($("#SignUpNewPwd1").val() != $("#SignUpNewPwd2").val())
+        ShowMsg([3], 'redBG');
+    else {
+        var formdata = new FormData();
+        formdata.append('email', $("#SignUpEmail").val());
+        formdata.append('pwd', $("#SignUpNewPwd1").val());
+        formdata.append('PayPal', $("#SignUpPayPal").val());
+        $.ajax({
+            url: "php/SignUp.php",
+            method: "POST",
+            data: formdata,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function(response) {
+                switch (response) {
+                    case "0":
+                        ShowMsg([15], "greenBG");
+                        break;
+                    case "1":
+                        ShowMsg([24], "redBG");
+                        break;
+                    default:
+                        ShowMsg([13], "redBG");
+                        break;   
+                }
+            }
+        });
+    }
 }
 
 function SendPasswordResetEmail() {

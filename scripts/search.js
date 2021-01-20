@@ -89,7 +89,7 @@ function SearchResultsTable(json, user) {
 function PrepareBuyFileForm(json) {
     $.ajax({
         type: "GET",
-        url: "php/IncrementView.php?FileID=" + json.id,
+        url: "php/IncrementView.php?UUID=" + json.UUID,
         data: $(this).serialize(),
         dataType: 'text'
     });
@@ -123,4 +123,8 @@ function SendMessage() {
                 ShowMsg([13], "redBG");
         }
     });
+}
+
+function BuyFile() {
+    var UUID = $('#buyUUID').prop('UUID');
 }
