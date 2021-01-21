@@ -60,92 +60,38 @@ function ComputeReceive() {
 }
 
 function SaveFile(type) {
-    if (ValidateFileForm()) {
-        var url = "";
-        var formdata = new FormData();
-        var msgID = Array();
-        var BGcolor = "";
-        if (type == "-upload") {
-            url = "php/upload.php";
-            msgID.push(26);
-            BGcolor = "greenBG";
+    var url = "";
+    var formdata = new FormData();
+    var msgID = Array();
+    var BGcolor = "";
+    if (type == "-upload") {
+        url = "php/upload.php";
+        msgID.push(26);
+        BGcolor = "greenBG";
+    }
+    else {
+        url = "php/update.php";
+        formdata.append('UUID', $('#buttonEditFile').prop('UUID'));
+        msgID.push(25);
+        BGcolor = "orangeBG";
+    }
+    formdata.append('description', $("#fileDescription").val());
+    formdata.append('category', $("#selFileCategories").val());
+    formdata.append('price', $("#filePrice").val());
+    formdata.append('image', $("#fileImage")[0].files[0]);
+    formdata.append('file', $("#fileFile")[0].files[0]);
+    formdata.append('user', user);
+    $.ajax({
+        url: url,
+        method: "POST",
+        data: formdata,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function() {
+            ShowMsg(msgID, BGcolor);
+            PopupFormDisplay(false, "FileForm");
+            GetMyFiles();
         }
-        else {
-            url = "php/update.php";
-            formdata.append('UUID', $('#buttonEditFile').prop('UUID'));
-            msgID.push(25);
-            BGcolor = "orangeBG";
-        }
-        formdata.append('description', $("#fileDescription").val());
-        formdata.append('category', $("#selFileCategories").val());
-        formdata.append('price', $("#filePrice").val());
-        formdata.append('image', $("#fileImage")[0].files[0]);
-        formdata.append('file', $("#fileFile")[0].files[0]);
-        formdata.append('user', user);
-        $.ajax({
-            url: url,
-            method: "POST",
-            data: formdata,
-            cache: false,
-            contentType: false,
-            processData: false,
-            success: function() {
-                ShowMsg(msgID, BGcolor);
-                PopupFormDisplay(false, "FileForm");
-                GetMyFiles();
-            }
-        });
-    }
+    });
 }
-
-function ValidateFileForm() {
-    var valid = true;
-    var ErrMsg = "<br> <br>";
-    if ($("#fileDescription").val() == "") {
-        $("#spnDescription").addClass("yellowBG");
-        valid = false;
-    }
-    else
-        $("#spnDescription").removeClass("yellowBG");
-
-    if ($("#selFileCategories").val() == -1) {
-        $("#spnCategory").addClass("yellowBG");
-        valid = false;
-    }
-    else
-        $("#spnCategory").removeClass("yellowBG");
-
-    if ($("#filePrice").val() == "" || $("#filePrice").val() < 1) {
-        $("#spnPrice").addClass("yellowBG");
-        valid = false;
-    }
-    else
-        $("#spnPrice").removeClass("yellowBG");
-
-    if ($("#fileImage").val() == "" && $("#fileImageCurrent").prop('src') == "data:image;base64,") {
-        $("#spnImage").addClass("yellowBG");
-        valid = false;
-    }
-    else
-        $("#spnImage").removeClass("yellowBG");
-
-    if ($("#fileFile").val() == "" && $("#fileFileName").html() == "") {
-        $("#spnFile").addClass("yellowBG");
-        valid = false;
-    }
-    else
-        $("#spnFile").removeClass("yellowBG");
-
-    if (!$('#fileAllowed').is(":checked")) {
-        $("#tdAllowed").addClass("yellowBG");
-        valid = false;
-    }
-    else
-        $("#tdAllowed").removeClass("yellowBG");
-
-    if (!valid)
-        ShowMsg([14], "redBG");
-    return valid;
-}
-
-
