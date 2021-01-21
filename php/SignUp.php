@@ -14,7 +14,7 @@
     if ($exists == 0) {
         $insert = "insert into users (email, password, PayPal, UUID) values(";
         $insert .= "'" . $_POST["email"] . "', ";
-        $insert .= "'" . addslashes($_POST["pwd"]) . "', ";
+        $insert .= "md5('" . addslashes($_POST["pwd"]) . "'), ";
         $insert .= "'" . $_POST["PayPal"] . "', UUID() )";
         $sql = $conn->prepare($insert);
         $sql->execute();

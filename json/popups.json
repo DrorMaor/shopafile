@@ -13,17 +13,13 @@
         {"id": "msgMessage", "type": "textarea", "validate": "text"}
       ],
       "FileForm": [
-        {"id": "spnDescription", "type": "yellow"},
-        {"id": "fileDescription", "type": "textarea"},
-        {"id": "spnDescription", "type": "yellow"},
-        {"id": "spnPrice", "type": "yellow"},
-        {"id": "filePrice", "type": "text"},
+        {"id": "fileDescription", "type": "textarea", "validate": "text"},
+        {"id": "filePrice", "type": "text", "validate": "text"},
         {"id": "fileYWR", "type": "span"},
-        {"id": "spnImage", "type": "yellow"},
-        {"id": "fileImageCurrent", "type": "image"},
-        {"id": "spnFile", "type": "yellow"},
+        {"id": "fileImageCurrent", "type": "image", "validate": "text"},
         {"id": "fileFileName", "type": "span"},
-        {"id": "tdAllowed", "type": "yellow"}
+        {"id": "fileFile", "type": "text", "validate": "text"},
+        {"id": "fileAllowed", "type": "checkbox", "validate": "checkbox"}
       ],
       "SignInForm": [
         {"id": "SignInUser", "type": "text", "validate": "email"},
@@ -32,7 +28,7 @@
       "SignUpForm": [
         {"id": "SignUpEmail", "type": "text", "validate": "email"},
         {"id": "SignUpNewPwd1", "type": "text", "validate": "pwd"},
-        {"id": "SignUpNewPwd2", "type": "text", "validate": "pwd"},
+        {"id": "SignUpNewPwd2", "type": "text"},
         {"id": "SignUpPayPal", "type": "text", "validate": "PayPal"},
         {"id": "SignUpAllowed", "type": "checkbox", "validate": "checkbox"}
       ],

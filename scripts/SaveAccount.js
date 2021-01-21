@@ -61,6 +61,8 @@ function SavePwd() {
         ShowMsg([23], 'redBG');
     else if ($("#acctNewPwd1").val() != $("#acctNewPwd2").val())
         ShowMsg([3], 'redBG');
+    else if (!IsPasswordValid($("#acctNewPwd1").val()))
+        ShowMsg([14], 'redBG');
     else {
         var formdata = new FormData();
         formdata.append('OldPwd', $("#acctOldPwd").val());

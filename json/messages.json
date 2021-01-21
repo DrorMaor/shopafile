@@ -13,7 +13,7 @@
         {"id": 11, "msg": "No search results found"},
         {"id": 12, "msg": "Your message has been sent to the seller"},
         {"id": 13, "msg": "An error occurred. Please try again."},
-        {"id": 14, "msg": "Please correct the highlighted fields"},
+        {"id": 14, "msg": "Please use a stronger password"},
         {"id": 15, "msg": "Thank you for signing up with Shopafile.<br>An email has been sent to you to complete your registration."},
         {"id": 16, "msg": "Please provide some text"},
         {"id": 17, "msg": "An email address is required"},
@@ -25,6 +25,7 @@
         {"id": 23, "msg": "Please enter the old password"},
         {"id": 24, "msg": "The email already exists in the system"},
         {"id": 25, "msg": "Your file has been saved"},
-        {"id": 26, "msg": "Your file has been uploaded"}
+        {"id": 26, "msg": "Your file has been uploaded"},
+        {"id": 27, "msg": "A password is required"}
     ]
 }
