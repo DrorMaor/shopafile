@@ -2,6 +2,8 @@ function SignIn() {
     var formdata = new FormData();
     formdata.append('user', $("#SignInUser").val());
     formdata.append('pwd', $("#SignInPwd").val());
+
+    $("#divLoader").show();
     $.ajax({
         url: "php/SignIn.php",
         method: "POST",
@@ -20,7 +22,13 @@ function SignIn() {
                 $("#tdSignOut").show();
             }
             else
-                ShowMsg([6], "redBG");
+                ShowMsg([6], "red");
+            
+            $("#divLoader").hide();
+        }, 
+        error: function () {
+            ShowMsg([13], "red")
+            $("#divLoader").hide();
         }
     });
 }
@@ -36,12 +44,13 @@ function SignOut () {
 
 function SignUp() {
     if ($("#SignUpNewPwd1").val() != $("#SignUpNewPwd2").val())
-        ShowMsg([3], 'redBG');
+        ShowMsg([3], 'red');
     else {
         var formdata = new FormData();
         formdata.append('email', $("#SignUpEmail").val());
         formdata.append('pwd', $("#SignUpNewPwd1").val());
         formdata.append('PayPal', $("#SignUpPayPal").val());
+        $("#divLoader").show();
         $.ajax({
             url: "php/SignUp.php",
             method: "POST",
@@ -52,15 +61,20 @@ function SignUp() {
             success: function(response) {
                 switch (response) {
                     case "0":
-                        ShowMsg([15], "greenBG");
+                        ShowMsg([15], "green");
                         break;
                     case "1":
-                        ShowMsg([24], "redBG");
+                        ShowMsg([24], "red");
                         break;
                     default:
-                        ShowMsg([13], "redBG");
+                        ShowMsg([13], "red");
                         break;   
                 }
+                $("#divLoader").hide();
+            }, 
+            error: function () {
+                ShowMsg([13], "red")
+                $("#divLoader").hide();
             }
         });
     }
@@ -68,7 +82,7 @@ function SignUp() {
 
 function SendPasswordResetEmail() {
     if ($("#SignInUser").val() == "")
-        ShowMsg([7], "redBG");
+        ShowMsg([7], "red");
     else {
         var msg = "Would you like us to send an email to " + $("#SignInUser").val() + " to reset your password?";
         if (confirm(msg)) {

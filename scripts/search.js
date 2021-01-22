@@ -8,11 +8,11 @@ function ValidateSearch() {
 }
 
 function LoadSearchResults(user) {
-    $("#divLoader").show();
     var url = "php/search.php";
     if (user) // regular user search
         url += "?kw=" + $("#SearchKeywords").val() + "&cat=" + $("#selSearchCategories").val();
-      
+    
+    $("#divLoader").show();
     $.ajax({
         type: "GET",
         url: url,
@@ -27,14 +27,18 @@ function LoadSearchResults(user) {
             }
             else 
                 AnimateCategories();
-
+            
+            $("#divLoader").hide();
+        }, 
+        error: function () {
+            AnimateCategories();
             $("#divLoader").hide();
         }
     });
 }
 
 function AnimateCategories() {
-    ShowMsg([11], "redBG");
+    ShowMsg([11], "red");
     
     $("#MyFiles").hide();
     $("#SearchResults").html("").show();
@@ -118,9 +122,9 @@ function SendMessage() {
         processData: false,
         success: function(response) {
             if (response == "1")
-                ShowMsg([12], "greenBG");
+                ShowMsg([12], "green");
             else
-                ShowMsg([13], "redBG");
+                ShowMsg([13], "red");
         }
     });
 }
