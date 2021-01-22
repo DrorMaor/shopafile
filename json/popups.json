@@ -14,7 +14,7 @@
       ],
       "FileForm": [
         {"id": "fileDescription", "type": "textarea", "validate": "text"},
-        {"id": "filePrice", "type": "text", "validate": "text"},
+        {"id": "filePrice", "type": "text", "validate": "price"},
         {"id": "fileYWR", "type": "span"},
         {"id": "fileImageCurrent", "type": "image", "validate": "text"},
         {"id": "fileFileName", "type": "span"},

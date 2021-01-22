@@ -1,15 +1,20 @@
 function CleanFileForm(type) {
-    if (type == 'upload') {
-        $("#FileFormHeading").html("Upload File");
-        $("#selFileCategories").val(-1);
-        $("#fileImageCurrent").prop('src', "data:image;base64,");
+    $("#FileFormHeading").html(type + " File");
+    $("#fileDescription").val("");
+    $("#selFileCategories").val(-1);
+    $("#fileYWR").html("");
+    $("#fileAllowed").prop("checked", false);
+    $("#fileFileName").html("");
+
+    if (type == 'Upload') {
+        $("#fileImageCurrent").prop('src', "");
         $("#divImageCurrent").hide();
         $("#divFileName").hide();
         $("#buttonEditFile").hide();
         $("#buttonUploadFile").show();
     }
     else {
-        $("#FileFormHeading").html("Edit File");
+        $("#fileImageCurrent").prop('src', "data:image;base64,");
         $("#divImageCurrent").show();
         $("#divFileName").show();
         $("#buttonEditFile").show();
@@ -20,10 +25,10 @@ function CleanFileForm(type) {
 }
 
 function GetUpdateData(UUID) {
-    CleanFileForm('edit');
-    PopulateCategories("File");
     $("#divLoader").show();
-
+    CleanFileForm('Edit');
+    PopulateCategories("File");
+    
     $.ajax({
         type: "GET",
         url: "php/GetUpdateData.php?UUID=" + UUID,
@@ -40,9 +45,14 @@ function GetUpdateData(UUID) {
                 $("#fileImageCurrent").prop("src", "data:image;base64," + j.image);
                 $("#fileFileName").html(j.FileName);
                 $("#buttonEditFile").prop("UUID", j.UUID);
-                $("#divLoader").hide();
+                
                 PopupFormDisplay(true, "FileForm");
+                $("#divLoader").hide();
             }
+        }, 
+        error: function () {
+            ShowMsg([13], "red")
+            $("#divLoader").hide();
         }
     });
 }
@@ -63,17 +73,17 @@ function SaveFile(type) {
     var url = "";
     var formdata = new FormData();
     var msgID = Array();
-    var BGcolor = "";
+    var color = "";
     if (type == "-upload") {
         url = "php/upload.php";
         msgID.push(26);
-        BGcolor = "greenBG";
+        color = "green";
     }
     else {
         url = "php/update.php";
         formdata.append('UUID', $('#buttonEditFile').prop('UUID'));
         msgID.push(25);
-        BGcolor = "orangeBG";
+        color = "orange";
     }
     formdata.append('description', $("#fileDescription").val());
     formdata.append('category', $("#selFileCategories").val());
@@ -81,6 +91,8 @@ function SaveFile(type) {
     formdata.append('image', $("#fileImage")[0].files[0]);
     formdata.append('file', $("#fileFile")[0].files[0]);
     formdata.append('user', user);
+
+    $("#divLoader").show();
     $.ajax({
         url: url,
         method: "POST",
@@ -89,9 +101,14 @@ function SaveFile(type) {
         contentType: false,
         processData: false,
         success: function() {
-            ShowMsg(msgID, BGcolor);
+            ShowMsg(msgID, color);
             PopupFormDisplay(false, "FileForm");
             GetMyFiles();
+            $("#divLoader").hide();
+        }, 
+        error: function () {
+            ShowMsg([13], "red")
+            $("#divLoader").hide();
         }
     });
 }

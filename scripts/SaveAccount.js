@@ -11,6 +11,7 @@ function SaveEmail() {
         var formdata = new FormData();
         formdata.append('email', email);
         formdata.append('user', user);
+        $("#divLoader").show();
         $.ajax({
             url: "php/save/SaveEmail.php",
             method: "POST",
@@ -19,12 +20,17 @@ function SaveEmail() {
             contentType: false,
             processData: false,
             success: function() {
-                ShowMsg([1], 'greenBG');
+                ShowMsg([1], 'green');
+                $("#divLoader").hide();
+            }, 
+            error: function () {
+                ShowMsg([13], "red")
+                $("#divLoader").hide();
             }
         });
     }
     else
-        ShowMsg(msgArray, "redBG");
+        ShowMsg(msgArray, "red");
 }
 
 function SavePayPal() {
@@ -40,6 +46,8 @@ function SavePayPal() {
         var formdata = new FormData();
         formdata.append('PayPal', PayPal);
         formdata.append('user', user);
+        
+        $("#divLoader").show();
         $.ajax({
             url: "php/save/SavePayPal.php",
             method: "POST",
@@ -48,21 +56,26 @@ function SavePayPal() {
             contentType: false,
             processData: false,
             success: function() {
-                ShowMsg([2], 'greenBG');
+                ShowMsg([2], 'green');
+                $("#divLoader").hide();
+            }, 
+            error: function () {
+                ShowMsg([13], "red")
+                $("#divLoader").hide();
             }
         });
     }
     else
-        ShowMsg(msgArray, "redBG");
+        ShowMsg(msgArray, "red");
 }
 
 function SavePwd() {
     if ($("#acctOldPwd").val() == "")
-        ShowMsg([23], 'redBG');
+        ShowMsg([23], 'red');
     else if ($("#acctNewPwd1").val() != $("#acctNewPwd2").val())
-        ShowMsg([3], 'redBG');
+        ShowMsg([3], 'red');
     else if (!IsPasswordValid($("#acctNewPwd1").val()))
-        ShowMsg([14], 'redBG');
+        ShowMsg([14], 'red');
     else {
         var formdata = new FormData();
         formdata.append('OldPwd', $("#acctOldPwd").val());
@@ -78,13 +91,13 @@ function SavePwd() {
             processData: false,
             success: function(response) {
                 if (response != "0") {
-                    ShowMsg([4], 'greenBG');
+                    ShowMsg([4], 'green');
                     $("#acctOldPwd").val("");
                     $("#acctNewPwd1").val("");
                     $("#acctNewPwd2").val("");
                 }
                 else
-                    ShowMsg([5], 'redBG');
+                    ShowMsg([5], 'red');
             }
         });
     }

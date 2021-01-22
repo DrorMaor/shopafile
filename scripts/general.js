@@ -24,7 +24,7 @@ function PopupFormDisplay(show, form) {
 function ClearFormFields(form) {
     $.each(PopupFiles, function(index, PopupFiles) {
         $.each(PopupFiles, function(index, elements) {
-            if (index == form && form != "AccountSettings") {
+            if (index == form) {
                 $.each(elements, function(index, element) {
                     var id = $("#" + element.id);
                     switch (element.type) {
@@ -97,7 +97,7 @@ function LoadMessages() {
     });
 }
 
-function ShowMsg(msgArray, BGcolor) {
+function ShowMsg(msgArray, color) {
     var ul = (msgArray.length > 1);
     var msg = (ul) ? "<ul>" : "";
     for (var i=0; i<msgArray.length; i++) {
@@ -117,7 +117,7 @@ function ShowMsg(msgArray, BGcolor) {
         $("#divMessage").css("text-align", "center");
 
     // finally, show the msg
-    $("#divMessage").html(msg).removeClass().addClass(BGcolor).show().delay(2500).fadeOut(750)
+    $("#divMessage").html(msg).removeClass().addClass(color + "BG").show().delay(2500).fadeOut(750)
 }
 
 function PopulateCategories(type) {
@@ -158,5 +158,5 @@ function DescriptionSpan(desc, chars, className, DivOrSpan) {
 }
 
 function ContactUs() {
-    ShowMsg([10], "greenBG");
+    ShowMsg([10], "green");
 }

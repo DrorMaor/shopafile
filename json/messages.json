@@ -26,6 +26,7 @@
         {"id": 24, "msg": "The email already exists in the system"},
         {"id": 25, "msg": "Your file has been saved"},
         {"id": 26, "msg": "Your file has been uploaded"},
-        {"id": 27, "msg": "A password is required"}
+        {"id": 27, "msg": "A password is required"},
+        {"id": 28, "msg": "Please enter a price of at least $1.00"}
     ]
 }

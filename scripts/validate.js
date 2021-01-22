@@ -17,6 +17,10 @@ function ValidateForm(form) {
                                 if (id.val() == "")
                                     msgArray.push(16);
                                 break;
+                            case "price":
+                                if (id.val() == "" || parseFloat(id.val()) < 1.00)
+                                    msgArray.push(28);
+                                break;
                             case "email":
                                 if (id.val() == "")
                                     msgArray.push(17);
@@ -49,7 +53,7 @@ function ValidateForm(form) {
         });
     });
     if (msgArray.length > 0) {
-        ShowMsg(msgArray, "redBG");
+        ShowMsg(msgArray, "red");
         return false;
     }
     else
