@@ -15,8 +15,8 @@ function PopupFormDisplay(show, form) {
     var MouseEvents = (show) ? "none" : "auto";
     $("#overlay").css("display", display);
     $(".MouseEvents").css('opacity', opacity).css("pointer-events", MouseEvents);
-    $("#" + form).css("display", display);
-    
+    if (form != "")
+        $("#" + form).css("display", display);
     if (!show)
         ClearFormFields(form);
 }
@@ -31,6 +31,9 @@ function ClearFormFields(form) {
                         case "text":
                         case "textarea":
                             id.val("");
+                            break;
+                        case "price":
+                            id.val(0);
                             break;
                         case "span":
                             id.html("");
