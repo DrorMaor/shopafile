@@ -97,7 +97,7 @@ function SavePwd() {
                     $("#acctNewPwd2").val("");
                 }
                 else
-                    ShowMsg([5], 'red');
+                    ShowMsg([13], 'red');
             }
         });
     }

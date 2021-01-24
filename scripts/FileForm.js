@@ -74,7 +74,7 @@ function SaveFile(type) {
     var formdata = new FormData();
     var msgID = Array();
     var color = "";
-    if (type == "-upload") {
+    if (type == "upload") {
         url = "php/upload.php";
         msgID.push(26);
         color = "green";

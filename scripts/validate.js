@@ -13,13 +13,9 @@ function ValidateForm(form) {
                     var id = $("#" + element.id);
                     if (element.validate != "") {
                         switch (element.validate) {
-                            case "text":
-                                if (id.val() == "")
-                                    msgArray.push(16);
-                                break;
-                            case "price":
-                                if (id.val() == "" || parseFloat(id.val()) < 1.00)
-                                    msgArray.push(28);
+                            case "checkbox":
+                                if (!id.prop("checked")) 
+                                    msgArray.push(19);
                                 break;
                             case "email":
                                 if (id.val() == "")
@@ -28,9 +24,25 @@ function ValidateForm(form) {
                                     if (!IsEmailValid(id.val()))
                                         msgArray.push(18);
                                 break;
-                            case "checkbox":
-                                if (!id.prop("checked")) 
-                                    msgArray.push(19);
+                            case "file":
+                            case "image":
+                                // only validate these during Upload (in Edit there will always be an existing file/image)
+                                if ($("#FileFormHeading").html() == "Upload File") {
+                                    var MsgID = (element.validate == "file") ? 31 : 30; 
+                                    if (id.val() == "")
+                                        msgArray.push(MsgID);
+                                }
+                                break;
+                            case "PayPal":
+                                if (id.val() == "")
+                                    msgArray.push(21);
+                                else
+                                    if (!IsEmailValid(id.val()))
+                                    msgArray.push(22);
+                                break;
+                            case "price":
+                                if (id.val() == "" || parseFloat(id.val()) < 1.00)
+                                    msgArray.push(28);
                                 break;
                             case "pwd":
                                 if (id.val() == "")
@@ -39,12 +51,13 @@ function ValidateForm(form) {
                                     if (!IsPasswordValid(id.val()))
                                         msgArray.push(14);
                                 break;
-                            case "PayPal":
+                            case "select":
+                                if (id.val() < 0)
+                                    msgArray.push(29);
+                                break;
+                            case "text":
                                 if (id.val() == "")
-                                    msgArray.push(21);
-                                else
-                                    if (!IsEmailValid(id.val()))
-                                    msgArray.push(22);
+                                    msgArray.push(16);
                                 break;
                         }
                     }

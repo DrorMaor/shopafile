@@ -14,11 +14,13 @@
       ],
       "FileForm": [
         {"id": "fileDescription", "type": "textarea", "validate": "text"},
-        {"id": "filePrice", "type": "text", "validate": "price"},
+        {"id": "selFileCategories", "type": "select", "validate": "select"},
+        {"id": "filePrice", "type": "price", "validate": "price"},
         {"id": "fileYWR", "type": "span"},
-        {"id": "fileImageCurrent", "type": "image", "validate": "text"},
+        {"id": "fileImageCurrent", "type": "image"},
+        {"id": "fileImage", "type": "text", "validate": "image"},
         {"id": "fileFileName", "type": "span"},
-        {"id": "fileFile", "type": "text", "validate": "text"},
+        {"id": "fileFile", "type": "text", "validate": "file"},
         {"id": "fileAllowed", "type": "checkbox", "validate": "checkbox"}
       ],
       "SignInForm": [
