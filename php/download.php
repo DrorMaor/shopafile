@@ -1,7 +1,7 @@
 <?php
-    if (isset($_GET["id"])) {
+    if (isset($_GET["UUID"])) {
         include("DBconn.php");
-        $sql = $conn->prepare("select FileName, file from files where id = '" . $_GET["id"] . "'");
+        $sql = $conn->prepare("select FileName, file from files where UUID = '" . $_GET["UUID"] . "'");
         $sql->execute();
         $rows = array();
         foreach($sql as $row => $cols) {

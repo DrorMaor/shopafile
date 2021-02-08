@@ -1,22 +1,24 @@
 <?php            
-	include("DisplayErrors.php");
-	
 	// Get access token from PayPal client Id and secrate key
 	
 	payToAccount($_POST["amount"], $_POST["email"]);
 
 	function payToAccount($amount, $address)
 	{
+		$sandbox = "sandbox";
+		//$sandbox = "";
+
 		define('PAYPAL_CLIENT_ID', '***REMOVED-PAYPAL-CLIENT-ID***');
 		define('PAYPAL_SECRET_KEY', '***REMOVED-PAYPAL-SECRET***');
 
 		$ch = curl_init();
 
-		curl_setopt($ch, CURLOPT_URL, "https://api.sandbox.paypal.com/v1/oauth2/token");
+		curl_setopt($ch, CURLOPT_URL, "https://api." . $sandbox . ".paypal.com/v1/oauth2/token");
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, "grant_type=client_credentials");
 		curl_setopt($ch, CURLOPT_POST, 1);
-		curl_setopt($ch, CURLOPT_USERPWD, PAYPAL_CLIENT_ID . ":" . PAYPAL_SECRET_KEY;
+		curl_setopt($ch, CURLOPT_USERPWD, PAYPAL_CLIENT_ID . ":" . PAYPAL_SECRET_KEY);
+		curl_setopt($ch, CURLOPT_SSLVERSION , 6); //tlsv1.2
 
 		$headers = array();
 		$headers[] = "Accept: application/json";
@@ -29,7 +31,8 @@
 
 
 		// PayPal Payout API for Send Payment from PayPal to PayPal account
-		curl_setopt($ch, CURLOPT_URL, "https://api.sandbox.paypal.com/v1/payments/payouts");
+		curl_setopt($ch, CURLOPT_URL, "https://api." . $sandbox . ".paypal.com/v1/payments/payouts");
+
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
 		$array = array('sender_batch_header' => array(
